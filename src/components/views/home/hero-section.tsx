@@ -1,6 +1,6 @@
 "use client";
 
-import { shoppingBagIcon } from "@/assets";
+import { noiseBackground, shoppingBagIcon } from "@/assets";
 import { Banner } from "@/components/global";
 import Navbar from "@/components/global/navbar";
 import CreativeBtn from "@/components/ui/creative-btn";
@@ -15,7 +15,7 @@ export default function HeroSection() {
       <Navbar />
 
       {/* Main Content */}
-      <main className="flex-1 grid grid-cols-12 bg-hologram w-full">
+      <main className="flex-1 grid grid-cols-12 w-full">
         {/* Text Content */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -49,11 +49,12 @@ export default function HeroSection() {
               </defs>
             </svg>
           </div>
+          <Image src={noiseBackground} alt="" className="w-full h-full object-cover absolute left-0 right-0 -z-20" />
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl md:text-5xl lg:text-5xl text-pretty font-recolta leading-tight text-zinc-800 capitalize"
+            className="text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recolta leading-tight text-zinc-800 capitalize"
           >
             Elevate your <span className="font-newyork italic">style</span> with
             selections from <span className="font-newyork italic">Nelly</span>{" "}
@@ -91,11 +92,11 @@ export default function HeroSection() {
 
         {/* Image Section */}
         <div className="col-span-12 md:col-span-7 w-full h-full relative">
-          <div className="size-32 rounded-full absolute bottom-6 -left-16 z-60">
-            <div className="relative w-full h-full z-20 rounded-full bg-white/50 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
+          <div className="size-32 rounded-full absolute bottom-16 -left-16 z-60">
+            <div className="relative w-full h-full z-20 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
               <SpinningText
                 radius={5}
-                fontSize={1}
+                fontSize={0.95}
                 className="font-medium leading-none"
               >
                 {`pre-order • pre-order • pre-order • `}

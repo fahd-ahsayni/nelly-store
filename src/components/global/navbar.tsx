@@ -10,7 +10,7 @@ export default function Navbar() {
     <header className="w-full z-10">
       <div className="w-full border-b border-zinc-900">
         <Banner />
-        <nav className="px-4 py-1.5 flex justify-between items-center">
+        <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
           {/* Left section - Store and Home links */}
           <div className="hidden md:flex items-center gap-8">
             <a href="/" className="hover:text-zinc-600 transition-colors">
