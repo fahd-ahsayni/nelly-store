@@ -1,10 +1,10 @@
 "use client";
 
 import { noiseBackground, shoppingBagIcon } from "@/assets";
-import { Banner } from "@/components/global";
 import Navbar from "@/components/global/navbar";
-import CreativeBtn from "@/components/ui/creative-btn";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { SpinningText } from "@/components/ui/spinning-text";
+import UnderlineToBackground from "@/components/ui/underline-to-background";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -13,7 +13,6 @@ export default function HeroSection() {
     <section className="flex flex-col w-full h-dvh overflow-hidden">
       {/* Header */}
       <Navbar />
-
       {/* Main Content */}
       <main className="flex-1 grid grid-cols-12 w-full">
         {/* Text Content */}
@@ -49,7 +48,11 @@ export default function HeroSection() {
               </defs>
             </svg>
           </div>
-          <Image src={noiseBackground} alt="" className="w-full h-full object-cover absolute left-0 right-0 -z-20" />
+          <Image
+            src={noiseBackground}
+            alt=""
+            className="w-full h-full object-cover absolute left-0 right-0 -z-20"
+          />
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -67,7 +70,7 @@ export default function HeroSection() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="mt-10"
           >
-            <CreativeBtn text="Shop Now" width="w-40" />
+            <InteractiveHoverButton>Shop Now</InteractiveHoverButton>
           </motion.div>
 
           {/* Social Links */}
@@ -78,14 +81,18 @@ export default function HeroSection() {
             className="absolute bottom-8 flex items-center gap-x-8"
           >
             <a href="#" className="group">
-              <p className="underline underline-offset-4 tracking-widest group-hover:text-rose-700 transition-colors duration-300 uppercase">
-                LinkedIn
-              </p>
+              <UnderlineToBackground
+                label="Instagram"
+                targetTextColor="#fff"
+                className="cursor-pointer"
+              />
             </a>
             <a href="#" className="group">
-              <p className="underline underline-offset-4 tracking-widest group-hover:text-rose-700 transition-colors duration-300 uppercase">
-                TikTok
-              </p>
+              <UnderlineToBackground
+                label="Tiktok"
+                targetTextColor="#fff"
+                className="cursor-pointer"
+              />
             </a>
           </motion.div>
         </motion.div>
@@ -118,7 +125,7 @@ export default function HeroSection() {
               className="w-full h-full"
             >
               <img
-                src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1747304488~exp=1747308088~hmac=b19c40f726d88fd7a5d85016861d2576fb0da783d314dcca1f349a89f322ec01&w=1380"
+                src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1747352698~exp=1747356298~hmac=fb438ccbd3b5e8b4173651ee36f90834e70b6bdad1120cdfdd6e3f614e9c4aed&w=1380"
                 alt="Elegant woman in hijab showcasing Nelly Collection"
                 className="object-cover w-full h-full"
                 loading="lazy"
