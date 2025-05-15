@@ -1,4 +1,3 @@
-
 export default function Banner() {
   return (
     <div className="relative bg-zinc-900">
