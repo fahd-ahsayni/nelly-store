@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <HeroSection />
       <VelocityScroll numRows={1} defaultVelocity={-3} className="bg-zinc-900 py-4">
-        <span className="tracking-widest text-rose-200">Nelly Collection</span>
+        <span className="tracking-widest text-rose-200 font-newyork">Nelly Collection</span>
       </VelocityScroll>
       <ProductsList />
     </>
