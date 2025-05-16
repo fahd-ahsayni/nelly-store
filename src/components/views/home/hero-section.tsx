@@ -16,12 +16,7 @@ export default function HeroSection() {
       {/* Main Content */}
       <main className="flex-1 grid grid-cols-12 w-full">
         {/* Text Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col justify-center col-span-12 md:col-span-5 w-full h-full px-6 lg:px-12 relative z-60 overflow-hidden"
-        >
+        <div className="flex flex-col justify-center col-span-12 md:col-span-5 w-full h-full px-6 lg:px-12 relative z-60 overflow-hidden">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
             <svg
               className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%)] sm:h-[42.375rem]"
@@ -95,7 +90,7 @@ export default function HeroSection() {
               />
             </a>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Image Section */}
         <div className="col-span-12 md:col-span-7 w-full h-full relative">

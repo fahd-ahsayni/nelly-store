@@ -2,6 +2,7 @@
 import { profile } from "@/assets";
 import AnimatedText from "@/components/ui/cursor-follow-text";
 import Image from "next/image";
+import { FaInstagram, FaTiktok } from "react-icons/fa6";
 
 function Footer() {
   return (
@@ -17,8 +18,10 @@ function Footer() {
                   className="w-full h-full object-cover relative z-10 rounded"
                 />
               </div>
-              <article className="py-2  2xl:w-80 w-64 space-y-1">
-                <h1 className="newFont text-3xl text-zinc-800">Nelly Oumaima</h1>
+              <article className="py-2 2xl:w-80 w-64 space-y-1">
+                <h1 className="newFont text-3xl text-zinc-800">
+                  Nelly Oumaima
+                </h1>
                 <p className="text-sm text-zinc-700">
                   Copy and paste designs that you love to have on your website.
                   Don't forget to share them with your friends. I'll bring more
@@ -26,45 +29,20 @@ function Footer() {
                 </p>
               </article>
             </div>
-
-            <div className="sm:block flex sm:mt-0 mt-4  gap-2 sm:w-auto w-full sm:space-y-2 relative z-[1]">
+            <div className="sm:block flex sm:mt-0 mt-4 gap-2 sm:w-auto w-full sm:space-y-2 relative z-[1]">
               <a
-                href="https://www.linkedin.com/in/naymur-rahman/"
-                target="_blank"
-                className="bg-gray-50 sm:w-auto w-full   grid place-content-center 2xl:h-40 h-32 2xl:p-10 p-5 rounded-lg"
+              href="https://www.instagram.com/yourInstagramUser/"
+              target="_blank"
+              className="bg-rose-50 sm:w-auto w-full aspect-square 2xl:p-10 p-5 rounded-lg flex items-center justify-center border border-zinc-800"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="70"
-                  height="62"
-                  viewBox="0 0 70 62"
-                  fill="none"
-                  className="sm:w-24 w-full  text-rose-500"
-                >
-                  <path
-                    d="M55.1291 0H65.8629L42.4127 26.2626L70 62H48.3994L31.481 40.3254L12.1226 62H1.38228L26.4646 33.9092L0 0H22.149L37.4417 19.8114L55.1291 0ZM51.3619 55.7046H57.3096L18.9172 5.96472H12.5347L51.3619 55.7046Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
+              <FaInstagram className="sm:text-6xl absolute text-4xl text-rose-500" />
               </a>
               <a
-                href="https://x.com/naymur_dev"
-                target="_blank"
-                className="bg-gray-50 sm:w-auto w-full  grid place-content-center  2xl:h-40 h-32 2xl:p-10 p-5 rounded-lg"
+              href="https://www.tiktok.com/@yourTiktokUser"
+              target="_blank"
+              className="bg-rose-50 sm:w-auto w-full aspect-square 2xl:p-10 p-5 rounded-lg flex items-center justify-center border border-zinc-800"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 80 78"
-                  fill="none"
-                  className="sm:w-24 w-full text-rose-600"
-                >
-                  <path
-                    d="M16.6 8.79036C16.6 13.3937 12.9 17.1237 8.33333 17.1237C3.76667 17.1237 0.0666667 13.3937 0.0666667 8.79036C0.0666667 4.19036 3.76667 0.457031 8.33333 0.457031C12.9 0.457031 16.6 4.19036 16.6 8.79036ZM16.6667 23.7904H0V77.1237H16.6667V23.7904ZM43.2733 23.7904H26.7133V77.1237H43.2767V49.127C43.2767 33.5604 63.3733 32.287 63.3733 49.127V77.1237H80V43.3537C80 17.087 50.26 18.0437 43.2733 30.9737V23.7904Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
+              <FaTiktok className="sm:text-6xl text-4xl text-rose-600" />
               </a>
             </div>
           </div>

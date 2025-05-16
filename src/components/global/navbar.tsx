@@ -7,7 +7,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full z-10">
+    <header className="w-full z-10 bg-white">
       <div className="w-full border-b border-zinc-900">
         <Banner />
         <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">

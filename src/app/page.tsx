@@ -5,6 +5,7 @@ import {
   CtaOne,
   Footer,
   HeroSection,
+  LocalStores,
   ProductsList,
   TestimonialGrid,
 } from "@/components/views/home";
@@ -27,6 +28,7 @@ export default function Home() {
       <CtaOne />
       <CoverSection />
       <TestimonialGrid />
+      <LocalStores />
       <Footer />
     </>
   );

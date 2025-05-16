@@ -5,6 +5,7 @@ import CtaOne from "./cta-one";
 import CoverSection from "./cover-section";
 import TestimonialGrid from "./testimonials";
 import Footer from "./footer";
+import LocalStores from "./local-stores";
 
 export {
   CollectionPerview,
@@ -14,4 +15,5 @@ export {
   CoverSection,
   TestimonialGrid,
   Footer,
+  LocalStores,
 };
