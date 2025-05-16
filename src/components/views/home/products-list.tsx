@@ -111,7 +111,7 @@ export default function ProductsList() {
               ))}
             </CarouselContent>
           </Carousel>
-          <div className="w-full mt-8 flex justify-end items-center space-x-8">
+          <div className="w-full mt-8 flex justify-end items-center space-x-8 relative z-50">
             <div className="flex items-center gap-x-6">
               <button
                 className="px-8 py-1 border border-zinc-800 bg-white hover:bg-zinc-800 hover:text-rose-200 transition-colors duration-200"

@@ -51,7 +51,7 @@ export default function Example() {
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-women-with-hijab-posing_23-2149226593.jpg?t=st=1747346824~exp=1747350424~hmac=c24b4d0324b0e68ba74c6b08f952db0735f0b886e699244af89ab7690d674cf7&w=1380"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                className="absolute inset-0 h-full w-full object-cover object-center rounded"
               />
             </div>
             <div className="relative flex h-full flex-col justify-end items-center overflow-hidden">
@@ -66,7 +66,7 @@ export default function Example() {
               <img
                 src="https://img.freepik.com/free-photo/beautiful-women-wearing-hijab_23-2149288896.jpg?t=st=1747347721~exp=1747351321~hmac=427aac5eb35df5ab4bab48271afaac0703386918f766265b1154efeb0cde4f3b&w=1380"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center brightness-75"
+                className="absolute inset-0 h-full w-full object-cover object-center brightness-75 rounded"
               />
             </div>
             <div className="relative flex h-full flex-col justify-end overflow-hidden">
@@ -86,7 +86,7 @@ export default function Example() {
               <img
                 src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288933.jpg?t=st=1747349135~exp=1747352735~hmac=9d8b4ba572e15600e89b7620a1927d782ce20749b812f68e68a92b3c3c57b0f3&w=1380"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center brightness-75"
+                className="absolute inset-0 h-full w-full object-cover object-center brightness-75 rounded"
               />
             </div>
             <div className="relative flex h-full flex-col justify-end overflow-hidden">
@@ -113,7 +113,7 @@ export default function Example() {
               <img
                 src="https://img.freepik.com/free-photo/women-wearing-hijab-medium-shot_23-2149226656.jpg?t=st=1747347470~exp=1747351070~hmac=b10bda9c70d63d91c8209cdea123d369140bb15e6dc675da66c43c940b20b8e9&w=996"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                className="absolute inset-0 h-full w-full object-cover object-center rounded"
               />
             </div>
             <div className="relative flex h-full flex-col justify-end items-center overflow-hidden">

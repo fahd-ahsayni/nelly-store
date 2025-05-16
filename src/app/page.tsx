@@ -1,10 +1,13 @@
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 import {
   CollectionPerview,
+  CoverSection,
+  CtaOne,
+  Footer,
   HeroSection,
   ProductsList,
+  TestimonialGrid,
 } from "@/components/views/home";
-import CtaOne from "@/components/views/home/cta-one";
 
 export default function Home() {
   return (
@@ -22,6 +25,9 @@ export default function Home() {
       <ProductsList />
       <CollectionPerview />
       <CtaOne />
+      <CoverSection />
+      <TestimonialGrid />
+      <Footer />
     </>
   );
 }
