@@ -31,18 +31,18 @@ function Footer() {
             </div>
             <div className="sm:block flex sm:mt-0 mt-4 gap-2 sm:w-auto w-full sm:space-y-2 relative z-[1]">
               <a
-              href="https://www.instagram.com/yourInstagramUser/"
-              target="_blank"
-              className="bg-rose-50 sm:w-auto w-full aspect-square 2xl:p-10 p-5 rounded-lg flex items-center justify-center border border-zinc-800"
+                href="https://www.instagram.com/yourInstagramUser/"
+                target="_blank"
+                className="bg-rose-50 sm:w-auto w-full aspect-square 2xl:p-10 p-5 rounded-lg flex items-center justify-center border border-zinc-800"
               >
-              <FaInstagram className="sm:text-6xl absolute text-4xl text-rose-500" />
+                <FaInstagram className="sm:text-6xl absolute text-4xl text-rose-500" />
               </a>
               <a
-              href="https://www.tiktok.com/@yourTiktokUser"
-              target="_blank"
-              className="bg-rose-50 sm:w-auto w-full aspect-square 2xl:p-10 p-5 rounded-lg flex items-center justify-center border border-zinc-800"
+                href="https://www.tiktok.com/@yourTiktokUser"
+                target="_blank"
+                className="bg-rose-50 sm:w-auto w-full aspect-square 2xl:p-10 p-5 rounded-lg flex items-center justify-center border border-zinc-800"
               >
-              <FaTiktok className="sm:text-6xl text-4xl text-rose-600" />
+                <FaTiktok className="sm:text-6xl text-4xl text-rose-600" />
               </a>
             </div>
           </div>

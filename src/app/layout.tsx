@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SmoothFollower from "@/components/ui/cursor-follow";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-rose-50/70 antialiased`}
+        suppressHydrationWarning
       >
+        <SmoothFollower />
         {children}
       </body>
     </html>

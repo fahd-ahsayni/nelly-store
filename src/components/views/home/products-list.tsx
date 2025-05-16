@@ -36,6 +36,16 @@ export default function ProductsList() {
     autoplayRef.current?.stop();
   };
 
+  // Handler for mouse enter to pause autoplay
+  const handleMouseEnter = () => {
+    autoplayRef.current?.stop();
+  };
+
+  // Handler for mouse leave to resume autoplay
+  const handleMouseLeave = () => {
+    autoplayRef.current?.play();
+  };
+
   return (
     <div className="bg-rose-50/70">
       <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
@@ -79,6 +89,8 @@ export default function ProductsList() {
             plugins={[autoplayRef.current]}
             className="w-full"
             setApi={setApi}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             <CarouselContent className="-ml-4">
               {products.map((product) => (
