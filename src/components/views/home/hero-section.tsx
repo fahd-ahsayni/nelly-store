@@ -3,9 +3,12 @@
 import { noiseBackground, shoppingBagIcon } from "@/assets";
 import Navbar from "@/components/global/navbar";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import ImageCarousel from "@/components/ui/images-carousel";
 import { SpinningText } from "@/components/ui/spinning-text";
 import UnderlineToBackground from "@/components/ui/underline-to-background";
+import { carouselImages } from "@/constants";
 import { motion } from "framer-motion";
+import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
 
 export default function HeroSection() {
@@ -99,33 +102,15 @@ export default function HeroSection() {
               <SpinningText
                 radius={5}
                 fontSize={0.95}
-                className="font-medium leading-none"
+                className="font-medium leading-none text-zinc-800"
               >
                 {`pre-order • pre-order • pre-order • `}
               </SpinningText>
-              <Image
-                src={shoppingBagIcon}
-                alt="Shopping Bag Icon"
-                width={25}
-                height={25}
-                className="absolute"
-              />
+              <ArrowDownRight size={50} strokeWidth={1} className="absolute text-zinc-700" />
             </div>
           </div>
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-            <motion.div
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.2 }}
-              className="w-full h-full"
-            >
-              <img
-                src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1747352698~exp=1747356298~hmac=fb438ccbd3b5e8b4173651ee36f90834e70b6bdad1120cdfdd6e3f614e9c4aed&w=1380"
-                alt="Elegant woman in hijab showcasing Nelly Collection"
-                className="object-cover w-full h-full"
-                loading="lazy"
-              />
-            </motion.div>
+            <ImageCarousel images={carouselImages} />
           </div>
         </div>
       </main>

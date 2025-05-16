@@ -13,12 +13,14 @@ export const InteractiveHoverButton = React.forwardRef<
     <button
       ref={ref}
       className={cn(
-        "group relative w-auto cursor-pointer overflow-hidden border border-neutral-800 bg-background p-2 px-6 text-center tracking-wide font-semibold",
+        "group relative w-auto cursor-pointer overflow-hidden border border-zinc-800 bg-background p-2 px-6 text-center tracking-wide font-semibold",
         className,
       )}
       {...props}
     >
-      <div className="flex items-center gap-2">
+      {/* Using a pseudo-element for the hover effect instead of a div */}
+      <div className="relative z-0 flex items-center gap-2">
+        {/* This div acts as a visual indicator only, not the hover trigger */}
         <div className="h-2 w-2 rounded-full bg-primary transition-all duration-300 group-hover:scale-[100.8]"></div>
         <span className="inline-block transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0">
           {children}
@@ -28,6 +30,8 @@ export const InteractiveHoverButton = React.forwardRef<
         <span>{children}</span>
         <ArrowRight />
       </div>
+      {/* Adding a full-width/height pseudo-background that acts as the hover trigger */}
+      <div className="absolute inset-0 -z-10 bg-transparent"></div>
     </button>
   );
 });

@@ -48,8 +48,8 @@ export default function ProductsList() {
 
   return (
     <div className="bg-rose-50/70">
-      <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-        <h2 className="text-5xl tracking-tight text-gray-900 mb-8">
+      <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8 relative z-10">
+        <h2 className="text-5xl tracking-tight text-zinc-800 mb-8">
           <span className="font-newyork italic">Trending</span> products
         </h2>
         <div className="md:flex md:items-center md:justify-between">
@@ -62,7 +62,7 @@ export default function ProductsList() {
                   className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
                     isActive
                       ? "bg-zinc-800 text-rose-200 border-zinc-700"
-                      : "bg-white text-neutral-900 border-neutral-900 hover:bg-gray-50"
+                      : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
                   }`}
                 >
                   {label}
@@ -99,23 +99,23 @@ export default function ProductsList() {
                   className="pl-4 md:basis-1/4 lg:basis-1/5"
                 >
                   <div className="group relative">
-                    <div className="h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
+                    <div className="h-56 w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 lg:h-72 xl:h-80">
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
-                    <h3 className="mt-4 text-sm text-gray-700">
+                    <h3 className="mt-4 text-sm text-zinc-700">
                       <a href={product.href}>
                         <span className="absolute inset-0" />
                         {product.name}
                       </a>
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="mt-1 text-sm text-zinc-500">
                       {product.collection}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-gray-900">
+                    <p className="mt-1 text-sm font-medium text-zinc-900">
                       {product.price}
                     </p>
                   </div>

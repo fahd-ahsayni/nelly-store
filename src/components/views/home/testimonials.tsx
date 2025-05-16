@@ -62,11 +62,11 @@ export default function TestimonialGrid() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="bg-white rounded overflow-hidden transition-shadow duration-300 border border-zinc-300"
+              className="bg-white rounded overflow-hidden transition-shadow duration-300 border border-zinc-600"
             >
               <div className="relative aspect-[3/3.5] h-[400px] overflow-hidden w-full">
                 <img
@@ -85,14 +85,14 @@ export default function TestimonialGrid() {
                       className={cn(
                         i < testimonial.rating
                           ? "fill-amber-400 text-amber-400"
-                          : "fill-gray-200 text-gray-200"
+                          : "fill-zinc-200 text-zinc-200"
                       )}
                     />
                   ))}
                 </div>
 
                 <h3 className="text-xl mb-1">{testimonial.name}</h3>
-                <p className="text-neutral-600 text-sm line-clamp-2">
+                <p className="text-zinc-600 text-sm line-clamp-2">
                   {testimonial.comment}
                 </p>
               </div>

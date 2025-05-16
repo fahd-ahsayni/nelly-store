@@ -1,9 +1,9 @@
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
-export default function Example() {
+export default function CollectionPerview() {
   return (
     <div className="bg-rose-50/70 pb-16 sm:pb-24 relative ">
-      <div className="absolute inset-x-0 Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
+      <div className="absolute inset-x-0 -Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
         <svg
           className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
           viewBox="0 0 1155 678"
@@ -32,7 +32,7 @@ export default function Example() {
       <div className="mx-auto px-6 lg:px-8">
         <div className="md:flex md:items-center md:justify-between">
           <div className="flex items-center gap-x-4">
-            <h2 className="text-5xl tracking-tight text-gray-900">
+            <h2 className="text-5xl tracking-tight text-zinc-800">
               <span className="font-newyork italic">Discover</span> Our
               Collections
             </h2>
@@ -106,7 +106,7 @@ export default function Example() {
                 </p>
               </div>
             </div>
-            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"></div>
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-zinc-900/5"></div>
           </div>
           <div className="relative lg:row-span-2">
             <div className="absolute inset-px">

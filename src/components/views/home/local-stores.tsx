@@ -38,7 +38,7 @@ export default function LocalStores() {
           collections
         </p>
       </div>
-      <div className="mx-auto max-w-7xl grid min-h-full grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 px-6 lg:px-8 gap-x-4 h-[799px] bg-rose-50/70">
+      <div className="mx-auto max-w-7xl grid min-h-full grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 px-6 lg:px-8 gap-x-4 h-[799px]">
         <div className="relative flex">
           <img
             alt=""

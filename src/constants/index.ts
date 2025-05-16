@@ -60,3 +60,18 @@ export const products = [
     imageAlt: "Comfortable everyday cotton hijab in versatile color.",
   },
 ];
+
+export const carouselImages = [
+  {
+    src: "https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1747352698~exp=1747356298~hmac=fb438ccbd3b5e8b4173651ee36f90834e70b6bdad1120cdfdd6e3f614e9c4aed&w=1380", // Sunset over water
+    alt: "Sunset over water with gentle waves",
+  },
+  {
+    src: "https://img.freepik.com/free-photo/medium-shot-muslim-woman-posing-with-flowers_23-2150494552.jpg?t=st=1747432178~exp=1747435778~hmac=ec434fd4f137056a92d395e5bf13ff0f7107b991ba67fd6984f920c6d9ef8cc9&w=1380",
+    alt: "Placeholder image 1",
+  },
+  {
+    src: "https://img.freepik.com/free-photo/medium-shot-muslim-woman-posing-with-flowers_23-2150494553.jpg?t=st=1747432226~exp=1747435826~hmac=94587f80ee4c7411b88a4f03873b82d0aea02a8ddfbd196317fbc2e08cbf63eb&w=996",
+    alt: "Placeholder image 2",
+  },
+];

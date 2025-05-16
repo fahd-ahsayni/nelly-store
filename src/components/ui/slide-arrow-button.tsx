@@ -8,13 +8,13 @@ interface SlideArrowButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEle
 
 export default function SlideArrowButton({
   text = "Get Started",
-  primaryColor = "hsl(345, 54%, 50%)",
+  primaryColor = " hsl(355, 46%, 58%)",
   className = "",
   ...props
 }: SlideArrowButtonProps) {
   return (
     <button
-      className={`group relative rounded-full border border-neutral-600 bg-white p-2 text-xl font-semibold ${className}`}
+      className={`group relative rounded-full border border-zinc-600 bg-white p-2 text-xl font-semibold ${className}`}
       {...props}
     >
       <div
@@ -25,7 +25,7 @@ export default function SlideArrowButton({
           <ArrowRight size={20} />
         </span>
       </div>
-      <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-black transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-white">
+      <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-zinc-800 transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-white">
         {text}
       </span>
     </button>

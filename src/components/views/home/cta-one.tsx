@@ -3,9 +3,9 @@ import SlideArrowButton from "@/components/ui/slide-arrow-button";
 
 export default function CtaOne() {
   return (
-    <div className="isolate bg-rose-50/70">
+    <div className="isolate bg-rose-50/70 relative z-0">
       <main>
-        <div className="relative px-6 lg:px-8">
+        <div className=" px-6 lg:px-8">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
             <svg
               className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:right-[calc(50%)] sm:h-[42.375rem]"
