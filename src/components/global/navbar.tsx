@@ -1,10 +1,16 @@
+"use client";
+
 import { useState } from "react";
 import Banner from "./banner";
 import Image from "next/image";
 import { logo, shoppingBagIcon } from "@/assets";
+import { useShoppingCart } from "@/context/shopping-cart-context";
+import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { openCart } = useShoppingCart();
+  const { openWishlist } = useWishlistDrawer();
 
   return (
     <header className="w-full z-10 bg-white">
@@ -13,10 +19,16 @@ export default function Navbar() {
         <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
           {/* Left section - Store and Home links */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="/" className="hover:text-zinc-600 transition-colors text-lg">
+            <a
+              href="/"
+              className="hover:text-zinc-600 transition-colors text-lg"
+            >
               Home
             </a>
-            <a href="/store" className="hover:text-zinc-600 transition-colors text-lg">
+            <a
+              href="/store"
+              className="hover:text-zinc-600 transition-colors text-lg"
+            >
               Store
             </a>
           </div>
@@ -34,6 +46,7 @@ export default function Navbar() {
             <button
               className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
               aria-label="View wishlist"
+              onClick={openWishlist}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +66,7 @@ export default function Navbar() {
             <button
               className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
               aria-label="View shopping cart"
+              onClick={openCart}
             >
               <Image
                 src={shoppingBagIcon}

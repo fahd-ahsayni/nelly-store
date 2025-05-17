@@ -1,7 +1,11 @@
+import ShoppingCart from "@/components/global/shopping-cart";
+import SmoothFollower from "@/components/ui/cursor-follow";
+import { ShoppingCartProvider } from "@/context/shopping-cart-context";
+import { WishlistDrawerProvider } from "@/context/wishlist-drawer-context";
+import WishlistDrawer from "@/components/global/wishlist-drawer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SmoothFollower from "@/components/ui/cursor-follow";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +33,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} bg-rose-50/70 antialiased`}
         suppressHydrationWarning
       >
-        <SmoothFollower />
-        {children}
+        <WishlistDrawerProvider>
+          <ShoppingCartProvider>
+            <ShoppingCart />
+            <SmoothFollower />
+            <main>{children}</main>
+            <WishlistDrawer />
+          </ShoppingCartProvider>
+        </WishlistDrawerProvider>
       </body>
     </html>
   );

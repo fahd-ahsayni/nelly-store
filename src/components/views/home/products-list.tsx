@@ -1,14 +1,14 @@
 "use client";
 
-import { products } from "@/constants";
-
+import ProductQuickview from "@/components/global/product-quickview";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { products } from "@/constants";
 import Autoplay from "embla-carousel-autoplay";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
 import { useRef, useState } from "react";
 
 export default function ProductsList() {
@@ -22,6 +22,10 @@ export default function ProductsList() {
 
   // Create a ref to store the autoplay plugin instance
   const autoplayRef = useRef<any>(Autoplay({ delay: 2000 }));
+
+  // State for quick view
+  const [quickViewOpen, setQuickViewOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
   // Handler functions for carousel navigation
   const handlePrevious = () => {
@@ -44,6 +48,14 @@ export default function ProductsList() {
   // Handler for mouse leave to resume autoplay
   const handleMouseLeave = () => {
     autoplayRef.current?.play();
+  };
+
+  // Handle quick view
+  const openQuickView = (product: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSelectedProduct(product);
+    setQuickViewOpen(true);
   };
 
   return (
@@ -99,18 +111,36 @@ export default function ProductsList() {
                   className="pl-4 md:basis-1/4 lg:basis-1/5"
                 >
                   <div className="group relative">
-                    <div className="h-56 w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 lg:h-72 xl:h-80">
+                    <div className="h-56 w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 lg:h-72 xl:h-80 relative">
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
                         className="h-full w-full object-cover object-center"
                       />
+
+                      {/* Out of stock badge */}
+                      {product.inStock === false && (
+                        <div className="absolute top-2 right-2 bg-zinc-800 text-white text-xs px-2 py-1">
+                          Out of stock
+                        </div>
+                      )}
+
+                      {/* Quick view and wishlist buttons - shown on hover */}
+                      <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4">
+                        <button
+                          onClick={(e) => openQuickView(product, e)}
+                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative z-[100] cursor-pointer flex-1"
+                        >
+                          PRODUCT QUICK VIEW
+                        </button>
+                        <button className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative z-[100] cursor-pointer">
+                          <Heart size={20} />
+                        </button>
+                      </div>
                     </div>
                     <h3 className="mt-4 text-sm text-zinc-700">
-                      <a href={product.href}>
-                        <span className="absolute inset-0" />
-                        {product.name}
-                      </a>
+                      {/* Replace the absolute positioned span with a standard link approach */}
+                      {product.name}
                     </h3>
                     <p className="mt-1 text-sm text-zinc-500">
                       {product.collection}
@@ -147,6 +177,15 @@ export default function ProductsList() {
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
+
+        {/* Product Quickview - Use a conditional check to make sure it only renders when we want it to */}
+        {quickViewOpen && selectedProduct && (
+          <ProductQuickview
+            open={quickViewOpen}
+            setOpen={setQuickViewOpen}
+            product={selectedProduct}
+          />
+        )}
       </div>
     </div>
   );
