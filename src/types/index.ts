@@ -4,7 +4,7 @@ export interface Product {
   collection: string;
   price: number;
   href: string;
-  imageSrc: string;
+  imageSrc: string; // Main image (for backwards compatibility)
   imageAlt: string;
   inStock: boolean;
   colors: Color[];
@@ -13,13 +13,26 @@ export interface Product {
   reviewCount: number;
   description?: string;
   slug: string;
+  images: ProductImage[]; // Array of product images for carousel
+  createdAt?: string;
+  updatedAt?: string;
+  stockLevel?: string; // Optional stock level message
+  shipping?: string;   // Optional shipping information
+}
+
+export interface ProductImage {
+  src: string;
+  alt: string;
 }
 
 export interface Color {
   name: string;
   hex: string;
-  selectedColor: string;
+  selectedColor?: string; // Make selectedColor optional to avoid TS errors
 }
+
+// Define standard sizes for display
+export const STANDARD_SIZES = ["XS", "S", "M", "L", "XL", "2XL"];
 
 export interface Size {
   name: string;
@@ -46,4 +59,15 @@ export interface WishlistItem {
   slug: string;
   inStock: boolean;
   productId: string;
+}
+
+// Dialog context types
+export interface DialogOptions {
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  variant?: "danger" | "warning" | "info";
+  onConfirm: () => void;
+  onCancel?: () => void;
 }
