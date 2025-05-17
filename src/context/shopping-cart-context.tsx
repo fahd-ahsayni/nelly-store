@@ -1,7 +1,8 @@
 "use client";
 
+import { useLocalStorage } from "@/hooks/use-localstorage";
 import { CartItem } from "@/types";
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode } from "react";
 
 interface ShoppingCartContextType {
   isCartOpen: boolean;
@@ -11,6 +12,7 @@ interface ShoppingCartContextType {
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  cartCount: number;
 }
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(
@@ -18,18 +20,25 @@ const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(
 );
 
 export function ShoppingCartProvider({ children }: { children: ReactNode }) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useLocalStorage('cart-drawer-open', false);
+  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('cart-items', []);
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
   
   const addToCart = (item: CartItem) => {
     setCartItems(prev => {
-      const existingItem = prev.find(i => i.id === item.id);
+      const existingItem = prev.find(i => 
+        i.productId === item.productId && 
+        i.color === item.color && 
+        i.size === item.size
+      );
+      
       if (existingItem) {
         return prev.map(i => 
-          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+          i.id === existingItem.id 
+            ? { ...i, quantity: i.quantity + item.quantity } 
+            : i
         );
       }
       return [...prev, item];
@@ -51,6 +60,8 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <ShoppingCartContext.Provider value={{ 
       isCartOpen, 
@@ -59,7 +70,8 @@ export function ShoppingCartProvider({ children }: { children: ReactNode }) {
       cartItems,
       addToCart,
       removeFromCart,
-      updateQuantity
+      updateQuantity,
+      cartCount
     }}>
       {children}
     </ShoppingCartContext.Provider>

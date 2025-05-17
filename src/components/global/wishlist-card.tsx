@@ -1,17 +1,13 @@
 'use client'
 
+import { useShoppingCart } from '@/context/shopping-cart-context'
+import { useWishlistDrawer } from '@/context/wishlist-drawer-context'
 import { ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-
-type WishlistItem = {
-  id: string
-  name: string
-  price: number
-  image: string
-  slug: string
-}
+import { v4 as uuidv4 } from 'uuid'
+import { WishlistItem } from '@/types'
 
 interface WishlistCardProps {
   item: WishlistItem
@@ -20,15 +16,15 @@ interface WishlistCardProps {
 export default function WishlistCard({ item }: WishlistCardProps) {
   const [isRemoving, setIsRemoving] = useState(false)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const { removeFromWishlist } = useWishlistDrawer()
+  const { addToCart } = useShoppingCart()
 
-  // Placeholder functions - in a real app, these would interact with your state management
   const handleRemoveFromWishlist = async () => {
     setIsRemoving(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500))
-      // Here you would dispatch an action to remove the item from wishlist
-      console.log(`Removed ${item.name} from wishlist`)
+      // Small delay for UX feedback
+      await new Promise(resolve => setTimeout(resolve, 300))
+      removeFromWishlist(item.id)
     } catch (error) {
       console.error('Error removing from wishlist:', error)
     } finally {
@@ -39,10 +35,24 @@ export default function WishlistCard({ item }: WishlistCardProps) {
   const handleAddToCart = async () => {
     setIsAddingToCart(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500))
-      // Here you would dispatch an action to add the item to cart
-      console.log(`Added ${item.name} to cart`)
+      // Small delay for UX feedback
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      // Add to cart with default color and size
+      addToCart({
+        id: uuidv4(),
+        productId: item.productId,
+        name: item.name,
+        price: item.price,
+        quantity: 1,
+        image: item.image,
+        color: "Default",
+        colorHex: "#000000",
+        size: "M"
+      })
+      
+      // Optionally remove from wishlist after adding to cart
+      // removeFromWishlist(item.id)
     } catch (error) {
       console.error('Error adding to cart:', error)
     } finally {
@@ -82,7 +92,7 @@ export default function WishlistCard({ item }: WishlistCardProps) {
             <button
             type="button"
             onClick={handleAddToCart}
-            disabled={isAddingToCart}
+            disabled={isAddingToCart || !item.inStock}
             className="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
             aria-label={`Add ${item.name} to cart`}
             >
@@ -97,7 +107,7 @@ export default function WishlistCard({ item }: WishlistCardProps) {
             ) : (
               <>
               <ShoppingBagIcon className="w-4 h-4 mr-1.5" aria-hidden="true" />
-              Add to Cart
+              {!item.inStock ? 'Out of Stock' : 'Add to Cart'}
               </>
             )}
             </button>

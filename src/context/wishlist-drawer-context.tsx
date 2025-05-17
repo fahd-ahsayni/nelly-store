@@ -1,7 +1,8 @@
 'use client'
 
+import { useLocalStorage } from '@/hooks/use-localstorage';
 import { WishlistItem } from '@/types';
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, ReactNode } from 'react'
 
 interface WishlistDrawerContextProps {
   isOpen: boolean;
@@ -10,13 +11,14 @@ interface WishlistDrawerContextProps {
   wishlistItems: WishlistItem[];
   addToWishlist: (item: WishlistItem) => void;
   removeFromWishlist: (id: string) => void;
+  isItemInWishlist: (productId: string) => boolean;
 }
 
 const WishlistDrawerContext = createContext<WishlistDrawerContextProps | undefined>(undefined)
 
 export function WishlistDrawerProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+  const [isOpen, setIsOpen] = useLocalStorage('wishlist-drawer-open', false);
+  const [wishlistItems, setWishlistItems] = useLocalStorage<WishlistItem[]>('wishlist-items', []);
 
   const openWishlist = () => setIsOpen(true);
   const closeWishlist = () => setIsOpen(false);
@@ -24,13 +26,17 @@ export function WishlistDrawerProvider({ children }: { children: ReactNode }) {
   const addToWishlist = (item: WishlistItem) => {
     setWishlistItems(prev => {
       // Don't add duplicate items
-      if (prev.some(i => i.id === item.id)) return prev;
+      if (prev.some(i => i.productId === item.productId)) return prev;
       return [...prev, item];
     });
   };
   
   const removeFromWishlist = (id: string) => {
     setWishlistItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const isItemInWishlist = (productId: string) => {
+    return wishlistItems.some(item => item.productId === productId);
   };
 
   return (
@@ -40,7 +46,8 @@ export function WishlistDrawerProvider({ children }: { children: ReactNode }) {
       closeWishlist,
       wishlistItems,
       addToWishlist,
-      removeFromWishlist
+      removeFromWishlist,
+      isItemInWishlist
     }}>
       {children}
     </WishlistDrawerContext.Provider>

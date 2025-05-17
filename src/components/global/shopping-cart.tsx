@@ -1,26 +1,13 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { initialCartItems } from "@/constants";
 import { useShoppingCart } from "@/context/shopping-cart-context";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 import ProductCard from "./product-card";
 
 export default function ShoppingCart() {
-  const { isCartOpen, closeCart } = useShoppingCart();
-  const [cartItems, setCartItems] = useState(initialCartItems);
-
-  const updateQuantity = (id: string, quantity: number) => {
-    setCartItems(
-      cartItems.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
+  const { isCartOpen, closeCart, cartItems, updateQuantity, removeFromCart } = useShoppingCart();
 
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -69,7 +56,7 @@ export default function ShoppingCart() {
                             key={item.id}
                             item={item}
                             updateQuantity={updateQuantity}
-                            removeItem={removeItem}
+                            removeItem={removeFromCart}
                           />
                         ))}
                       </div>

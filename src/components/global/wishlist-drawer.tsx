@@ -6,33 +6,8 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import WishlistCard from "./wishlist-card";
 
-// Example wishlist items data
-const exampleWishlistItems = [
-  {
-    id: "1",
-    name: "Leather Crossbody Bag",
-    price: 129.99,
-    image: "/images/products/bag-1.jpg",
-    slug: "leather-crossbody-bag",
-  },
-  {
-    id: "2",
-    name: "Slim Fit Cotton T-Shirt",
-    price: 34.99,
-    image: "/images/products/tshirt-1.jpg",
-    slug: "slim-fit-cotton-tshirt",
-  },
-  {
-    id: "3",
-    name: "Wireless Noise Cancelling Headphones",
-    price: 249.99,
-    image: "/images/products/headphones-1.jpg",
-    slug: "wireless-noise-cancelling-headphones",
-  }
-];
-
 export default function WishlistDrawer() {
-  const { isOpen, closeWishlist } = useWishlistDrawer();
+  const { isOpen, closeWishlist, wishlistItems } = useWishlistDrawer();
 
   return (
     <Dialog open={isOpen} onClose={closeWishlist} className="relative z-[99]">
@@ -65,14 +40,14 @@ export default function WishlistDrawer() {
                   </div>
                 </div>
                 <ScrollArea className="relative flex-1 px-4 sm:px-6 mt-6">
-                  {exampleWishlistItems.length > 0 ? (
+                  {wishlistItems.length > 0 ? (
                     <div className="space-y-4">
                       <p className="text-sm font-medium text-zinc-500">
-                        {exampleWishlistItems.length}{" "}
-                        {exampleWishlistItems.length === 1 ? "item" : "items"}
+                        {wishlistItems.length}{" "}
+                        {wishlistItems.length === 1 ? "item" : "items"}
                       </p>
                       <div className="divide-y divide-zinc-200">
-                        {exampleWishlistItems.map((item) => (
+                        {wishlistItems.map((item) => (
                           <WishlistCard key={item.id} item={item} />
                         ))}
                       </div>
