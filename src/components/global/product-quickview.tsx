@@ -17,7 +17,7 @@ import {
   HeartIcon,
   ShoppingBagIcon,
   TruckIcon,
-  XMarkIcon
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
@@ -51,8 +51,6 @@ export default function ProductQuickview({
     handleAddToWishlist,
     carouselImages,
     displayProduct,
-    standardSizes,
-    hasSize
   } = useProductQuickview({ product, open, setOpen });
 
   return (
@@ -62,7 +60,10 @@ export default function ProductQuickview({
       className="relative z-[9999]"
     >
       {/* Improved overlay for accessibility */}
-      <div className="fixed inset-0 bg-zinc-500/75 transition-opacity" aria-hidden="true" />
+      <div
+        className="fixed inset-0 bg-zinc-500/75 transition-opacity"
+        aria-hidden="true"
+      />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         {/* Ensure full width on mobile by removing padding on small screens */}
@@ -87,21 +88,15 @@ export default function ProductQuickview({
               <div className="grid w-full grid-cols-1 items-start gap-x-4 gap-y-6 sm:grid-cols-12 lg:items-center lg:gap-x-8">
                 {/* Image section - adjusted for better display on mobile */}
                 <div className="relative sm:col-span-4 lg:col-span-5">
-                  <div
-                    className="w-full relative"
-                    style={{ minHeight: "350px" }}
-                  >
+                  <div className="w-full relative">
                     {!displayProduct.inStock && (
-                      <div className="absolute top-4 right-4 bg-zinc-800 text-white text-xs px-2 py-1 z-10 rounded-sm">
+                      <div className="absolute top-4 right-4 bg-zinc-800 text-rose-200 text-xs px-2 py-1 z-10">
                         Out of stock
                       </div>
                     )}
 
                     <Carousel className="h-full flex flex-col">
-                      <div
-                        className="relative w-full flex-grow flex"
-                        style={{ height: "350px" }}
-                      >
+                      <div className="relative w-full flex-grow flex">
                         <CarouselMainContainer className="w-full flex-grow">
                           {carouselImages.map((image, idx) => (
                             <SliderMainItem
@@ -121,14 +116,14 @@ export default function ProductQuickview({
                       </div>
 
                       {carouselImages.length > 1 && (
-                        <CarouselThumbsContainer className="flex-shrink-0 h-16 pb-0 mt-2">
+                      <CarouselThumbsContainer className="flex-shrink-0 h-16 pb-0">
                           {carouselImages.map((image, idx) => (
                             <SliderThumbItem
                               key={idx}
                               index={idx}
-                              className="rounded bg-transparent basis-1/4"
+                              className="bg-transparent basis-1/4"
                             >
-                              <div className="rounded overflow-hidden h-full w-full cursor-pointer">
+                              <div className="overflow-hidden h-full w-full cursor-pointer">
                                 <img
                                   src={image.src}
                                   alt={`Thumbnail ${idx + 1}`}
@@ -207,24 +202,28 @@ export default function ProductQuickview({
                         </p>
                       </div>
 
-                      {displayProduct.shipping && (
-                        <div className="flex items-center text-xs sm:text-sm text-zinc-700">
-                          <TruckIcon
-                            className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-zinc-500"
-                            aria-hidden="true"
-                          />
-                          {displayProduct.shipping}
-                        </div>
-                      )}
+                      <div className="flex items-center text-xs sm:text-sm text-zinc-700">
+                        <TruckIcon
+                          className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-zinc-500"
+                          aria-hidden="true"
+                        />
+                        Fast shipping available
+                      </div>
                     </div>
                   </section>
 
-                  <section aria-labelledby="options-heading" className="mt-4 sm:mt-6">
+                  <section
+                    aria-labelledby="options-heading"
+                    className="mt-4 sm:mt-6"
+                  >
                     <h3 id="options-heading" className="sr-only">
                       Product options
                     </h3>
 
-                    <form onSubmit={handleAddToCart} className="space-y-4 sm:space-y-6">
+                    <form
+                      onSubmit={handleAddToCart}
+                      className="space-y-4 sm:space-y-6"
+                    >
                       {/* Options grid */}
                       <div className="grid grid-cols-1 gap-y-4 sm:gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                         {/* Color picker */}
@@ -256,7 +255,7 @@ export default function ProductQuickview({
                                   >
                                     <span
                                       aria-hidden="true"
-                                      className="h-5 w-5 sm:h-6 sm:w-6 rounded-full border border-black/10"
+                                      className="h-6 w-6 rounded-full border border-black/10"
                                       style={{ backgroundColor: color.hex }}
                                     />
                                   </Radio>
@@ -281,48 +280,44 @@ export default function ProductQuickview({
                             <RadioGroup
                               value={selectedSize}
                               onChange={setSelectedSize}
-                              className="grid grid-cols-6 gap-1 sm:gap-2"
+                              className="flex items-center gap-1 sm:gap-2"
                             >
                               {/* Always show standard sizes */}
                               {STANDARD_SIZES.map((size) => {
                                 // Check if this size exists in product sizes
-                                const productSize = displayProduct.sizes.find(s => s.name === size);
+                                const productSize = displayProduct.sizes.find(
+                                  (s) => s.name === size
+                                );
                                 const exists = !!productSize;
-                                
+
+                                if (!exists) return null;
+
                                 return (
                                   <Radio
                                     key={size}
-                                    value={productSize || { name: size, inStock: false }}
-                                    disabled={!exists || (exists && !productSize.inStock)}
+                                    value={
+                                      productSize || {
+                                        name: size,
+                                        inStock: false,
+                                      }
+                                    }
+                                    disabled={
+                                      !exists ||
+                                      (exists && !productSize.inStock)
+                                    }
                                     className={cn(
-                                      "relative flex aspect-square h-auto w-full items-center justify-center rounded-none text-xs sm:text-sm font-medium uppercase focus:outline-none transition-colors",
+                                      "relative flex w-12 h-12 items-center justify-center rounded-none text-xs sm:text-sm font-medium uppercase focus:outline-none transition-colors",
                                       exists && productSize.inStock
                                         ? "cursor-pointer bg-white"
                                         : "cursor-not-allowed bg-zinc-50 text-zinc-300",
-                                      exists && productSize === selectedSize && productSize.inStock
+                                      exists &&
+                                        productSize === selectedSize &&
+                                        productSize.inStock
                                         ? "bg-zinc-800 text-rose-200"
                                         : "border border-zinc-800 text-zinc-700 hover:bg-zinc-50"
                                     )}
                                   >
                                     {size}
-                                    {(!exists || (exists && !productSize.inStock)) && (
-                                      <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                                        <svg
-                                          className="absolute h-full w-full stroke-1 text-zinc-300"
-                                          viewBox="0 0 100 100"
-                                          preserveAspectRatio="none"
-                                          stroke="currentColor"
-                                        >
-                                          <line
-                                            x1="0"
-                                            y1="100"
-                                            x2="100"
-                                            y2="0"
-                                            vectorEffect="non-scaling-stroke"
-                                          />
-                                        </svg>
-                                      </span>
-                                    )}
                                   </Radio>
                                 );
                               })}
@@ -344,11 +339,13 @@ export default function ProductQuickview({
                               <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
                               <span className="sr-only">Decrease quantity</span>
                             </Button>
-                            <span className="w-8 sm:w-10 text-center text-sm sm:text-base">{quantity}</span>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="h-8 w-8 sm:h-10 sm:w-10" 
+                            <span className="w-8 sm:w-10 text-center text-sm sm:text-base">
+                              {quantity}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 sm:h-10 sm:w-10"
                               onClick={increaseQuantity}
                             >
                               <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -359,7 +356,7 @@ export default function ProductQuickview({
                       </div>
 
                       {/* Action buttons - stacked on mobile, side by side on larger screens */}
-                      <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                      <div className="mt-4 flex gap-3">
                         <button
                           type="submit"
                           disabled={!displayProduct.inStock || addingToCart}

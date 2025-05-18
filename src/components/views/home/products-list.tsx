@@ -84,7 +84,7 @@ export default function ProductsList() {
   return (
     <div className="bg-rose-50/70">
       <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8 relative z-10">
-        <h2 className="text-5xl tracking-tight text-zinc-800 mb-8">
+        <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-8">
           <span className="font-newyork italic">Trending</span> products
         </h2>
         <div className="md:flex md:items-center md:justify-between">
@@ -134,7 +134,7 @@ export default function ProductsList() {
                   className="pl-4 md:basis-1/4 lg:basis-1/5"
                 >
                   <div className="group relative">
-                    <div className="h-56 w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 lg:h-72 xl:h-80 relative">
+                    <div className="aspect-[3/4] w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 relative">
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
@@ -143,16 +143,16 @@ export default function ProductsList() {
 
                       {/* Out of stock badge */}
                       {product.inStock === false && (
-                        <div className="absolute top-2 right-2 bg-zinc-800 text-white text-xs px-2 py-1">
+                        <div className="absolute top-2 right-2 bg-zinc-800 text-rose-200 text-xs px-2 py-1">
                           Out of stock
                         </div>
                       )}
 
-                      {/* Quick view and wishlist buttons - shown on hover */}
-                      <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4">
+                      {/* Quick view and wishlist buttons - always visible on mobile, hover on desktop */}
+                      <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4">
                         <button
                           onClick={(e) => openQuickView(product, e)}
-                          className="bg-rose-50 hover:bg-white border font-medium border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative z-[100] cursor-pointer flex-1"
+                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative z-[100] cursor-pointer flex-1"
                         >
                           Produc Quick View
                         </button>
@@ -164,7 +164,7 @@ export default function ProductsList() {
                             size={20}
                             className={
                               isItemInWishlist(product.id)
-                                ? "fill-rose-600 text-rose-600"
+                                ? "fill-pink-600 text-pink-600"
                                 : ""
                             }
                           />
@@ -185,7 +185,7 @@ export default function ProductsList() {
               ))}
             </CarouselContent>
           </Carousel>
-          <div className="w-full mt-8 flex justify-end items-center space-x-8 relative z-50">
+          <div className="w-full mt-8 flex md:justify-end justify-center items-center space-x-8 relative z-50">
             <div className="flex items-center gap-x-6">
               <button
                 className="px-8 py-1 border border-zinc-800 bg-white hover:bg-zinc-800 hover:text-rose-200 transition-colors duration-200"
@@ -203,7 +203,7 @@ export default function ProductsList() {
           </div>
         </div>
 
-        <div className="mt-8 text-sm md:hidden">
+        <div className="mt-8 text-sm md:hidden w-full flex items-center justify-center">
           <a href="#" className="font-medium text-rose-600 hover:text-rose-500">
             Shop the collection
             <span aria-hidden="true"> &rarr;</span>
