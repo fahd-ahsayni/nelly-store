@@ -2,7 +2,7 @@
 
 import { useShoppingCart } from "@/context/shopping-cart-context";
 import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
-import { Color, Product, Size, STANDARD_SIZES } from "@/types";
+import { Color, Product } from "@/types";
 import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,14 +14,19 @@ const defaultProduct: Product = {
   rating: 0,
   imageSrc: "/placeholder.jpg",
   imageAlt: "Product placeholder",
-  colors: [{ name: "Default", hex: "#000000" }],
-  sizes: [{ name: "ONE SIZE", inStock: true }],
+  colors: [{ name: "Default", hex: "#000000", selectedColor: "" }],
+  sizes: ["ONE SIZE"],
   inStock: true,
   slug: "sample-product",
   images: [],
-  collection: "",
-  href: "",
-  reviewCount: 0
+  collection: {
+    id: "default-collection",
+    name: "Default",
+    description: "Default collection",
+    imageSrc: "/placeholder.jpg",
+  },
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 
 interface UseProductQuickviewProps {
@@ -33,8 +38,8 @@ interface UseProductQuickviewProps {
 interface UseProductQuickviewReturn {
   selectedColor: Color;
   setSelectedColor: (color: Color) => void;
-  selectedSize: Size;
-  setSelectedSize: (size: Size) => void;
+  selectedSize: string;
+  setSelectedSize: (size: string) => void;
   quantity: number;
   increaseQuantity: () => void;
   decreaseQuantity: () => void;
@@ -46,7 +51,6 @@ interface UseProductQuickviewReturn {
   handleAddToWishlist: () => Promise<void>;
   carouselImages: Array<{ src: string; alt: string }>;
   displayProduct: Product;
-  standardSizes: string[];
   hasSize: (sizeName: string) => boolean;
 }
 
@@ -65,8 +69,8 @@ export function useProductQuickview({
     displayProduct.colors[0] || defaultProduct.colors[0]
   );
   
-  const [selectedSize, setSelectedSize] = useState<Size>(
-    displayProduct.sizes.find((s) => s.inStock) || displayProduct.sizes[0]
+  const [selectedSize, setSelectedSize] = useState<string>(
+    displayProduct.sizes[0] || "ONE SIZE"
   );
   
   const [quantity, setQuantity] = useState(1);
@@ -82,9 +86,8 @@ export function useProductQuickview({
   // Update state when product changes
   useEffect(() => {
     if (product) {
-      // Find first in-stock size
-      const availableSize = product.sizes.find((s) => s.inStock);
-      setSelectedSize(availableSize || product.sizes[0]);
+      // Set first available size
+      setSelectedSize(product.sizes[0] || "ONE SIZE");
 
       // Set first available color
       if (product.colors.length > 0) {
@@ -96,14 +99,14 @@ export function useProductQuickview({
     }
   }, [product, open]);
 
-  // Prepare image array for carousel - use images array if available, otherwise use imageSrc
+  // Prepare image array for carousel from string array
   const carouselImages = displayProduct.images?.length
-    ? displayProduct.images
+    ? displayProduct.images.map(src => ({ src, alt: displayProduct.imageAlt }))
     : [{ src: displayProduct.imageSrc, alt: displayProduct.imageAlt }];
 
-  // Function to check if a standard size exists in the product sizes
+  // Function to check if a size exists in the product sizes
   const hasSize = (sizeName: string): boolean => {
-    return displayProduct.sizes.some(size => size.name === sizeName);
+    return displayProduct.sizes.includes(sizeName);
   };
 
   // Handle quantity changes
@@ -129,7 +132,7 @@ export function useProductQuickview({
         image: displayProduct.imageSrc,
         color: selectedColor.name,
         colorHex: selectedColor.hex,
-        size: selectedSize.name,
+        size: selectedSize,
       });
 
       // Show success message
@@ -184,7 +187,6 @@ export function useProductQuickview({
     handleAddToWishlist,
     carouselImages,
     displayProduct,
-    standardSizes: STANDARD_SIZES,
     hasSize
   };
 }

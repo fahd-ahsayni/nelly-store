@@ -116,7 +116,7 @@ export default function ProductQuickview({
                       </div>
 
                       {carouselImages.length > 1 && (
-                      <CarouselThumbsContainer className="flex-shrink-0 h-16 pb-0">
+                        <CarouselThumbsContainer className="flex-shrink-0 h-16 pb-0">
                           {carouselImages.map((image, idx) => (
                             <SliderThumbItem
                               key={idx}
@@ -195,10 +195,7 @@ export default function ProductQuickview({
                           } mr-2`}
                         ></div>
                         <p className="text-xs sm:text-sm text-zinc-700">
-                          {displayProduct.stockLevel ||
-                            (displayProduct.inStock
-                              ? "In stock"
-                              : "Out of stock")}
+                          {displayProduct.inStock ? "In stock" : "Out of stock"}
                         </p>
                       </div>
 
@@ -272,7 +269,7 @@ export default function ProductQuickview({
                               <legend className="block text-sm font-medium text-zinc-900">
                                 Size:{" "}
                                 <span className="text-rose-600 ml-1">
-                                  {selectedSize.name}
+                                  {selectedSize}
                                 </span>
                               </legend>
                             </div>
@@ -282,37 +279,26 @@ export default function ProductQuickview({
                               onChange={setSelectedSize}
                               className="flex items-center gap-1 sm:gap-2"
                             >
-                              {/* Always show standard sizes */}
+                              {/* Filter standard sizes to only show those available in product */}
                               {STANDARD_SIZES.map((size) => {
                                 // Check if this size exists in product sizes
-                                const productSize = displayProduct.sizes.find(
-                                  (s) => s.name === size
+                                const exists = displayProduct.sizes.includes(
+                                  size
                                 );
-                                const exists = !!productSize;
 
                                 if (!exists) return null;
 
                                 return (
                                   <Radio
                                     key={size}
-                                    value={
-                                      productSize || {
-                                        name: size,
-                                        inStock: false,
-                                      }
-                                    }
-                                    disabled={
-                                      !exists ||
-                                      (exists && !productSize.inStock)
-                                    }
+                                    value={size}
+                                    disabled={!exists}
                                     className={cn(
                                       "relative flex w-12 h-12 items-center justify-center rounded-none text-xs sm:text-sm font-medium uppercase focus:outline-none transition-colors",
-                                      exists && productSize.inStock
+                                      exists
                                         ? "cursor-pointer bg-white"
                                         : "cursor-not-allowed bg-zinc-50 text-zinc-300",
-                                      exists &&
-                                        productSize === selectedSize &&
-                                        productSize.inStock
+                                      exists && size === selectedSize
                                         ? "bg-zinc-800 text-rose-200"
                                         : "border border-zinc-800 text-zinc-700 hover:bg-zinc-50"
                                     )}

@@ -1,44 +1,37 @@
 export interface Product {
   id: string;
   name: string;
-  collection: string;
+  collection: Collection;
   price: number;
-  href: string;
-  imageSrc: string; // Main image (for backwards compatibility)
+  imageSrc: string;
   imageAlt: string;
   inStock: boolean;
   colors: Color[];
-  sizes: Size[];
+  sizes: string[];
   rating: number;
-  reviewCount: number;
-  description?: string;
   slug: string;
-  images: ProductImage[]; // Array of product images for carousel
-  createdAt?: string;
-  updatedAt?: string;
-  stockLevel?: string; // Optional stock level message
-  shipping?: string;   // Optional shipping information
-}
-
-export interface ProductImage {
-  src: string;
-  alt: string;
-}
-
-export interface Color {
-  name: string;
-  hex: string;
-  selectedColor?: string; // Make selectedColor optional to avoid TS errors
+  images: string[];
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
 }
 
 // Define standard sizes for display
 export const STANDARD_SIZES = ["XS", "S", "M", "L", "XL", "2XL"];
 
-export interface Size {
+export interface Collection {
+  id: string;
   name: string;
-  inStock: boolean;
+  description: string;
+  imageSrc: string;
 }
 
+export interface Color {
+  name: string;
+  hex: string;
+  selectedColor: string;
+}
+
+// Additional types needed for the application
 export interface CartItem {
   id: string;
   productId: string;
@@ -70,4 +63,10 @@ export interface DialogOptions {
   variant?: "danger" | "warning" | "info";
   onConfirm: () => void;
   onCancel?: () => void;
+}
+
+// Helper type for product quickview
+export interface ProductImage {
+  src: string;
+  alt: string;
 }
