@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { Collection, Color, Product } from '@/types';
+import { DB_COLUMNS, mapDatabaseProductToModel } from '@/lib/db-mapping';
 
 // Type for the product creation/update
 type ProductInput = Omit<
@@ -10,19 +11,14 @@ type ProductInput = Omit<
   images?: string[];
 };
 
-// Update the ColorJoinResult type to properly reflect the structure
+// Update the ColorJoinResult type to properly reflect the actual database structure
 interface ColorJoinResult {
   colors: {
     id: string;
     name: string;
     hex: string;
     selectedColor: string;
-  } | Array<{
-    id: string;
-    name: string;
-    hex: string;
-    selectedColor: string;
-  }>;
+  };
 }
 
 interface SizeResult {
@@ -60,111 +56,73 @@ export const supabaseService = {
   
   /* Product operations */
   async getProducts(): Promise<Product[]> {
+    console.log("Fetching products from Supabase");
+    
     // Base product query
-    const { data, error } = await supabase
+    const { data: productsData, error } = await supabase
       .from('products')
       .select(`
         *,
         collections:collection_id(*)
       `)
-      .order('createdat', { ascending: false }); // Changed from 'createdAt' to 'createdat'
+      .order(DB_COLUMNS.PRODUCTS.CREATED_AT, { ascending: false });
       
-    if (error) throw error;
+    if (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+    
+    console.log(`Retrieved ${productsData?.length || 0} products`);
     
     // For each product, get its related data
-    const productsWithRelations = await Promise.all(data.map(async (product) => {
-      // Get colors
+    const productsWithRelations = await Promise.all(productsData.map(async (dbProduct) => {
+      // Debug the product to see what we're working with
+      console.log(`Processing product: ${dbProduct.id}, instock value:`, dbProduct.instock);
+      
+      // Get colors with explicit column selection to avoid casing issues
       const { data: colorData, error: colorError } = await supabase
         .from('product_colors')
-        .select('colors:color_id(*)')
-        .eq('product_id', product.id);
+        .select(`
+          color_id,
+          colors:color_id(id, name, hex, selectedcolor)
+        `)
+        .eq('product_id', dbProduct.id);
         
-      if (colorError) throw colorError;
+      if (colorError) {
+        console.error(`Error fetching colors for product ${dbProduct.id}:`, colorError);
+        throw colorError;
+      }
+      
+      console.log(`Retrieved ${colorData?.length || 0} colors for product ${dbProduct.id}`);
       
       const colors: Color[] = [];
       
-      // Improved type handling for colors - checking both object and array possibilities
+      // Extract and transform the colors data
       if (colorData && colorData.length > 0) {
         for (const item of colorData) {
-          try {
-            if (item.colors) {
-              // If colors is a single object
-              if (!Array.isArray(item.colors) && typeof item.colors === 'object') {
-                if ('name' in item.colors && 'hex' in item.colors && 'selectedColor' in item.colors) {
-                  colors.push({
-                    name: String(item.colors.name || ''),
-                    hex: String(item.colors.hex || ''),
-                    selectedColor: String(item.colors.selectedColor || ''),
-                  });
-                }
-              } 
-              // If colors is an array of objects
-              else if (Array.isArray(item.colors) && item.colors.length > 0) {
-                const colorObj = item.colors[0];
-                if (colorObj && typeof colorObj === 'object' && 
-                    'name' in colorObj && 'hex' in colorObj && 'selectedColor' in colorObj) {
-                  colors.push({
-                    name: String(colorObj.name || ''),
-                    hex: String(colorObj.hex || ''),
-                    selectedColor: String(colorObj.selectedColor || ''),
-                  });
-                }
-              }
+          if (item.colors) {
+            try {
+              colors.push({
+                name: String(item.colors.name || ''),
+                hex: String(item.colors.hex || ''),
+                selectedColor: String(item.colors.selectedcolor || ''),
+              });
+            } catch (e) {
+              console.error("Error processing color data:", e);
             }
-          } catch (e) {
-            console.error("Error processing color data:", e);
           }
         }
       }
       
-      // Get sizes
-      const { data: sizeData, error: sizeError } = await supabase
-        .from('product_sizes')
-        .select('*')
-        .eq('product_id', product.id);
-        
-      if (sizeError) throw sizeError;
+      // Convert the raw database product to our model format
+      const mappedProduct = mapDatabaseProductToModel(dbProduct);
       
-      const sizes: string[] = [];
-      if (sizeData && sizeData.length > 0) {
-        for (const item of sizeData) {
-          if (item && item.size) {
-            sizes.push(String(item.size));
-          }
-        }
-      }
+      // Add the colors we fetched separately
+      mappedProduct.colors = colors.length > 0 ? colors : [
+        { name: "Default", hex: "#000000", selectedColor: "ring-zinc-900" }
+      ];
       
-      // Get images
-      const { data: imageData } = await supabase
-        .from('product_images')
-        .select('*')
-        .eq('product_id', product.id)
-        .order('sort_order');
-        
-      const images = imageData?.map(item => item.image_url) || [];
-      
-      // Return transformed product
-      return {
-        id: product.id,
-        name: product.name,
-        collection: {
-          id: product.collections.id,
-          name: product.collections.name,
-          description: product.collections.description,
-          imageSrc: product.collections.imageSrc,
-        },
-        price: product.price,
-        imageSrc: product.imageSrc,
-        imageAlt: product.imageAlt,
-        inStock: product.inStock,
-        colors,
-        sizes,
-        rating: product.rating,
-        slug: product.slug,
-        images,
-        createdAt: product.createdAt,
-        updatedAt: product.updatedAt,
-      } as Product;
+      return mappedProduct;
     }));
     
     return productsWithRelations;
@@ -187,7 +145,7 @@ export const supabaseService = {
     
     if (!data) return null;
     
-    // Get colors with the same improved type handling
+    // Get colors
     const { data: colorData } = await supabase
       .from('product_colors')
       .select('colors:color_id(*)')
@@ -195,7 +153,7 @@ export const supabaseService = {
       
     const colors: Color[] = [];
     
-    // Apply the same improved type handling here
+    // Safely map color data with proper type checking
     if (colorData && colorData.length > 0) {
       for (const item of colorData) {
         try {
@@ -229,22 +187,11 @@ export const supabaseService = {
       }
     }
     
-    // Get sizes
-    const { data: sizeData } = await supabase
-      .from('product_sizes')
-      .select('*')
-      .eq('product_id', id);
-      
-    const sizes = sizeData?.map(item => item.size) || [];
+    // Use sizes directly from the product object
+    const sizes = data.sizes || [];
     
-    // Get images
-    const { data: imageData } = await supabase
-      .from('product_images')
-      .select('*')
-      .eq('product_id', id)
-      .order('sort_order');
-      
-    const images = imageData?.map(item => item.image_url) || [];
+    // Use images directly from the product object
+    const images = data.image_urls || [data.imageSrc];
     
     return {
       id: data.id,

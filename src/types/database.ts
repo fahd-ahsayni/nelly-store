@@ -40,21 +40,21 @@ export interface Database {
           id: string
           name: string
           hex: string
-          selectedColor: string
+          selectedcolor: string // Changed from selectedColor to selectedcolor to match DB
           created_at: string
         }
         Insert: {
           id?: string
           name: string
           hex: string
-          selectedColor: string
+          selectedcolor: string // Changed from selectedColor to selectedcolor
           created_at?: string
         }
         Update: {
           id?: string
           name?: string
           hex?: string
-          selectedColor?: string
+          selectedcolor?: string // Changed from selectedColor to selectedcolor
           created_at?: string
         }
       }
@@ -68,12 +68,14 @@ export interface Database {
           price: number
           imageSrc: string
           imageAlt: string
-          inStock: boolean
+          inStock: boolean | string // Accepting either type to handle different formats
           rating: number
           slug: string
           createdAt: string
           updatedAt: string
           description: string | null
+          sizes: string[]
+          image_urls: string[]
         }
         Insert: {
           id?: string
@@ -88,6 +90,8 @@ export interface Database {
           createdAt?: string
           updatedAt?: string
           description?: string | null
+          sizes?: string[]
+          image_urls?: string[]
         }
         Update: {
           id?: string
@@ -102,34 +106,8 @@ export interface Database {
           createdAt?: string
           updatedAt?: string
           description?: string | null
-        }
-      }
-
-      // Product images table
-      product_images: {
-        Row: {
-          id: string
-          product_id: string
-          image_url: string
-          alt_text: string | null
-          sort_order: number
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          product_id: string
-          image_url: string
-          alt_text?: string | null
-          sort_order?: number
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          product_id?: string
-          image_url?: string
-          alt_text?: string | null
-          sort_order?: number
-          created_at?: string
+          sizes?: string[]
+          image_urls?: string[]
         }
       }
       
@@ -151,31 +129,6 @@ export interface Database {
           id?: string
           product_id?: string
           color_id?: string
-          created_at?: string
-        }
-      }
-      
-      // Product sizes table
-      product_sizes: {
-        Row: {
-          id: string
-          product_id: string
-          size: string
-          inStock: boolean
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          product_id: string
-          size: string
-          inStock: boolean
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          product_id?: string
-          size?: string
-          inStock?: boolean
           created_at?: string
         }
       }
