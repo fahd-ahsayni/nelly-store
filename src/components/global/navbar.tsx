@@ -6,6 +6,8 @@ import Image from "next/image";
 import { logo, shoppingBagIcon } from "@/assets";
 import { useShoppingCart } from "@/context/shopping-cart-context";
 import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
+import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { MenuIcon } from "lucide-react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,46 +36,28 @@ export default function Navbar() {
           </div>
 
           {/* Center section - Logo */}
-          <div className="text-3xl font-medium">
-            <div className="flex items-center gap-2">
+          <div className="text-2xl md:text-3xl font-medium">
+            <div className="flex items-center gap-1 lg:gap-2">
               <Image src={logo} alt="Logo" width={50} height={50} />
               <span>Nelly collection</span>
             </div>
           </div>
 
           {/* Right section - Wishlist and Cart icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 lg:gap-4">
             <button
               className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
               aria-label="View wishlist"
               onClick={openWishlist}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                />
-              </svg>
+             <HeartIcon className="w-5 h-5" />
             </button>
             <button
               className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
               aria-label="View shopping cart"
               onClick={openCart}
             >
-              <Image
-                src={shoppingBagIcon}
-                alt="Shopping Bag Icon"
-                width={20}
-                height={20}
-              />
+              <ShoppingBagIcon className="w-5 h-5" />
             </button>
 
             {/* Mobile menu button */}
@@ -82,20 +66,7 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
+              <MenuIcon className="w-6 h-6 text-zinc-800" />
             </button>
           </div>
         </nav>

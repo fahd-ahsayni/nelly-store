@@ -56,7 +56,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-3xl sm:text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recolta leading-tight text-zinc-800 capitalize"
+            className="text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recolta leading-tight text-zinc-800 capitalize -mt-10"
           >
             Elevate your <span className="font-newyork italic">style</span> with
             selections from <span className="font-newyork italic">Nelly</span>{" "}
@@ -77,7 +77,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="absolute bottom-8 hidden md:flex items-center gap-x-8"
+            className="absolute bottom-8 flex items-center gap-x-8"
           >
             <a href="#" className="group">
               <UnderlineToBackground
@@ -98,16 +98,16 @@ export default function HeroSection() {
 
         {/* Image Section */}
         <div className="col-span-12 md:col-span-7 w-full h-full relative flex items-center">
-          <div className="size-24 sm:size-32 rounded-full absolute bottom-4 md:bottom-16 left-4 md:-left-16 z-60">
+          <div className="size-28 rounded-full absolute bottom-36 md:bottom-16 left-60 md:-left-16 z-60">
             <div className="relative w-full h-full z-20 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
               <SpinningText
                 radius={5}
                 fontSize={0.8}
-                className="font-medium leading-none text-zinc-800"
+                className="font-semibold leading-none text-zinc-700"
               >
                 {`pre-order • pre-order • pre-order • `}
               </SpinningText>
-              <ArrowDownRight size={30} strokeWidth={1} className="absolute text-zinc-700 sm:size-[50px]" />
+              <ArrowDownRight strokeWidth={1} className="absolute text-zinc-700 size-[40px]" />
             </div>
           </div>
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden">

@@ -32,7 +32,7 @@ export default function CollectionPerview() {
       <div className="mx-auto px-6 lg:px-8">
         <div className="md:flex md:items-center md:justify-between">
           <div className="flex items-center gap-x-4">
-            <h2 className="text-5xl tracking-tight text-zinc-800">
+            <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800">
               <span className="font-newyork italic">Discover</span> Our
               Collections
             </h2>
@@ -45,83 +45,79 @@ export default function CollectionPerview() {
             <span aria-hidden="true"> &rarr;</span>
           </a>
         </div>
-        <div className="mt-10 grid gap-4 sm:mt-12 lg:grid-cols-3 lg:grid-rows-2">
-          <div className="relative lg:row-span-2">
-            <div className="absolute inset-px bg-white">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 lg:h-[700px]">
+          {/* Card 1 */}
+          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:row-span-2">
+            <div className="absolute inset-0 bg-white rounded overflow-hidden">
               <img
                 src="https://img.freepik.com/free-photo/medium-shot-women-with-hijab-posing_23-2149226593.jpg?t=st=1747346824~exp=1747350424~hmac=c24b4d0324b0e68ba74c6b08f952db0735f0b886e699244af89ab7690d674cf7&w=1380"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center rounded"
+                className="h-full w-full object-cover object-center"
               />
             </div>
-            <div className="relative flex h-full flex-col justify-end items-center overflow-hidden">
+            <div className="absolute inset-0 flex flex-col justify-end items-center">
               <div className="px-8 pb-8 pt-3 sm:px-10 sm:pb-10 sm:pt-0">
                 <InteractiveHoverButton>Explore Now</InteractiveHoverButton>
               </div>
             </div>
-            <div className="pointer-events-none absolute inset-px rounded-lg"></div>
           </div>
-          <div className="relative max-lg:row-start-1">
-            <div className="absolute inset-px rounded-lg">
+          
+          {/* Card 2 */}
+          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:col-start-2">
+            <div className="absolute inset-0 rounded-lg overflow-hidden">
               <img
                 src="https://img.freepik.com/free-photo/beautiful-women-wearing-hijab_23-2149288896.jpg?t=st=1747347721~exp=1747351321~hmac=427aac5eb35df5ab4bab48271afaac0703386918f766265b1154efeb0cde4f3b&w=1380"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center brightness-75 rounded"
+                className="h-full w-full object-cover object-center brightness-75"
               />
             </div>
-            <div className="relative flex h-full flex-col justify-end overflow-hidden">
+            <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-3xl font-medium tracking-tight text-white max-lg:text-center">
+                <p className="mt-2 text-3xl font-medium tracking-tight text-white text-center sm:text-left">
                   Performance
                 </p>
-                <p className="max-w-xs text-sm/6 text-zinc-100 text-balance max-lg:text-center">
+                <p className="max-w-xs text-sm/6 text-zinc-100 text-balance text-center sm:text-left">
                   Lorem ipsum, dolor sit amet.
                 </p>
               </div>
             </div>
-            <div className="pointer-events-none absolute inset-px"></div>
           </div>
-          <div className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
-            <div className="absolute inset-px">
+          
+          {/* Card 3 */}
+          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:col-start-2 lg:row-start-2">
+            <div className="absolute inset-0 rounded-lg overflow-hidden">
               <img
                 src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288933.jpg?t=st=1747349135~exp=1747352735~hmac=9d8b4ba572e15600e89b7620a1927d782ce20749b812f68e68a92b3c3c57b0f3&w=1380"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center brightness-75 rounded"
+                className="h-full w-full object-cover object-center brightness-75"
               />
             </div>
             <div className="relative flex h-full flex-col justify-end overflow-hidden">
-              <div className="@container flex flex-1 items-center max-lg:py-6 lg:pb-2">
-                <img
-                  className="h-[min(152px,40cqw)] object-cover opacity-0"
-                  src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-security.png"
-                  alt=""
-                />
-              </div>
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-3xl font-medium tracking-tight text-white max-lg:text-center">
+                <p className="mt-2 text-3xl font-medium tracking-tight text-white text-center sm:text-left">
                   Performance
                 </p>
-                <p className="mmax-w-xs text-sm/6 text-zinc-100 text-balance max-lg:text-center">
+                <p className="max-w-xs text-sm/6 text-zinc-100 text-balance text-center sm:text-left">
                   Lorem ipsum, dolor sit amet.
                 </p>
               </div>
             </div>
-            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-zinc-900/5"></div>
           </div>
-          <div className="relative lg:row-span-2">
-            <div className="absolute inset-px">
+          
+          {/* Card 4 */}
+          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:col-start-3 lg:row-span-2">
+            <div className="absolute inset-0 rounded overflow-hidden">
               <img
                 src="https://img.freepik.com/free-photo/women-wearing-hijab-medium-shot_23-2149226656.jpg?t=st=1747347470~exp=1747351070~hmac=b10bda9c70d63d91c8209cdea123d369140bb15e6dc675da66c43c940b20b8e9&w=996"
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-center rounded"
+                className="h-full w-full object-cover object-center"
               />
             </div>
-            <div className="relative flex h-full flex-col justify-end items-center overflow-hidden">
+            <div className="absolute inset-0 flex flex-col justify-end items-center">
               <div className="px-8 pb-8 pt-3 sm:px-10 sm:pb-10 sm:pt-0">
                 <InteractiveHoverButton>Explore Now</InteractiveHoverButton>
               </div>
             </div>
-            <div className="pointer-events-none absolute inset-px"></div>
           </div>
         </div>
       </div>
