@@ -97,7 +97,7 @@ export default function ProductQuickview({
                     )}
 
                     <Carousel className="h-full flex flex-col">
-                      <div className="relative w-full flex-grow flex">
+                      <div className="relative w-full flex-grow flex flex-1">
                         <CarouselMainContainer className="w-full flex-grow">
                           {carouselImages.map((image, idx) => (
                             <SliderMainItem
@@ -124,7 +124,7 @@ export default function ProductQuickview({
                       </div>
 
                       {carouselImages.length > 1 && (
-                        <CarouselThumbsContainer className="flex-shrink-0 h-16 pb-0">
+                        <CarouselThumbsContainer className="flex-shrink-0 h-20 pb-0">
                           {carouselImages.map((image, idx) => (
                             <SliderThumbItem
                               key={idx}
@@ -364,7 +364,7 @@ export default function ProductQuickview({
                           {addingToCart ? (
                             <span className="flex items-center">
                               <svg
-                                className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white"
+                                className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"

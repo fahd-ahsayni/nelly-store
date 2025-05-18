@@ -240,13 +240,13 @@ export default function ProductsList() {
                       <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4 z-10">
                         <button
                           onClick={(e) => openQuickView(product, e)}
-                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative cursor-pointer flex-1"
+                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 font-medium relative cursor-pointer flex-1 tracking-wide"
                         >
                           Product Quick View
                         </button>
                         <button
                           onClick={(e) => handleAddToWishlist(product, e)}
-                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-2 py-2 text-sm font-medium relative cursor-pointer"
+                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-2.5 py-2.5 font-medium relative cursor-pointer"
                         >
                           <Heart
                             size={20}
