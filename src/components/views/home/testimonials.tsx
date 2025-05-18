@@ -50,7 +50,7 @@ export default function TestimonialGrid() {
   ];
 
   return (
-    <section className="pb-12 px-4 md:px-8 bg-rose-50/70">
+    <section className="pb-12 px-4 md:px-8 bg-rose-50/70 -mt-20">
       <div className="">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-5xl mb-3">
