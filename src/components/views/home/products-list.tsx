@@ -6,27 +6,28 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { collections, products } from "@/constants";
 import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
-import { Collection, Product } from "@/types";
+import { useProductsList } from "@/hooks/use-products-list";
+import { Product } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-type FilterType = "all" | "new" | string; // 'all', 'new', or collection id
-
 export default function ProductsList() {
-  const [api, setApi] = useState<
-    | {
-        scrollPrev: () => void;
-        scrollNext: () => void;
-      }
-    | any
-  >(null);
-
-  // Filter state
-  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [api, setApi] = useState<{ scrollPrev: () => void; scrollNext: () => void } | any>(null);
+  
+  // Use our custom hook to get products and filter functionality
+  const {
+    filteredProducts,
+    hasNewProducts,
+    uniqueCollections,
+    activeFilter,
+    setActiveFilter,
+    isLoading,
+    error,
+    isNewProduct
+  } = useProductsList();
 
   // Create a ref to store the autoplay plugin instance
   const autoplayRef = useRef<any>(Autoplay({ delay: 2000 }));
@@ -37,37 +38,6 @@ export default function ProductsList() {
 
   // Wishlist integration
   const { addToWishlist, isItemInWishlist } = useWishlistDrawer();
-
-  // Extract unique collections and check if we have any
-  const uniqueCollections = useMemo(() => {
-    const collectionsMap = new Map<string, Collection>();
-    products.forEach((product) => {
-      if (product.collection && !collectionsMap.has(product.collection.id)) {
-        collectionsMap.set(product.collection.id, product.collection);
-      }
-    });
-    return Array.from(collectionsMap.values());
-  }, []);
-
-  // Function to check if a product is new (created within the last month)
-  const isNewProduct = useCallback((product: Product) => {
-    if (!product.createdAt) return false;
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-    return new Date(product.createdAt) > oneMonthAgo;
-  }, []);
-
-  // Filter products based on active filter
-  const filteredProducts = useMemo(() => {
-    if (activeFilter === "all") return products;
-    if (activeFilter === "new") return products.filter(isNewProduct);
-    return products.filter(product => product.collection.id === activeFilter);
-  }, [activeFilter, isNewProduct]);
-
-  // Check if we have any new products
-  const hasNewProducts = useMemo(() => {
-    return products.some(isNewProduct);
-  }, [isNewProduct]);
 
   // Handler functions for carousel navigation
   const handlePrevious = () => {
@@ -117,6 +87,36 @@ export default function ProductsList() {
       inStock: product.inStock,
     });
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="bg-rose-50/70 py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+        <div className="animate-pulse flex flex-col space-y-4 items-center justify-center h-96">
+          <div className="h-10 w-3/4 bg-gray-300 rounded"></div>
+          <div className="h-6 w-1/2 bg-gray-300 rounded"></div>
+          <div className="h-64 w-full bg-gray-300 rounded"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="bg-rose-50/70 py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-center h-96">
+          <p className="text-red-500 text-lg">Failed to load products: {error}</p>
+          <button 
+            className="mt-4 px-4 py-2 bg-rose-600 text-white rounded-md"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-rose-50/70">

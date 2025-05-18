@@ -1,0 +1,68 @@
+-- Collections table
+CREATE TABLE public.collections (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    imageSrc TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- Colors table
+CREATE TABLE public.colors (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    hex TEXT NOT NULL,
+    selectedColor TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- Products table
+CREATE TABLE public.products (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    collection_id UUID NOT NULL REFERENCES public.collections(id) ON DELETE CASCADE,
+    price NUMERIC(10, 2) NOT NULL,
+    imageSrc TEXT NOT NULL,
+    imageAlt TEXT NOT NULL,
+    inStock BOOLEAN NOT NULL DEFAULT true,
+    rating NUMERIC(3, 1) NOT NULL DEFAULT 0,
+    slug TEXT NOT NULL UNIQUE,
+    description TEXT,
+    createdAt TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updatedAt TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- Product images table
+CREATE TABLE public.product_images (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
+    image_url TEXT NOT NULL,
+    alt_text TEXT,
+    sort_order INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- Product colors junction table
+CREATE TABLE public.product_colors (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
+    color_id UUID NOT NULL REFERENCES public.colors(id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    UNIQUE(product_id, color_id)
+);
+
+-- Product sizes table
+CREATE TABLE public.product_sizes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
+    size TEXT NOT NULL,
+    inStock BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    UNIQUE(product_id, size)
+);
+
+-- Create indexes for better performance
+CREATE INDEX idx_products_collection_id ON public.products(collection_id);
+CREATE INDEX idx_product_images_product_id ON public.product_images(product_id);
+CREATE INDEX idx_product_colors_product_id ON public.product_colors(product_id);
+CREATE INDEX idx_product_sizes_product_id ON public.product_sizes(product_id);

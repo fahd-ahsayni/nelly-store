@@ -1,6 +1,7 @@
 import { ShoppingCartProvider, useShoppingCart } from "./shopping-cart-context";
 import { WishlistDrawerProvider, useWishlistDrawer } from "./wishlist-drawer-context";
 import { DialogProvider, useDialog } from "./dialog-context";
+import { SupabaseProvider, useSupabaseState } from "./supabase-context";
 
 export {
   ShoppingCartProvider,
@@ -8,5 +9,7 @@ export {
   WishlistDrawerProvider,
   useWishlistDrawer,
   DialogProvider,
-  useDialog
+  useDialog,
+  SupabaseProvider,
+  useSupabaseState
 };
