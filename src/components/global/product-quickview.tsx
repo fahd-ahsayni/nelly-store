@@ -21,6 +21,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
+import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
 type ProductQuickviewProps = {
@@ -104,10 +105,17 @@ export default function ProductQuickview({
                               className="border-none flex items-center justify-center rounded-md p-0"
                             >
                               <div className="relative h-full w-full">
-                                <img
+                                <Image
                                   src={image.src}
                                   alt={image.alt}
+                                  width={500}
+                                  height={500}
+                                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                                   className="h-full w-full object-cover object-center"
+                                  priority={idx === 0}
+                                  loading={idx === 0 ? "eager" : "lazy"}
+                                  placeholder="blur"
+                                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlNWU3ZWIiLz48L3N2Zz4="
                                 />
                               </div>
                             </SliderMainItem>
@@ -124,10 +132,16 @@ export default function ProductQuickview({
                               className="bg-transparent basis-1/4"
                             >
                               <div className="overflow-hidden h-full w-full cursor-pointer">
-                                <img
+                                <Image
                                   src={image.src}
                                   alt={`Thumbnail ${idx + 1}`}
+                                  width={100}
+                                  height={100}
                                   className="h-full w-full object-cover object-center"
+                                  loading="lazy"
+                                  sizes="96px"
+                                  placeholder="blur"
+                                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlNWU3ZWIiLz48L3N2Zz4="
                                 />
                               </div>
                             </SliderThumbItem>
@@ -282,9 +296,8 @@ export default function ProductQuickview({
                               {/* Filter standard sizes to only show those available in product */}
                               {STANDARD_SIZES.map((size) => {
                                 // Check if this size exists in product sizes
-                                const exists = displayProduct.sizes.includes(
-                                  size
-                                );
+                                const exists =
+                                  displayProduct.sizes.includes(size);
 
                                 if (!exists) return null;
 

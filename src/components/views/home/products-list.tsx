@@ -11,6 +11,7 @@ import { useProductsList } from "@/hooks/use-products-list";
 import { Product } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -199,37 +200,43 @@ export default function ProductsList() {
                 >
                   <div className="group relative">
                     <div className="aspect-[3/4] w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 relative">
-                      <img
+                      <Image
                         src={product.imageSrc}
                         alt={product.imageAlt}
                         className="h-full w-full object-cover object-center"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={isNewProduct(product)}
+                        loading={isNewProduct(product) ? "eager" : "lazy"}
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlNWU3ZWIiLz48L3N2Zz4="
                       />
 
                       {/* Out of stock badge */}
                       {product.inStock === false && (
-                        <div className="absolute top-2 right-2 bg-zinc-800 text-rose-200 text-xs px-2 py-1">
+                        <div className="absolute top-2 right-2 bg-zinc-800 text-rose-200 text-xs px-2 py-1 z-10">
                           Out of stock
                         </div>
                       )}
                       
                       {/* New badge - show if product is less than a month old */}
                       {isNewProduct(product) && (
-                        <div className="absolute top-2 left-2 bg-rose-600 text-white text-xs px-2 py-1">
+                        <div className="absolute top-2 left-2 bg-rose-600 text-white text-xs px-2 py-1 z-10">
                           NEW
                         </div>
                       )}
 
                       {/* Quick view and wishlist buttons */}
-                      <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4">
+                      <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4 z-10">
                         <button
                           onClick={(e) => openQuickView(product, e)}
-                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative z-[100] cursor-pointer flex-1"
+                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative cursor-pointer flex-1"
                         >
                           Product Quick View
                         </button>
                         <button
                           onClick={(e) => handleAddToWishlist(product, e)}
-                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative z-[100] cursor-pointer"
+                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative cursor-pointer"
                         >
                           <Heart
                             size={20}
