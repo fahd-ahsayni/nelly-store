@@ -30,15 +30,26 @@ export function useProductsList() {
     return products.some(isNewProduct);
   }, [products, isNewProduct]);
   
-  // Extract unique collections
-  const uniqueCollections = useMemo(() => {
-    return collections;
-  }, [collections]);
+  // Count products by collection and include only non-empty collections
+  const collectionsWithCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    
+    // Count products per collection
+    products.forEach(product => {
+      const collectionId = product.collection.id;
+      counts.set(collectionId, (counts.get(collectionId) || 0) + 1);
+    });
+    
+    // Filter to only include collections with products
+    return collections.filter(collection => 
+      counts.get(collection.id) && counts.get(collection.id)! > 0
+    );
+  }, [collections, products]);
   
   return {
     filteredProducts,
     hasNewProducts,
-    uniqueCollections,
+    uniqueCollections: collectionsWithCounts, // Return only non-empty collections
     activeFilter,
     setActiveFilter,
     isLoading,

@@ -154,7 +154,7 @@ export default function ProductQuickview({
 
                 {/* Product details section - adjusted for better mobile spacing */}
                 <div className="sm:col-span-8 lg:col-span-7">
-                  <h2 className="text-xl sm:text-2xl text-zinc-900 sm:pr-12 tracking-tight line-clamp-2 font-medium">
+                  <h2 className="text-2xl text-zinc-900 sm:pr-12 tracking-tight line-clamp-2 font-medium">
                     {displayProduct.name}
                   </h2>
 
@@ -167,7 +167,7 @@ export default function ProductQuickview({
                     </h3>
 
                     {/* Price section */}
-                    <p className="text-lg sm:text-xl font-medium text-zinc-900 mt-1">
+                    <p className="text-xl font-medium text-zinc-900 mt-1">
                       ${displayProduct.price.toFixed(2)}
                     </p>
 
@@ -189,7 +189,7 @@ export default function ProductQuickview({
                             />
                           ))}
                         </div>
-                        <p className="ml-2 -mb-1 text-xs sm:text-sm text-zinc-700">
+                        <p className="ml-2 -mb-1 text-zinc-700">
                           <span className="font-medium">
                             {displayProduct.rating}
                           </span>
@@ -208,14 +208,14 @@ export default function ProductQuickview({
                               : "bg-red-500"
                           } mr-2`}
                         ></div>
-                        <p className="text-xs sm:text-sm text-zinc-700">
+                        <p className="text-zinc-700">
                           {displayProduct.inStock ? "In stock" : "Out of stock"}
                         </p>
                       </div>
 
-                      <div className="flex items-center text-xs sm:text-sm text-zinc-700">
+                      <div className="flex items-center text-zinc-700">
                         <TruckIcon
-                          className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-zinc-500"
+                          className="h-4 w-4 mr-2 text-zinc-500"
                           aria-hidden="true"
                         />
                         Fast shipping available
@@ -241,7 +241,7 @@ export default function ProductQuickview({
                         {displayProduct.colors.length > 0 && (
                           <div className="sm:col-span-1">
                             <fieldset aria-label="Choose a color">
-                              <legend className="block text-sm font-medium text-zinc-900 mb-2">
+                              <legend className="block font-medium text-zinc-900 mb-2 tracking-wider">
                                 Color:{" "}
                                 <span className="text-rose-500 ml-1">
                                   {selectedColor.name}
@@ -280,7 +280,7 @@ export default function ProductQuickview({
                         <div className="sm:col-span-2">
                           <fieldset aria-label="Choose a size">
                             <div className="flex items-center justify-between mb-2">
-                              <legend className="block text-sm font-medium text-zinc-900">
+                              <legend className="block font-medium text-zinc-900 mb-2 tracking-wider">
                                 Size:{" "}
                                 <span className="text-rose-600 ml-1">
                                   {selectedSize}
@@ -326,28 +326,28 @@ export default function ProductQuickview({
 
                         {/* Quantity selector - responsive adjustment */}
                         <div className="sm:col-span-2">
-                          <h3 className="text-sm font-medium mb-2">Quantity</h3>
+                          <h3 className="block font-medium text-zinc-900 mb-2 tracking-wider">Quantity</h3>
                           <div className="flex items-center border border-zinc-800 bg-white w-fit">
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 sm:h-10 sm:w-10"
+                              className="h-10 w-10"
                               onClick={decreaseQuantity}
                               disabled={quantity <= 1}
                             >
-                              <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <Minus className="h-4 w-4" />
                               <span className="sr-only">Decrease quantity</span>
                             </Button>
-                            <span className="w-8 sm:w-10 text-center text-sm sm:text-base">
+                            <span className="w-10 text-center">
                               {quantity}
                             </span>
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 sm:h-10 sm:w-10"
+                              className="h-10 w-10"
                               onClick={increaseQuantity}
                             >
-                              <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <Plus className="h-4 w-4" />
                               <span className="sr-only">Increase quantity</span>
                             </Button>
                           </div>
@@ -359,7 +359,7 @@ export default function ProductQuickview({
                         <button
                           type="submit"
                           disabled={!displayProduct.inStock || addingToCart}
-                          className="flex flex-1 items-center justify-center border border-transparent bg-zinc-800 px-6 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-rose-200 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                          className="flex flex-1 items-center justify-center border border-transparent bg-zinc-800 px-6 py-2.5 sm:py-3 font-medium text-rose-200 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-colors cursor-pointer"
                         >
                           {addingToCart ? (
                             <span className="flex items-center">
@@ -390,7 +390,7 @@ export default function ProductQuickview({
                           ) : (
                             <>
                               <ShoppingBagIcon
-                                className="h-4 w-4 sm:h-5 sm:w-5 mr-2"
+                                className="h-5 w-5 mr-2"
                                 aria-hidden="true"
                               />
                               Add to Cart

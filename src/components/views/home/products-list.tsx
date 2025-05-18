@@ -6,6 +6,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
 import { useProductsList } from "@/hooks/use-products-list";
 import { Product } from "@/types";
@@ -126,57 +127,66 @@ export default function ProductsList() {
           <span className="font-newyork italic">Trending</span> products
         </h2>
         <div className="md:flex md:items-center md:justify-between">
-          <div className="flex items-center gap-x-4 overflow-x-auto pb-2 hide-scrollbar">
-            {/* All filter button - always shown */}
-            <button
-              key="all"
-              onClick={() => setActiveFilter("all")}
-              className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
-                activeFilter === "all"
-                  ? "bg-zinc-800 text-rose-200 border-zinc-700"
-                  : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
-              }`}
+            <div className="md:flex-1 md:pr-4 max-w-full">
+            <ScrollArea className="w-full whitespace-nowrap">
+              <div className="flex items-center gap-x-4">
+                {/* All filter button - always shown */}
+                <button
+                  key="all"
+                  onClick={() => setActiveFilter("all")}
+                  className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
+                  activeFilter === "all"
+                    ? "bg-zinc-800 text-rose-200 border-zinc-700"
+                    : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
+                  }`}
+                >
+                  All
+                </button>
+                
+                {/* New filter button - only if we have new products */}
+                {hasNewProducts && (
+                  <button
+                  key="new"
+                  onClick={() => setActiveFilter("new")}
+                  className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
+                    activeFilter === "new"
+                    ? "bg-zinc-800 text-rose-200 border-zinc-700"
+                    : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
+                  }`}
+                  >
+                  New
+                  </button>
+                )}
+                
+                {/* Collection filter buttons - only shown for collections with products */}
+                {uniqueCollections.length > 0 && uniqueCollections.map((collection) => (
+                  <button
+                  key={collection.id}
+                  onClick={() => setActiveFilter(collection.id)}
+                  className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
+                    activeFilter === collection.id
+                    ? "bg-zinc-800 text-rose-200 border-zinc-700"
+                    : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
+                  }`}
+                  >
+                  {collection.name}
+                  </button>
+                ))}
+              </div>
+              <ScrollBar orientation="horizontal" className="h-0" />
+            </ScrollArea>
+            </div>
+          
+          {/* Only show "Shop the collection" if we have collections */}
+          {uniqueCollections.length > 0 && (
+            <a
+              href="#"
+              className="hidden font-medium text-rose-600 hover:text-rose-500 md:block"
             >
-              All
-            </button>
-            
-            {/* New filter button - only if we have new products */}
-            {hasNewProducts && (
-              <button
-                key="new"
-                onClick={() => setActiveFilter("new")}
-                className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
-                  activeFilter === "new"
-                    ? "bg-zinc-800 text-rose-200 border-zinc-700"
-                    : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
-                }`}
-              >
-                NEW
-              </button>
-            )}
-            
-            {/* Collection filter buttons - only shown if collections exist */}
-            {uniqueCollections.map((collection) => (
-              <button
-                key={collection.id}
-                onClick={() => setActiveFilter(collection.id)}
-                className={`px-6 py-1.5 border focus:outline-none transition-colors duration-200 font-medium tracking-wide ${
-                  activeFilter === collection.id
-                    ? "bg-zinc-800 text-rose-200 border-zinc-700"
-                    : "bg-white text-zinc-800 border-zinc-800 hover:bg-zinc-50"
-                }`}
-              >
-                {collection.name}
-              </button>
-            ))}
-          </div>
-          <a
-            href="#"
-            className="hidden font-medium text-rose-600 hover:text-rose-500 md:block"
-          >
-            Shop the collection
-            <span aria-hidden="true"> &rarr;</span>
-          </a>
+              Shop the collection
+              <span aria-hidden="true"> &rarr;</span>
+            </a>
+          )}
         </div>
 
         <div className="mt-10 relative">
@@ -230,13 +240,13 @@ export default function ProductsList() {
                       <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4 z-10">
                         <button
                           onClick={(e) => openQuickView(product, e)}
-                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative cursor-pointer flex-1"
+                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative cursor-pointer flex-1"
                         >
                           Product Quick View
                         </button>
                         <button
                           onClick={(e) => handleAddToWishlist(product, e)}
-                          className="bg-rose-50 hover:bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 text-sm font-medium relative cursor-pointer"
+                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-2 py-2 text-sm font-medium relative cursor-pointer"
                         >
                           <Heart
                             size={20}
@@ -249,13 +259,13 @@ export default function ProductsList() {
                         </button>
                       </div>
                     </div>
-                    <h3 className="mt-4 text-sm text-zinc-700">
+                    <h3 className="mt-4 text-lg text-zinc-700 line-clamp-1">
                       {product.name}
                     </h3>
-                    <p className="mt-1 text-sm text-zinc-500">
+                    <p className="mt-1 text-zinc-500">
                       {product.collection.name}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-zinc-900">
+                    <p className="mt-1 font-medium text-zinc-900">
                       ${product.price}
                     </p>
                   </div>
@@ -288,12 +298,15 @@ export default function ProductsList() {
           )}
         </div>
 
-        <div className="mt-8 text-sm md:hidden w-full flex items-center justify-center">
-          <a href="#" className="font-medium text-rose-600 hover:text-rose-500">
-            Shop the collection
-            <span aria-hidden="true"> &rarr;</span>
-          </a>
-        </div>
+        {/* Only show "Shop the collection" mobile link if we have collections */}
+        {uniqueCollections.length > 0 && (
+          <div className="mt-8 text-sm md:hidden w-full flex items-center justify-center">
+            <a href="#" className="font-medium text-rose-600 hover:text-rose-500">
+              Shop the collection
+              <span aria-hidden="true"> &rarr;</span>
+            </a>
+          </div>
+        )}
 
         {/* Product Quickview */}
         {quickViewOpen && selectedProduct && (
