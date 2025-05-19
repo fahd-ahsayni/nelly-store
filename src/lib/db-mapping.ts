@@ -1,7 +1,41 @@
 import { Collection, Color, Product } from "@/types";
 
 /**
- * Maps database column names to our application model properties
+ * Database column names for consistent reference
+ */
+export const DB_COLUMNS = {
+  COLLECTIONS: {
+    ID: 'id',
+    NAME: 'name',
+    DESCRIPTION: 'description',
+    IMAGE_SRC: 'imagesrc', // Note lowercase in database
+    CREATED_AT: 'created_at',
+  },
+  PRODUCTS: {
+    ID: 'id',
+    NAME: 'name',
+    COLLECTION_ID: 'collection_id',
+    PRICE: 'price',
+    IMAGE_SRC: 'imagesrc', // Note lowercase in database
+    IMAGE_ALT: 'imagealt', // Note lowercase in database
+    IN_STOCK: 'instock',
+    RATING: 'rating',
+    SLUG: 'slug',
+    DESCRIPTION: 'description',
+    CREATED_AT: 'createdat',
+    UPDATED_AT: 'updatedat',
+    SIZES: 'sizes',
+    IMAGE_URLS: 'image_urls',
+  },
+  COLORS: {
+    NAME: 'name',
+    HEX: 'hex',
+    SELECTED_COLOR: 'selectedcolor',
+  },
+};
+
+/**
+ * Maps database product to our application model
  */
 export function mapDatabaseProductToModel(dbProduct: any): Product {
   // Map images from string array stored in database to string[]
@@ -46,7 +80,7 @@ export function mapDatabaseProductToModel(dbProduct: any): Product {
       id: dbProduct.collections?.id || '',
       name: dbProduct.collections?.name || '',
       description: dbProduct.collections?.description || '',
-      imageSrc: dbProduct.collections?.imagesrc || dbProduct.collections?.imageSrc || '',
+      imageSrc: dbProduct.collections?.imagesrc || '', // Note accessing as lowercase
     },
     price: parseFloat(dbProduct.price) || 0,
     imageSrc: dbProduct.imagesrc || dbProduct.imageSrc || '',
@@ -63,28 +97,13 @@ export function mapDatabaseProductToModel(dbProduct: any): Product {
 }
 
 /**
- * Database column names for consistent reference
+ * Maps database collection to our application model
  */
-export const DB_COLUMNS = {
-  PRODUCTS: {
-    ID: 'id',
-    NAME: 'name',
-    COLLECTION_ID: 'collection_id',
-    PRICE: 'price',
-    IMAGE_SRC: 'imagesrc',
-    IMAGE_ALT: 'imagealt',
-    IN_STOCK: 'instock',
-    RATING: 'rating',
-    SLUG: 'slug',
-    DESCRIPTION: 'description',
-    CREATED_AT: 'createdat',
-    UPDATED_AT: 'updatedat',
-    SIZES: 'sizes',
-    IMAGE_URLS: 'image_urls',
-  },
-  COLORS: {
-    NAME: 'name',
-    HEX: 'hex',
-    SELECTED_COLOR: 'selectedcolor',
-  },
-};
+export function mapDatabaseCollectionToModel(dbCollection: any): Collection {
+  return {
+    id: dbCollection.id || '',
+    name: dbCollection.name || '',
+    description: dbCollection.description || '',
+    imageSrc: dbCollection.imagesrc || '', // Note accessing as lowercase
+  };
+}

@@ -15,21 +15,21 @@ export interface Database {
           id: string
           name: string
           description: string
-          imageSrc: string
+          imagesrc: string // Changed from imageSrc to match database column
           created_at: string
         }
         Insert: {
           id?: string
           name: string
           description: string
-          imageSrc: string
+          imagesrc: string // Changed from imageSrc to match database column
           created_at?: string
         }
         Update: {
           id?: string
           name?: string
           description?: string
-          imageSrc?: string
+          imagesrc?: string // Changed from imageSrc to match database column
           created_at?: string
         }
       }

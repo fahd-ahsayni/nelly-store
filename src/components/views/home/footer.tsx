@@ -1,6 +1,5 @@
 "use client";
 import { profile } from "@/assets";
-import AnimatedText from "@/components/ui/cursor-follow-text";
 import Image from "next/image";
 import { FaInstagram, FaTiktok } from "react-icons/fa6";
 
@@ -8,7 +7,7 @@ function Footer() {
   return (
     <>
       <div className="px-6 lg:px-8 bg-rose-50/70">
-        <footer className="relative 2xl:h-[550px] h-fit lg:pb-20 w-full mx-auto rounded overflow-hidden">
+        <footer className="relative h-fit lg:pb-4 w-full mx-auto rounded overflow-hidden">
           <div className="relative gap-10 sm:flex justify-between p-5 2xl:py-10 py-5 bg-rose-200 border border-zinc-800 rounded rounded-b-none">
             <div className="w-fit flex-col flex justify-center">
               <div className="2xl:w-24 2xl:h-24 w-20 h-20 ml-3 bg-rose-400 z-10 rounded before:z-0 before:absolute relative before:w-full before:h-full before:bg-rose-400/50  before:rounded-md before:-top-3 before:-left-3">
@@ -45,12 +44,6 @@ function Footer() {
                 <FaTiktok className="sm:text-6xl text-4xl text-rose-600" />
               </a>
             </div>
-          </div>
-          <div className="lg:flex hidden">
-            <AnimatedText
-              text="Nelly Collection"
-              className="2xl:text-[10rem] text-[10vw] font-newyork"
-            />
           </div>
         </footer>
       </div>

@@ -1,9 +1,10 @@
-import React from 'react'
+import { FilterByCollections, HeaderStore } from "@/components/views/store";
 
 export default function page() {
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <HeaderStore />
+      <FilterByCollections />
+    </>
+  );
 }

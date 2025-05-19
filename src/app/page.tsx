@@ -14,7 +14,7 @@ import {
 export default function Home() {
   return (
     <>
-      <div className="relative z-10">
+      <div className="relative z-10 bg-rose-50/70">
         <HeroSection />
       </div>
       <VelocityScroll

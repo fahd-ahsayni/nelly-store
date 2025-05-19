@@ -55,7 +55,7 @@ export const supabaseService = {
       id: item.id,
       name: item.name,
       description: item.description,
-      imageSrc: item.imageSrc,
+      imageSrc: item.imagesrc, // Changed from imageSrc to imagesrc to match DB column
     }));
   },
   
@@ -200,7 +200,7 @@ export const supabaseService = {
         id: data.collections.id,
         name: data.collections.name,
         description: data.collections.description,
-        imageSrc: data.collections.imageSrc,
+        imageSrc: data.collections.imagesrc, // Changed from imageSrc to imagesrc
       },
       price: data.price,
       imageSrc: data.imageSrc,
