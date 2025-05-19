@@ -11,14 +11,19 @@ type ProductInput = Omit<
   images?: string[];
 };
 
-// Update the ColorJoinResult type to properly reflect the actual database structure
+// Update the ColorJoinResult interface to handle both possible response formats
 interface ColorJoinResult {
   colors: {
     id: string;
     name: string;
     hex: string;
-    selectedColor: string;
-  };
+    selectedcolor: string;
+  } | {
+    id: string;
+    name: string;
+    hex: string;
+    selectedcolor: string;
+  }[];
 }
 
 interface SizeResult {
@@ -97,19 +102,25 @@ export const supabaseService = {
       
       const colors: Color[] = [];
       
-      // Extract and transform the colors data
+      // Extract and transform the colors data with improved type handling
       if (colorData && colorData.length > 0) {
         for (const item of colorData) {
-          if (item.colors) {
-            try {
-              colors.push({
-                name: String(item.colors.name || ''),
-                hex: String(item.colors.hex || ''),
-                selectedColor: String(item.colors.selectedcolor || ''),
-              });
-            } catch (e) {
-              console.error("Error processing color data:", e);
+          try {
+            if (item.colors) {
+              // Check if colors is an array or a single object
+              const colorObj = Array.isArray(item.colors) ? item.colors[0] : item.colors;
+              
+              // Only proceed if we have a valid color object
+              if (colorObj && typeof colorObj === 'object') {
+                colors.push({
+                  name: String(colorObj.name || ''),
+                  hex: String(colorObj.hex || ''),
+                  selectedColor: String(colorObj.selectedcolor || ''),
+                });
+              }
             }
+          } catch (e) {
+            console.error("Error processing color data:", e);
           }
         }
       }
@@ -145,7 +156,7 @@ export const supabaseService = {
     
     if (!data) return null;
     
-    // Get colors
+    // Get colors with the same improved type handling
     const { data: colorData } = await supabase
       .from('product_colors')
       .select('colors:color_id(*)')
@@ -153,32 +164,21 @@ export const supabaseService = {
       
     const colors: Color[] = [];
     
-    // Safely map color data with proper type checking
+    // Apply the same improved type handling here
     if (colorData && colorData.length > 0) {
       for (const item of colorData) {
         try {
           if (item.colors) {
-            // If colors is a single object
-            if (!Array.isArray(item.colors) && typeof item.colors === 'object') {
-              if ('name' in item.colors && 'hex' in item.colors && 'selectedColor' in item.colors) {
-                colors.push({
-                  name: String(item.colors.name || ''),
-                  hex: String(item.colors.hex || ''),
-                  selectedColor: String(item.colors.selectedColor || ''),
-                });
-              }
-            } 
-            // If colors is an array of objects
-            else if (Array.isArray(item.colors) && item.colors.length > 0) {
-              const colorObj = item.colors[0];
-              if (colorObj && typeof colorObj === 'object' && 
-                  'name' in colorObj && 'hex' in colorObj && 'selectedColor' in colorObj) {
-                colors.push({
-                  name: String(colorObj.name || ''),
-                  hex: String(colorObj.hex || ''),
-                  selectedColor: String(colorObj.selectedColor || ''),
-                });
-              }
+            // Check if colors is an array or a single object
+            const colorObj = Array.isArray(item.colors) ? item.colors[0] : item.colors;
+              
+            // Only proceed if we have a valid color object
+            if (colorObj && typeof colorObj === 'object') {
+              colors.push({
+                name: String(colorObj.name || ''),
+                hex: String(colorObj.hex || ''),
+                selectedColor: String(colorObj.selectedcolor || ''),
+              });
             }
           }
         } catch (e) {

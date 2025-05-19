@@ -30,11 +30,15 @@ interface ColorJoinResult {
     id: string;
     name: string;
     hex: string;
-    selectedColor: string;
-  };
+    selectedcolor: string;
+  } | {
+    id: string;
+    name: string;
+    hex: string;
+    selectedcolor: string;
+  }[];
 }
 
-// Alternative structure in case the first one doesn't match
 interface ColorData {
   id: string;
   name: string;
@@ -157,19 +161,25 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
         
         const productColors: Color[] = [];
         
-        // Process colors with proper column names
+        // Improved type handling for colors
         if (colorData && colorData.length > 0) {
           for (const item of colorData) {
-            if (item.colors) {
-              try {
-                productColors.push({
-                  name: String(item.colors.name || ''),
-                  hex: String(item.colors.hex || ''),
-                  selectedColor: String(item.colors.selectedcolor || ''),
-                });
-              } catch (e) {
-                console.error("Error mapping color:", e);
+            try {
+              if (item.colors) {
+                // Check if colors is an array or a single object
+                const colorObj = Array.isArray(item.colors) ? item.colors[0] : item.colors;
+                
+                // Only proceed if we have a valid color object
+                if (colorObj && typeof colorObj === 'object') {
+                  productColors.push({
+                    name: String(colorObj.name || ''),
+                    hex: String(colorObj.hex || ''),
+                    selectedColor: String(colorObj.selectedcolor || ''),
+                  });
+                }
               }
+            } catch (e) {
+              console.error("Error processing color data:", e);
             }
           }
         }
@@ -224,23 +234,22 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
     
     if (colorData && colorData.length > 0) {
       for (const item of colorData) {
-        if (item.colors && typeof item.colors === 'object') {
-          if ('name' in item.colors && 'hex' in item.colors && 'selectedColor' in item.colors) {
-            colors.push({
-              name: String(item.colors.name || ''),
-              hex: String(item.colors.hex || ''),
-              selectedColor: String(item.colors.selectedColor || ''), // Ensure string type
-            });
-          } else if (Array.isArray(item.colors) && item.colors.length > 0) {
-            const colorItem = item.colors[0];
-            if (colorItem && 'name' in colorItem && 'hex' in colorItem && 'selectedColor' in colorItem) {
+        try {
+          if (item.colors) {
+            // Check if colors is an array or a single object
+            const colorObj = Array.isArray(item.colors) ? item.colors[0] : item.colors;
+            
+            // Only proceed if we have a valid color object
+            if (colorObj && typeof colorObj === 'object') {
               colors.push({
-                name: String(colorItem.name || ''),
-                hex: String(colorItem.hex || ''),
-                selectedColor: String(colorItem.selectedColor || ''), // Ensure string type
+                name: String(colorObj.name || ''),
+                hex: String(colorObj.hex || ''),
+                selectedColor: String(colorObj.selectedcolor || ''),
               });
             }
           }
+        } catch (e) {
+          console.error("Error processing color data:", e);
         }
       }
     }

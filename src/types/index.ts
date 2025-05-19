@@ -26,9 +26,9 @@ export interface Collection {
 }
 
 export interface Color {
-  name: string;
-  hex: string;
-  selectedColor: string;
+  name: string | any;
+  hex: string | any;
+  selectedColor: string | any;
 }
 
 // Additional types needed for the application
