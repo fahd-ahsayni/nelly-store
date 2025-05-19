@@ -8,8 +8,8 @@ export default function HeaderStore() {
       {/* Header */}
       <Navbar />
       <div className="py-4 px-3 lg:px-8 border-b border-zinc-800 flex justify-between items-center">
-        <div className="flex gap-x-4 items-center max-w-lg">
-          <Input placeholder="Search for a product" />
+        <div className="flex gap-x-4 items-center min-w-xl">
+          <Input placeholder="Search for a product" className="flex-1" />
           <Button>Filter</Button>
           <Button variant="outline" className="bg-white">
             Sort By

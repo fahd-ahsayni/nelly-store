@@ -1,9 +1,11 @@
 "use client";
 
+import { allCollections } from "@/assets";
 import { useSupabaseState } from "@/context";
 import { cn } from "@/lib/utils";
-import { Collection } from "@/types";
-import { useRef, useState } from "react";
+import { Collection } from "@/types"; // Assuming Collection is { id: string | number; name: string; imageSrc: string; ...otherOptionalFields }
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,62 +16,136 @@ export default function FilterByCollections() {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0); // Default to 0, selecting the first card
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [shouldShowNavigation, setShouldShowNavigation] = useState(true);
 
-  // Get collections from Supabase state
-  const { collections, isLoading, error } = useSupabaseState();
+  const {
+    collections: fetchedCollections,
+    isLoading,
+    error,
+  } = useSupabaseState();
 
-  // If loading, show a skeleton
+  // Define the "All" collection card.
+  // Ensure this card conforms to your `Collection` type.
+  // Replace imageSrc with your desired placeholder or actual image for "All".
+  const allCollectionsCard: Collection = useMemo(
+    () => ({
+      id: "all-collections-id", // Ensure this ID is unique
+      name: "All",
+      imageSrc: allCollections,
+      description: "All items in the store",
+      // Add any other properties required by your Collection type here
+      // e.g., slug: "all",
+    }),
+    []
+  );
+
+  // Create the list of collections to display, prepending the "All" card.
+  const displayCollections = useMemo(() => {
+    return [allCollectionsCard, ...(fetchedCollections || [])];
+  }, [allCollectionsCard, fetchedCollections]);
+
+  // Check window size for responsive behavior and navigation visibility
+  useEffect(() => {
+    const checkSize = () => {
+      const currentWindowWidth = window.innerWidth;
+      setIsMobile(currentWindowWidth < 640);
+      setIsTablet(currentWindowWidth >= 640 && currentWindowWidth < 1024);
+
+      const currentCollectionsLength = displayCollections.length;
+      let slidesPerViewBasedOnWidth = 2.5; // Default for smallest screens
+
+      if (currentWindowWidth >= 1024) {
+        // Desktop
+        slidesPerViewBasedOnWidth = 6.5;
+      } else if (currentWindowWidth >= 768) {
+        // Large Tablet
+        slidesPerViewBasedOnWidth = 4;
+      } else if (currentWindowWidth >= 640) {
+        // Small Tablet
+        slidesPerViewBasedOnWidth = 3.5;
+      }
+      // else, for mobile (<640px), it remains 2.5
+
+      setShouldShowNavigation(
+        currentCollectionsLength > slidesPerViewBasedOnWidth
+      );
+    };
+
+    checkSize(); // Initial check
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, [displayCollections.length]); // Re-run when the number of displayable collections changes
+
   if (isLoading) {
     return (
       <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-20 bg-rose-50/70 relative">
         <div className="flex space-x-4 overflow-hidden">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className="animate-pulse flex-shrink-0 w-48 h-28 bg-zinc-200 rounded"
-            ></div>
-          ))}
+          {Array.from({ length: 5 }).map(
+            (
+              _,
+              index // Adjusted skeleton for potentially more items
+            ) => (
+              <div
+                key={index}
+                className="animate-pulse flex-shrink-0 w-48 h-28 bg-zinc-200 rounded"
+              ></div>
+            )
+          )}
         </div>
       </div>
     );
   }
 
-  // If error, show error message
   if (error) {
     return (
       <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-20 bg-rose-50/70 relative">
-        <p className="text-red-500">Failed to load collections: {error}</p>
+        <p className="text-red-500">
+          Failed to load collections:{" "}
+          {typeof error === "object" && error !== null && "message" in error
+            ? (error as Error).message
+            : String(error)}
+        </p>
       </div>
     );
   }
 
-  // If no collections, don't render the component
-  if (collections.length === 0) {
-    return null;
-  }
+  // `displayCollections` will always have at least the "All" card, so no need for an empty check here.
+  const showButtons = shouldShowNavigation && !isMobile && !isTablet;
 
   return (
-    <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-20 bg-rose-50/70 relative">
+    <div
+      className={cn(
+        "w-full border-b border-zinc-800 py-4 px-3",
+        showButtons ? "lg:px-20" : "lg:px-6",
+        "bg-rose-50/70 relative"
+      )}
+    >
       <div className="flex items-center">
         <Swiper
           modules={[Navigation]}
           spaceBetween={16}
           slidesPerView={2.5}
           breakpoints={{
-            480: { slidesPerView: 2.5 },
             640: { slidesPerView: 3.5 },
             768: { slidesPerView: 4 },
             1024: { slidesPerView: 6.5 },
           }}
-          navigation={{
-            prevEl: navigationPrevRef.current,
-            nextEl: navigationNextRef.current,
-          }}
+          navigation={
+            showButtons
+              ? {
+                  prevEl: navigationPrevRef.current,
+                  nextEl: navigationNextRef.current,
+                }
+              : false
+          }
           onBeforeInit={(swiper) => {
             if (
+              showButtons &&
               swiper.params.navigation &&
               typeof swiper.params.navigation !== "boolean"
             ) {
@@ -80,7 +156,9 @@ export default function FilterByCollections() {
           onInit={(swiper) => {
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);
-            swiper.navigation?.update();
+            if (showButtons) {
+              swiper.navigation?.update();
+            }
           }}
           onSlideChange={(swiper) => {
             setIsBeginning(swiper.isBeginning);
@@ -88,9 +166,9 @@ export default function FilterByCollections() {
           }}
           className="w-full pl-6"
         >
-          {collections.map((collection: Collection, index: number) => (
+          {displayCollections.map((collection: Collection, index: number) => (
             <SwiperSlide
-              key={collection.id}
+              key={collection.id} // `id` from `allCollectionsCard` will be used for the "All" card
               onClick={() => {
                 setActiveIndex(index);
               }}
@@ -99,7 +177,7 @@ export default function FilterByCollections() {
                 activeIndex === index
                   ? "transform scale-105 z-10"
                   : "scale-100 hover:scale-102",
-                index === 0 && "ml-4"
+                index === 0 && "ml-4" // This will apply to the "All" card
               )}
             >
               <div className="flex flex-col items-center justify-center">
@@ -111,7 +189,7 @@ export default function FilterByCollections() {
                       : "bg-zinc-200"
                   )}
                 >
-                  <img
+                  <Image
                     src={collection.imageSrc}
                     alt={collection.name}
                     width={500}
@@ -124,7 +202,7 @@ export default function FilterByCollections() {
                     )}
                   />
                   {activeIndex === index && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-rose-500/30 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-rose-500/60 to-transparent"></div>
                   )}
                   <div
                     className={cn(
@@ -148,39 +226,41 @@ export default function FilterByCollections() {
           ))}
         </Swiper>
 
-        {/* Previous Button */}
-        <div className="absolute left-3 lg:left-6 top-1/2 -translate-y-1/2 z-10 h-full py-5">
-          <button
-            ref={navigationPrevRef}
-            className={cn(
-              "flex items-center justify-center w-9 md:w-10 h-full bg-zinc-800/90 hover:bg-zinc-700 border-zinc-700 border focus:outline-none text-rose-200 transition-all duration-300 rounded-lg",
-              isBeginning
-                ? "opacity-50 cursor-not-allowed"
-                : "opacity-100 cursor-pointer"
-            )}
-            aria-label="Previous slide"
-            disabled={isBeginning}
-          >
-            <FiChevronLeft size={20} />
-          </button>
-        </div>
+        {showButtons && (
+          <>
+            <div className="absolute left-3 lg:left-6 top-1/2 -translate-y-1/2 z-10 h-full py-5">
+              <button
+                ref={navigationPrevRef}
+                className={cn(
+                  "flex items-center justify-center w-9 md:w-10 h-full bg-zinc-800/90 hover:bg-zinc-700 border-zinc-700 border focus:outline-none text-rose-200 transition-all duration-300 rounded-lg",
+                  isBeginning
+                    ? "opacity-50 cursor-not-allowed"
+                    : "opacity-100 cursor-pointer"
+                )}
+                aria-label="Previous slide"
+                disabled={isBeginning}
+              >
+                <FiChevronLeft size={20} />
+              </button>
+            </div>
 
-        {/* Next Button */}
-        <div className="absolute right-3 lg:right-6 top-1/2 -translate-y-1/2 z-10 h-full py-5">
-          <button
-            ref={navigationNextRef}
-            className={cn(
-              "flex items-center justify-center w-9 h-full md:w-10 bg-zinc-800/90 hover:bg-zinc-700 border-zinc-700 border focus:outline-none text-rose-200 transition-all duration-300 rounded-lg",
-              isEnd
-                ? "opacity-50 cursor-not-allowed"
-                : "opacity-100 cursor-pointer"
-            )}
-            aria-label="Next slide"
-            disabled={isEnd}
-          >
-            <FiChevronRight size={20} />
-          </button>
-        </div>
+            <div className="absolute right-3 lg:right-6 top-1/2 -translate-y-1/2 z-10 h-full py-5">
+              <button
+                ref={navigationNextRef}
+                className={cn(
+                  "flex items-center justify-center w-9 h-full md:w-10 bg-zinc-800/90 hover:bg-zinc-700 border-zinc-700 border focus:outline-none text-rose-200 transition-all duration-300 rounded-lg",
+                  isEnd
+                    ? "opacity-50 cursor-not-allowed"
+                    : "opacity-100 cursor-pointer"
+                )}
+                aria-label="Next slide"
+                disabled={isEnd}
+              >
+                <FiChevronRight size={20} />
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

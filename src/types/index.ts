@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface Product {
   id: string;
   name: string;
@@ -22,7 +24,7 @@ export interface Collection {
   id: string;
   name: string;
   description: string;
-  imageSrc: string;
+  imageSrc: string | StaticImageData;
 }
 
 export interface Color {

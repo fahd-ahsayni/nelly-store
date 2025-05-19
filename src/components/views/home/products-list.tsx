@@ -1,5 +1,6 @@
 "use client";
 
+import ProductCard from "@/components/product/product-card";
 import ProductQuickview from "@/components/global/product-quickview";
 import {
   Carousel,
@@ -7,14 +8,11 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
 import { useProductsList } from "@/hooks/use-products-list";
 import { Product } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
-import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
-import Image from "next/image";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 export default function ProductsList() {
   const [api, setApi] = useState<{ scrollPrev: () => void; scrollNext: () => void } | any>(null);
@@ -37,9 +35,6 @@ export default function ProductsList() {
   // State for quick view
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-  // Wishlist integration
-  const { addToWishlist, isItemInWishlist } = useWishlistDrawer();
 
   // Handler functions for carousel navigation
   const handlePrevious = () => {
@@ -70,24 +65,6 @@ export default function ProductsList() {
     e.stopPropagation();
     setSelectedProduct(product);
     setQuickViewOpen(true);
-  };
-
-  // Handle adding to wishlist
-  const handleAddToWishlist = (product: Product, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isItemInWishlist(product.id)) return;
-
-    addToWishlist({
-      id: uuidv4(),
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.imageSrc,
-      slug: product.slug,
-      inStock: product.inStock,
-    });
   };
 
   // Show loading state
@@ -127,7 +104,7 @@ export default function ProductsList() {
           <span className="font-newyork italic">Trending</span> products
         </h2>
         <div className="md:flex md:items-center md:justify-between">
-            <div className="md:flex-1 md:pr-4 max-w-full">
+          <div className="md:flex-1 md:pr-4 max-w-full">
             <ScrollArea className="w-full whitespace-nowrap">
               <div className="flex items-center gap-x-4">
                 {/* All filter button - always shown */}
@@ -175,7 +152,7 @@ export default function ProductsList() {
               </div>
               <ScrollBar orientation="horizontal" className="h-0" />
             </ScrollArea>
-            </div>
+          </div>
           
           {/* Only show "Shop the collection" if we have collections */}
           {uniqueCollections.length > 0 && (
@@ -208,67 +185,11 @@ export default function ProductsList() {
                   key={product.id}
                   className="pl-4 md:basis-1/4 lg:basis-1/5"
                 >
-                  <div className="group relative">
-                    <div className="aspect-[3/4] w-full overflow-hidden rounded-md bg-zinc-200 group-hover:opacity-75 relative">
-                      <Image
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
-                        className="h-full w-full object-cover object-center"
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        priority={isNewProduct(product)}
-                        loading={isNewProduct(product) ? "eager" : "lazy"}
-                        placeholder="blur"
-                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNlNWU3ZWIiLz48L3N2Zz4="
-                      />
-
-                      {/* Out of stock badge */}
-                      {product.inStock === false && (
-                        <div className="absolute top-2 right-2 bg-zinc-800 text-rose-200 text-xs px-2 py-1 z-10">
-                          Out of stock
-                        </div>
-                      )}
-                      
-                      {/* New badge - show if product is less than a month old */}
-                      {isNewProduct(product) && (
-                        <div className="absolute top-2 left-2 bg-rose-600 text-white text-xs px-2 py-1 z-10">
-                          NEW
-                        </div>
-                      )}
-
-                      {/* Quick view and wishlist buttons */}
-                      <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 bg-black/20 before:content-none px-4 pb-4 z-10">
-                        <button
-                          onClick={(e) => openQuickView(product, e)}
-                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 font-medium relative cursor-pointer flex-1 tracking-wide"
-                        >
-                          Product Quick View
-                        </button>
-                        <button
-                          onClick={(e) => handleAddToWishlist(product, e)}
-                          className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-2.5 py-2.5 font-medium relative cursor-pointer"
-                        >
-                          <Heart
-                            size={20}
-                            className={
-                              isItemInWishlist(product.id)
-                                ? "fill-pink-600 text-pink-600"
-                                : ""
-                            }
-                          />
-                        </button>
-                      </div>
-                    </div>
-                    <h3 className="mt-4 text-lg text-zinc-700 line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <p className="mt-1 text-zinc-500">
-                      {product.collection.name}
-                    </p>
-                    <p className="mt-1 font-medium text-zinc-900">
-                      ${product.price}
-                    </p>
-                  </div>
+                  <ProductCard
+                    product={product}
+                    isNewProduct={isNewProduct}
+                    onQuickView={openQuickView}
+                  />
                 </CarouselItem>
               )) : (
                 <div className="col-span-full py-10 text-center text-zinc-500">
