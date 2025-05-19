@@ -19,6 +19,7 @@ interface FilterState {
   searchQuery: string;
   selectedColors: string[]; // Hex codes
   selectedSizes: string[];
+  selectedCollectionId: string | null; // Add selected collection ID
   priceRange: { min: number; max: number };
   isInStock: boolean | null; // true = only in stock, false = only out of stock, null = both
   sortBy: SortOption;
@@ -38,6 +39,7 @@ interface FilterContextType {
   updatePendingPriceRange: (min: number, max: number) => void;
   updatePendingInStockFilter: (value: boolean | null) => void;
   updatePendingSortBy: (option: SortOption) => void;
+  updateSelectedCollection: (collectionId: string | null) => void; // Add this method
   clearAllFilters: () => void;
   clearPendingColorFilters: () => void;
   clearPendingSizeFilters: () => void;
@@ -56,6 +58,7 @@ const initialFilterState: FilterState = {
   searchQuery: "",
   selectedColors: [],
   selectedSizes: [],
+  selectedCollectionId: null, // Initialize with no collection selected
   priceRange: { min: 0, max: 1000 },
   isInStock: null,
   sortBy: "relevance",
@@ -78,6 +81,11 @@ export function FilterProvider({ children }: { children: ReactNode; allProducts?
     return allProducts.filter(product => {
       // Search query filter
       if (debouncedSearchQuery && !product.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())) {
+        return false;
+      }
+      
+      // Collection filter
+      if (filterState.selectedCollectionId && product.collection.id !== filterState.selectedCollectionId) {
         return false;
       }
       
@@ -141,7 +149,8 @@ export function FilterProvider({ children }: { children: ReactNode; allProducts?
     });
   }, [
     allProducts, 
-    debouncedSearchQuery, 
+    debouncedSearchQuery,
+    filterState.selectedCollectionId, // Add collection ID dependency
     filterState.selectedColors, 
     filterState.selectedSizes, 
     filterState.priceRange, 
@@ -227,6 +236,12 @@ export function FilterProvider({ children }: { children: ReactNode; allProducts?
     setPendingFilterState(prev => ({ ...prev, sortBy: option }));
   };
 
+  // Collection filter update
+  const updateSelectedCollection = (collectionId: string | null) => {
+    setFilterState(prev => ({ ...prev, selectedCollectionId: collectionId }));
+    setPendingFilterState(prev => ({ ...prev, selectedCollectionId: collectionId }));
+  };
+
   // Apply pending filters
   const applyFilters = () => {
     setFilterState(prev => ({
@@ -278,6 +293,7 @@ export function FilterProvider({ children }: { children: ReactNode; allProducts?
         updatePendingPriceRange,
         updatePendingInStockFilter,
         updatePendingSortBy,
+        updateSelectedCollection, // Add this to the context value
         clearAllFilters,
         clearPendingColorFilters,
         clearPendingSizeFilters,

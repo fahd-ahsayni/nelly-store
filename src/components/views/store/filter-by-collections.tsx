@@ -1,9 +1,9 @@
 "use client";
 
 import { allCollections } from "@/assets";
-import { useSupabaseState } from "@/context";
+import { useSupabaseState, useFilter } from "@/context";
 import { cn } from "@/lib/utils";
-import { Collection } from "@/types"; // Assuming Collection is { id: string | number; name: string; imageSrc: string; ...otherOptionalFields }
+import { Collection } from "@/types";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -16,7 +16,12 @@ export default function FilterByCollections() {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(0); // Default to 0, selecting the first card
+  // Access the filter context to update selected collection
+  const { updateSelectedCollection, filterState } = useFilter();
+  
+  // Find the index of the currently selected collection
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -30,16 +35,12 @@ export default function FilterByCollections() {
   } = useSupabaseState();
 
   // Define the "All" collection card.
-  // Ensure this card conforms to your `Collection` type.
-  // Replace imageSrc with your desired placeholder or actual image for "All".
   const allCollectionsCard: Collection = useMemo(
     () => ({
-      id: "all-collections-id", // Ensure this ID is unique
+      id: "all", // Use consistent ID for "All" option
       name: "All",
       imageSrc: allCollections,
       description: "All items in the store",
-      // Add any other properties required by your Collection type here
-      // e.g., slug: "all",
     }),
     []
   );
@@ -49,7 +50,18 @@ export default function FilterByCollections() {
     return [allCollectionsCard, ...(fetchedCollections || [])];
   }, [allCollectionsCard, fetchedCollections]);
 
-  // Check window size for responsive behavior and navigation visibility
+  // Update activeIndex when filterState.selectedCollectionId changes
+  useEffect(() => {
+    const collectionId = filterState.selectedCollectionId;
+    if (collectionId === null) {
+      setActiveIndex(0); // "All" is at index 0
+    } else {
+      const index = displayCollections.findIndex(c => c.id === collectionId);
+      setActiveIndex(index >= 0 ? index : 0);
+    }
+  }, [filterState.selectedCollectionId, displayCollections]);
+
+  // Check window size for responsive behavior
   useEffect(() => {
     const checkSize = () => {
       const currentWindowWidth = window.innerWidth;
@@ -79,7 +91,16 @@ export default function FilterByCollections() {
     checkSize(); // Initial check
     window.addEventListener("resize", checkSize);
     return () => window.removeEventListener("resize", checkSize);
-  }, [displayCollections.length]); // Re-run when the number of displayable collections changes
+  }, [displayCollections.length]);
+
+  // Handle collection selection
+  const handleCollectionSelect = (index: number) => {
+    setActiveIndex(index);
+    
+    // Map index to collection ID
+    const collectionId = index === 0 ? null : displayCollections[index]?.id || null;
+    updateSelectedCollection(collectionId);
+  };
 
   if (isLoading) {
     return (
@@ -114,7 +135,7 @@ export default function FilterByCollections() {
     );
   }
 
-  // `displayCollections` will always have at least the "All" card, so no need for an empty check here.
+  // `displayCollections` will always have at least the "All" card
   const showButtons = shouldShowNavigation && !isMobile && !isTablet;
 
   return (
@@ -168,10 +189,8 @@ export default function FilterByCollections() {
         >
           {displayCollections.map((collection: Collection, index: number) => (
             <SwiperSlide
-              key={collection.id} // `id` from `allCollectionsCard` will be used for the "All" card
-              onClick={() => {
-                setActiveIndex(index);
-              }}
+              key={collection.id}
+              onClick={() => handleCollectionSelect(index)}
               className={cn(
                 "cursor-pointer transition-all duration-500 ease-in-out py-2",
                 activeIndex === index
