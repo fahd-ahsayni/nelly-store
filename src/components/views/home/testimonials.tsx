@@ -50,7 +50,7 @@ export default function TestimonialGrid() {
   ];
 
   return (
-    <section className="pb-12 px-4 md:px-8 bg-rose-50/70 -mt-20">
+    <section className="pb-12 px-4 md:px-8 -mt-20">
       <div className="">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-5xl mb-3">
@@ -66,7 +66,7 @@ export default function TestimonialGrid() {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="bg-white rounded overflow-hidden transition-shadow duration-300 border border-zinc-600"
+              className="bg-card rounded overflow-hidden transition-shadow duration-300 border border-zinc-600"
             >
               <div className="relative aspect-[3/3.5] h-[400px] overflow-hidden w-full">
                 <img

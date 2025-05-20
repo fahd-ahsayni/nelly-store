@@ -3,7 +3,7 @@ import SlideArrowButton from "@/components/ui/slide-arrow-button";
 
 export default function CtaOne() {
   return (
-    <div className="isolate bg-rose-50/70 relative z-0">
+    <div className="isolate relative z-0">
       <main>
         <div className=" px-6 lg:px-8">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">

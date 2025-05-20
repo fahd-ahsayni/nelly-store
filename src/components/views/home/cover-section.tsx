@@ -3,7 +3,7 @@ import { ArrowDownRight } from "lucide-react";
 
 export default function CoverSection() {
   return (
-    <div className="mx-auto px-6 lg:px-8 bg-rose-50/70">
+    <div className="mx-auto px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="flex flex-col lg:flex-row lg:justify-between items-start md:gap-12 bg-rose-200 border border-zinc-800 py-12 px-8 h-[550px] md:h-[400px] rounded">
           <h2 className="text-3xl lg:text-5xl font-medium text-zinc-800">

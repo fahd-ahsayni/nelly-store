@@ -2,7 +2,7 @@ import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-b
 
 export default function LocalStores() {
   return (
-    <div className="px-6 lg:px-8 py-16 sm:py-24 bg-rose-50/70 isolate relative">
+    <div className="px-6 lg:px-8 py-16 sm:py-24 isolate relative">
       <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
         <svg
           className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%)] sm:h-[42.375rem]"

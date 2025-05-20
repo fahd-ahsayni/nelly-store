@@ -135,6 +135,8 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
     setError(null);
     
     try {
+      console.log("Fetching products from Supabase...");
+      
       // Get all products with their collections
       const { data: productsData, error: productsError } = await supabase
         .from('products')
@@ -145,6 +147,13 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
         .order(DB_COLUMNS.PRODUCTS.CREATED_AT, { ascending: false });
         
       if (productsError) throw productsError;
+      
+      console.log(`Fetched ${productsData?.length || 0} raw products from Supabase`);
+      
+      if (!productsData || productsData.length === 0) {
+        setProducts([]);
+        return;
+      }
       
       // Process each product to get its colors
       const productsWithRelations = await Promise.all(productsData.map(async (dbProduct) => {
@@ -157,7 +166,10 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
           `)
           .eq('product_id', dbProduct.id);
           
-        if (colorError) throw colorError;
+        if (colorError) {
+          console.error(`Error fetching colors for product ${dbProduct.id}:`, colorError);
+          throw colorError;
+        }
         
         const productColors: Color[] = [];
         
@@ -184,19 +196,56 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
           }
         }
         
-        // Map database product to our model format
-        const mappedProduct = mapDatabaseProductToModel(dbProduct);
-        
-        // Add the colors we fetched separately
-        mappedProduct.colors = productColors.length > 0 ? productColors : [
-          { name: "Default", hex: "#000000", selectedColor: "ring-zinc-900" }
-        ];
-        
-        return mappedProduct;
+        try {
+          // Map database product to our model format
+          const mappedProduct = mapDatabaseProductToModel(dbProduct);
+          
+          // Add the colors we fetched separately
+          mappedProduct.colors = productColors.length > 0 ? productColors : [
+            { name: "Default", hex: "#000000", selectedColor: "ring-zinc-900" }
+          ];
+          
+          return mappedProduct;
+        } catch (error) {
+          console.error(`Error mapping product ${dbProduct.id}:`, error);
+          // Return a basic product with default values to prevent crashing
+          return {
+            id: dbProduct.id || "unknown",
+            name: dbProduct.name || "Unknown Product",
+            price: dbProduct.price || 0,
+            collection: dbProduct.collections || {
+              id: "unknown-collection",
+              name: "Unknown",
+              description: "",
+              imageSrc: "/placeholder.jpg"
+            },
+            imageSrc: dbProduct.imageSrc || "/placeholder.jpg",
+            imageAlt: dbProduct.imageAlt || "",
+            inStock: Boolean(dbProduct.inStock),
+            colors: [{ name: "Default", hex: "#000000", selectedColor: "ring-zinc-900" }],
+            sizes: dbProduct.sizes || ["ONE SIZE"],
+            rating: dbProduct.rating || 0,
+            slug: dbProduct.slug || "unknown",
+            images: dbProduct.image_urls || [dbProduct.imageSrc] || ["/placeholder.jpg"],
+            createdAt: dbProduct.createdAt || new Date().toISOString(),
+            updatedAt: dbProduct.updatedAt || new Date().toISOString(),
+          };
+        }
       }));
       
+      console.log(`Processed ${productsWithRelations.length} products with relationships`);
       setProducts(productsWithRelations);
+      
+      // Cache products in localStorage for faster subsequent loads
+      try {
+        localStorage.setItem('cached-products', JSON.stringify(productsWithRelations));
+        localStorage.setItem('products-cache-time', Date.now().toString());
+      } catch (err) {
+        console.warn('Failed to cache products in localStorage:', err);
+      }
+      
     } catch (error) {
+      console.error("Error in fetchProducts:", error);
       setError(handleSupabaseError(error));
     } finally {
       setIsLoading(false);

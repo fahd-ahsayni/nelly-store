@@ -2,7 +2,7 @@ import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-b
 
 export default function CollectionPerview() {
   return (
-    <div className="bg-rose-50/70 pb-16 sm:pb-24 relative ">
+    <div className="pb-16 sm:pb-24 relative ">
       <div className="absolute inset-x-0 -Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
         <svg
           className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"

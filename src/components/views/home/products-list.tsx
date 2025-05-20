@@ -2,6 +2,8 @@
 
 import ProductCard from "@/components/product/product-card";
 import ProductQuickview from "@/components/global/product-quickview";
+import NoResults from "@/components/ui/no-results";
+import { useSupabaseState } from "@/context";
 import {
   Carousel,
   CarouselContent,
@@ -28,6 +30,8 @@ export default function ProductsList() {
     error,
     isNewProduct
   } = useProductsList();
+
+  const { fetchProducts } = useSupabaseState();
 
   // Create a ref to store the autoplay plugin instance
   const autoplayRef = useRef<any>(Autoplay({ delay: 2000 }));
@@ -70,7 +74,7 @@ export default function ProductsList() {
   // Show loading state
   if (isLoading) {
     return (
-      <div className="bg-rose-50/70 py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
         <div className="animate-pulse flex flex-col space-y-4 items-center justify-center h-96">
           <div className="h-10 w-3/4 bg-gray-300 rounded"></div>
           <div className="h-6 w-1/2 bg-gray-300 rounded"></div>
@@ -83,7 +87,7 @@ export default function ProductsList() {
   // Show error state
   if (error) {
     return (
-      <div className="bg-rose-50/70 py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center h-96">
           <p className="text-red-500 text-lg">Failed to load products: {error}</p>
           <button 
@@ -98,7 +102,7 @@ export default function ProductsList() {
   }
 
   return (
-    <div className="bg-rose-50/70">
+    <div>
       <div className="py-16 px-4 sm:py-24 sm:px-6 lg:px-8 relative z-10">
         <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-8">
           <span className="font-newyork italic">Trending</span> products
@@ -192,8 +196,8 @@ export default function ProductsList() {
                   />
                 </CarouselItem>
               )) : (
-                <div className="col-span-full py-10 text-center text-zinc-500">
-                  No products found for this filter.
+                <div className="col-span-full w-full pl-4">
+                  <NoResults onRetry={fetchProducts} />
                 </div>
               )}
             </CarouselContent>

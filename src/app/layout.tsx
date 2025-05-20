@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="w-screen overflow-x-hidden bg-rose-50/70">
+      <body className="w-screen overflow-x-hidden bg-rose-50">
         <FilterProvider>
           <SupabaseProvider>
             <DialogProvider>

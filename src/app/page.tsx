@@ -14,13 +14,13 @@ import {
 export default function Home() {
   return (
     <>
-      <div className="relative z-10 bg-rose-50/70">
+      <div className="relative z-10">
         <HeroSection />
       </div>
       <VelocityScroll
         numRows={1}
         defaultVelocity={-3}
-        className="bg-zinc-900 py-4 relative z-20"
+        className="bg-accent py-4 relative z-20"
       >
         <span className="inline-flex items-center gap-2 whitespace-nowrap">
           <span className="tracking-widest text-rose-200 font-newyork">

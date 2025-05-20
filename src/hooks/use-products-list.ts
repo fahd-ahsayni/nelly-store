@@ -1,9 +1,9 @@
 "use client";
 
 import { useSupabaseState } from "@/context";
-import { useFilter } from "@/context"; // Import the filter context
+import { useFilter } from "@/context"; 
 import { Collection, Product } from "@/types";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { filterNewProducts } from "@/lib/product-utils";
 
 export function useProductsList() {
@@ -11,37 +11,74 @@ export function useProductsList() {
     products, 
     collections, 
     isLoading, 
-    error 
+    error,
+    fetchProducts 
   } = useSupabaseState();
   
   // Use the filter context
   const { 
     filteredProducts: contextFilteredProducts, 
     updateSelectedCollection,
-    filterState 
+    filterState,
+    updateProducts 
   } = useFilter();
+  
+  // Use refs to break circular dependencies
+  const prevActiveFilterRef = useRef<string>("all");
+  const initialRenderRef = useRef<boolean>(true);
+  
+  // Update the filter context with the latest products
+  useEffect(() => {
+    if (products.length > 0) {
+      console.log("Updating products in filter context:", products.length);
+      updateProducts(products);
+    } else if (!isLoading && !error) {
+      // Try fetching products if array is empty
+      console.log("Products array is empty, fetching products");
+      fetchProducts();
+    }
+  }, [products, updateProducts, isLoading, error, fetchProducts]);
   
   // Instead of managing this locally, we use the context state
   const [activeFilter, setActiveFilter] = useState<string>("all");
   
-  // Handle filter changes
   useEffect(() => {
-    if (activeFilter === "all") {
-      updateSelectedCollection(null);
-    } else if (activeFilter === "new") {
-      // New products filter is handled differently
-      // We'll keep the collection filter as null
-      updateSelectedCollection(null);
-    } else {
-      // This is a collection ID
-      updateSelectedCollection(activeFilter);
+    // Skip the first render to prevent double initialization
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+      
+      // Initialize activeFilter based on filterState on first render only
+      if (filterState.selectedCollectionId) {
+        setActiveFilter(filterState.selectedCollectionId);
+      }
+      return;
     }
-  }, [activeFilter, updateSelectedCollection]);
+    
+    // Only update if activeFilter actually changed
+    if (prevActiveFilterRef.current !== activeFilter) {
+      prevActiveFilterRef.current = activeFilter;
+      console.log("Changing active filter to:", activeFilter);
+      
+      if (activeFilter === "all") {
+        updateSelectedCollection(null);
+      } else if (activeFilter === "new") {
+        // New products filter is handled differently
+        updateSelectedCollection(null);
+      } else {
+        // This is a collection ID
+        updateSelectedCollection(activeFilter);
+      }
+    }
+  }, [activeFilter, updateSelectedCollection, filterState.selectedCollectionId]);
   
-  // Apply new product filter if needed (this is separate from the collection filter)
+  // Apply new product filter if needed
   const filteredProducts = useMemo(() => {
+    console.log("Products after context filtering:", contextFilteredProducts.length);
+    
     if (activeFilter === "new") {
-      return filterNewProducts(contextFilteredProducts);
+      const newProducts = filterNewProducts(contextFilteredProducts);
+      console.log("New products:", newProducts.length);
+      return newProducts;
     }
     return contextFilteredProducts;
   }, [activeFilter, contextFilteredProducts]);
@@ -64,7 +101,7 @@ export function useProductsList() {
     return filterNewProducts(products).length > 0;
   }, [products]);
 
-  // Function to check if a product is new (less than a month old)
+  // Function to check if a product is new
   const isNewProduct = (product: Product) => {
     if (!product.createdAt) return false;
     const oneMonthAgo = new Date();
