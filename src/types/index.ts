@@ -54,6 +54,9 @@ export interface WishlistItem {
   slug: string;
   inStock: boolean;
   productId: string;
+  colorName?: string; // Added
+  colorHex?: string;  // Added
+  size?: string;      // Added
 }
 
 // Dialog context types

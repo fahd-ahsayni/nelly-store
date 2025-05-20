@@ -1,24 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useDialog } from "@/context/dialog-context";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Minus, Plus } from "lucide-react";
+import { CartItem } from "@/types"; // Import CartItem from global types
+import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  color: string;
-  size: string;
-}
 
 interface ProductCardProps {
-  item: CartItem;
+  item: CartItem; // Use the imported CartItem type
   updateQuantity: (id: string, quantity: number) => void;
   removeItem: (id: string) => void;
 }
@@ -28,27 +16,14 @@ export default function ProductCard({
   updateQuantity,
   removeItem,
 }: ProductCardProps) {
-  const [isHovering, setIsHovering] = useState(false);
-  const { showDialog } = useDialog();
-
-  const handleDelete = () => {
-    showDialog({
-      title: "Remove item",
-      message: `Are you sure you want to remove "${item.name}" from your cart?`,
-      confirmText: "Remove",
-      cancelText: "Cancel",
-      variant: "danger",
-      onConfirm: () => removeItem(item.id),
-    });
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent event bubbling
+    removeItem(item.id);
   };
-  
+
   return (
-    <div
-      className="group relative flex gap-4 p-3 rounded-xl transition-all duration-200 hover:bg-zinc-50"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
-      <div className="relative h-20 w-20 overflow-hidden rounded bg-zinc-100 flex-shrink-0">
+    <div className="group relative flex gap-4 p-3 divide-b divide-zinc-200 transition-all duration-200 hover:bg-zinc-50">
+      <div className="relative h-20 w-20 overflow-hidden bg-zinc-100 flex-shrink-0">
         <Image
           src={item.image || "/placeholder.svg"}
           alt={item.name}
@@ -63,11 +38,11 @@ export default function ProductCard({
 
           <button
             type="button"
-            className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-zinc-400 hover:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 rounded-md"
+            className="absolute top-2 right-2 p-1 h-auto text-zinc-500 hover:text-zinc-6000 z-10"
             aria-label={`Remove ${item.name} from cart`}
             onClick={handleDelete}
           >
-            <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+            <Trash className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -108,7 +83,7 @@ export default function ProductCard({
           </div>
 
           <div className="font-medium">
-            ${(item.price * item.quantity).toFixed(2)}
+            {(item.price * item.quantity).toFixed(2)} Dhs
           </div>
         </div>
       </div>

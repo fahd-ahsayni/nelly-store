@@ -19,10 +19,10 @@ import {
   TruckIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import { Spinner } from "../ui/spinner";
 
 type ProductQuickviewProps = {
   open: boolean;
@@ -46,13 +46,14 @@ export default function ProductQuickview({
     decreaseQuantity,
     addingToCart,
     addingToWishlist,
-    successMessage,
     isInWishlist,
     handleAddToCart,
     handleAddToWishlist,
     carouselImages,
     displayProduct,
   } = useProductQuickview({ product, open, setOpen });
+
+  const canAddToCartOrWishlist = selectedColor && selectedSize;
 
   return (
     <Dialog
@@ -244,7 +245,9 @@ export default function ProductQuickview({
                               <legend className="block font-medium text-zinc-900 mb-2 tracking-wider">
                                 Color:{" "}
                                 <span className="text-rose-500 ml-1">
-                                  {selectedColor.name}
+                                  {selectedColor
+                                    ? selectedColor.name
+                                    : "Select Color"}
                                 </span>
                               </legend>
                               <RadioGroup
@@ -283,7 +286,7 @@ export default function ProductQuickview({
                               <legend className="block font-medium text-zinc-900 mb-2 tracking-wider">
                                 Size:{" "}
                                 <span className="text-rose-600 ml-1">
-                                  {selectedSize}
+                                  {selectedSize || "Select Size"}
                                 </span>
                               </legend>
                             </div>
@@ -326,7 +329,9 @@ export default function ProductQuickview({
 
                         {/* Quantity selector - responsive adjustment */}
                         <div className="sm:col-span-2">
-                          <h3 className="block font-medium text-zinc-900 mb-2 tracking-wider">Quantity</h3>
+                          <h3 className="block font-medium text-zinc-900 mb-2 tracking-wider">
+                            Quantity
+                          </h3>
                           <div className="flex items-center border border-zinc-800 bg-white w-fit">
                             <Button
                               variant="ghost"
@@ -338,9 +343,7 @@ export default function ProductQuickview({
                               <Minus className="h-4 w-4" />
                               <span className="sr-only">Decrease quantity</span>
                             </Button>
-                            <span className="w-10 text-center">
-                              {quantity}
-                            </span>
+                            <span className="w-10 text-center">{quantity}</span>
                             <Button
                               variant="ghost"
                               size="icon"
@@ -358,35 +361,19 @@ export default function ProductQuickview({
                       <div className="mt-4 flex gap-3">
                         <button
                           type="submit"
-                          disabled={!displayProduct.inStock || addingToCart}
+                          disabled={
+                            !displayProduct.inStock ||
+                            addingToCart ||
+                            !canAddToCartOrWishlist
+                          }
                           className="flex flex-1 items-center justify-center border border-transparent bg-zinc-800 px-6 py-2.5 sm:py-3 font-medium text-rose-200 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-colors cursor-pointer"
                         >
                           {addingToCart ? (
-                            <span className="flex items-center">
-                              <svg
-                                className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                              >
-                                <circle
-                                  className="opacity-25"
-                                  cx="12"
-                                  cy="12"
-                                  r="10"
-                                  stroke="currentColor"
-                                  strokeWidth="4"
-                                ></circle>
-                                <path
-                                  className="opacity-75"
-                                  fill="currentColor"
-                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                ></path>
-                              </svg>
-                              Adding...
-                            </span>
+                            <Spinner />
                           ) : !displayProduct.inStock ? (
                             "Out of Stock"
+                          ) : !canAddToCartOrWishlist ? (
+                            "Select Color & Size"
                           ) : (
                             <>
                               <ShoppingBagIcon
@@ -402,8 +389,8 @@ export default function ProductQuickview({
                           <button
                             type="button"
                             onClick={handleAddToWishlist}
-                            disabled={addingToWishlist}
-                            className="flex w-full bg-white items-center justify-center border px-3 py-2.5 sm:py-3 text-sm sm:text-base font-medium text-zinc-700 hover:bg-zinc-50 focus:outline-none disabled:opacity-70 transition-colors"
+                            disabled={addingToWishlist || !canAddToCartOrWishlist}
+                            className="flex aspect-square bg-white items-center justify-center border h-12 w-12 text-sm sm:text-base font-medium text-zinc-700 hover:bg-zinc-50 focus:outline-none disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
                             aria-label={
                               isInWishlist
                                 ? "In your wishlist"
@@ -411,7 +398,7 @@ export default function ProductQuickview({
                             }
                           >
                             <HeartIcon
-                              className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                              className={`h-5 w-5 sm:h-6 sm:w-6 ${
                                 isInWishlist
                                   ? "text-pink-600 fill-pink-600"
                                   : ""
@@ -429,20 +416,6 @@ export default function ProductQuickview({
           </DialogPanel>
         </div>
       </div>
-
-      {/* Success message toast */}
-      <AnimatePresence>
-        {successMessage && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-zinc-800 text-white px-4 py-2 rounded-md shadow-lg z-[9999]"
-          >
-            {successMessage}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </Dialog>
   );
 }

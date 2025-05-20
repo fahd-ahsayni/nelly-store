@@ -46,7 +46,7 @@ export default function HeaderStore() {
                     type="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 bg-zinc-50 border border-border rounded-md text-sm placeholder-zinc-600 focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+                    className="block w-full pl-10 pr-3 py-2 bg-white border border-border rounded-md text-sm placeholder-zinc-600 focus:outline-none focus:ring-rose-500 focus:border-rose-500"
                     placeholder="Search products..."
                   />
                 </div>

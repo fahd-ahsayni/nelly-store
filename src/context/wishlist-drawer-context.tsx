@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { useLocalStorage } from '@/hooks/use-localstorage';
-import { WishlistItem } from '@/types';
-import { createContext, useContext, ReactNode } from 'react'
+import { useLocalStorage } from "@/hooks/use-localstorage";
+import { WishlistItem } from "@/types"; // This WishlistItem type should include colorName, colorHex, and size
+import { createContext, useContext, ReactNode } from "react";
 
 interface WishlistDrawerContextProps {
   isOpen: boolean;
@@ -14,50 +14,60 @@ interface WishlistDrawerContextProps {
   isItemInWishlist: (productId: string) => boolean;
 }
 
-const WishlistDrawerContext = createContext<WishlistDrawerContextProps | undefined>(undefined)
+const WishlistDrawerContext = createContext<
+  WishlistDrawerContextProps | undefined
+>(undefined);
 
 export function WishlistDrawerProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useLocalStorage('wishlist-drawer-open', false);
-  const [wishlistItems, setWishlistItems] = useLocalStorage<WishlistItem[]>('wishlist-items', []);
+  const [isOpen, setIsOpen] = useLocalStorage("wishlist-drawer-open", false);
+  // Ensure WishlistItem[] here matches the updated type definition from @/types
+  const [wishlistItems, setWishlistItems] = useLocalStorage<WishlistItem[]>(
+    "wishlist-items",
+    []
+  );
 
   const openWishlist = () => setIsOpen(true);
   const closeWishlist = () => setIsOpen(false);
-  
+
   const addToWishlist = (item: WishlistItem) => {
-    setWishlistItems(prev => {
+    setWishlistItems((prev) => {
       // Don't add duplicate items
-      if (prev.some(i => i.productId === item.productId)) return prev;
+      if (prev.some((i) => i.productId === item.productId)) return prev;
       return [...prev, item];
     });
   };
-  
+
   const removeFromWishlist = (id: string) => {
-    setWishlistItems(prev => prev.filter(item => item.id !== id));
+    setWishlistItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   const isItemInWishlist = (productId: string) => {
-    return wishlistItems.some(item => item.productId === productId);
+    return wishlistItems.some((item) => item.productId === productId);
   };
 
   return (
-    <WishlistDrawerContext.Provider value={{ 
-      isOpen, 
-      openWishlist, 
-      closeWishlist,
-      wishlistItems,
-      addToWishlist,
-      removeFromWishlist,
-      isItemInWishlist
-    }}>
+    <WishlistDrawerContext.Provider
+      value={{
+        isOpen,
+        openWishlist,
+        closeWishlist,
+        wishlistItems,
+        addToWishlist,
+        removeFromWishlist,
+        isItemInWishlist,
+      }}
+    >
       {children}
     </WishlistDrawerContext.Provider>
-  )
+  );
 }
 
 export function useWishlistDrawer() {
-  const context = useContext(WishlistDrawerContext)
+  const context = useContext(WishlistDrawerContext);
   if (context === undefined) {
-    throw new Error('useWishlistDrawer must be used within a WishlistDrawerProvider')
+    throw new Error(
+      "useWishlistDrawer must be used within a WishlistDrawerProvider"
+    );
   }
-  return context
+  return context;
 }

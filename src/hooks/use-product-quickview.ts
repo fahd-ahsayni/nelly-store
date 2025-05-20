@@ -4,6 +4,7 @@ import { useShoppingCart } from "@/context/shopping-cart-context";
 import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
 import { Color, Product } from "@/types";
 import { FormEvent, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 
 // Default product fallback for when no product is provided
@@ -36,9 +37,9 @@ interface UseProductQuickviewProps {
 }
 
 interface UseProductQuickviewReturn {
-  selectedColor: Color;
+  selectedColor: Color | null; // Changed to allow null
   setSelectedColor: (color: Color) => void;
-  selectedSize: string;
+  selectedSize: string | null; // Changed to allow null
   setSelectedSize: (size: string) => void;
   quantity: number;
   increaseQuantity: () => void;
@@ -54,9 +55,9 @@ interface UseProductQuickviewReturn {
   hasSize: (sizeName: string) => boolean;
 }
 
-export function useProductQuickview({ 
-  product, 
-  open 
+export function useProductQuickview({
+  product,
+  open,
 }: UseProductQuickviewProps): UseProductQuickviewReturn {
   // Prepare display product (with fallback values)
   const displayProduct: Product = {
@@ -65,14 +66,9 @@ export function useProductQuickview({
   };
 
   // State management
-  const [selectedColor, setSelectedColor] = useState<Color>(
-    displayProduct.colors[0] || defaultProduct.colors[0]
-  );
-  
-  const [selectedSize, setSelectedSize] = useState<string>(
-    displayProduct.sizes[0] || "ONE SIZE"
-  );
-  
+  const [selectedColor, setSelectedColor] = useState<Color | null>(null); // Initialize to null
+  const [selectedSize, setSelectedSize] = useState<string | null>(null); // Initialize to null
+
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
   const [addingToWishlist, setAddingToWishlist] = useState(false);
@@ -86,22 +82,19 @@ export function useProductQuickview({
   // Update state when product changes
   useEffect(() => {
     if (product) {
-      // Set first available size
-      setSelectedSize(product.sizes[0] || "ONE SIZE");
-
-      // Set first available color
-      if (product.colors.length > 0) {
-        setSelectedColor(product.colors[0]);
-      }
-
-      // Reset quantity
+      // Reset selections when product or open state changes
+      setSelectedColor(null);
+      setSelectedSize(null);
       setQuantity(1);
     }
   }, [product, open]);
 
   // Prepare image array for carousel from string array
   const carouselImages = displayProduct.images?.length
-    ? displayProduct.images.map(src => ({ src, alt: displayProduct.imageAlt }))
+    ? displayProduct.images.map((src) => ({
+        src,
+        alt: displayProduct.imageAlt,
+      }))
     : [{ src: displayProduct.imageSrc, alt: displayProduct.imageAlt }];
 
   // Function to check if a size exists in the product sizes
@@ -118,6 +111,11 @@ export function useProductQuickview({
   const handleAddToCart = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
+    if (!selectedColor || !selectedSize) {
+      toast.error("Please select a color and size.");
+      return;
+    }
+
     if (addingToCart || !displayProduct.inStock) return;
 
     setAddingToCart(true);
@@ -130,22 +128,26 @@ export function useProductQuickview({
         price: displayProduct.price,
         quantity: quantity,
         image: displayProduct.imageSrc,
-        color: selectedColor.name,
-        colorHex: selectedColor.hex,
-        size: selectedSize,
+        color: selectedColor.name, // Use selected color
+        colorHex: selectedColor.hex, // Use selected color hex
+        size: selectedSize, // Use selected size
       });
 
       // Show success message
-      setSuccessMessage("Added to cart!");
-      setTimeout(() => setSuccessMessage(""), 2000);
+      toast("Added to cart!");
     } catch (error) {
       console.error("Error adding to cart:", error);
+      toast.error("Failed to add to cart.");
     } finally {
       setAddingToCart(false);
     }
   };
 
   const handleAddToWishlist = async (): Promise<void> => {
+    if (!selectedColor || !selectedSize) {
+      toast.error("Please select a color and size to add to wishlist.");
+      return;
+    }
     if (addingToWishlist || isInWishlist) return;
 
     setAddingToWishlist(true);
@@ -159,13 +161,17 @@ export function useProductQuickview({
         image: displayProduct.imageSrc,
         slug: displayProduct.slug,
         inStock: displayProduct.inStock,
+        // Store selected color and size
+        colorName: selectedColor.name,
+        colorHex: selectedColor.hex,
+        size: selectedSize,
       });
 
       // Show success message
-      setSuccessMessage("Added to wishlist!");
-      setTimeout(() => setSuccessMessage(""), 2000);
+      toast("Added to wishlist!");
     } catch (error) {
       console.error("Error adding to wishlist:", error);
+      toast.error("Failed to add to wishlist.");
     } finally {
       setAddingToWishlist(false);
     }
@@ -187,6 +193,6 @@ export function useProductQuickview({
     handleAddToWishlist,
     carouselImages,
     displayProduct,
-    hasSize
+    hasSize,
   };
 }
