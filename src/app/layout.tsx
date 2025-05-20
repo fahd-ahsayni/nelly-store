@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="w-screen overflow-x-hidden bg-rose-50">
         <FilterProvider>
           <SupabaseProvider>

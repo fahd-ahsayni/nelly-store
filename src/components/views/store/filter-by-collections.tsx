@@ -1,7 +1,7 @@
 "use client";
 
 import { allCollections } from "@/assets";
-import { useSupabaseState, useFilter } from "@/context";
+import { useFilter, useSupabaseState } from "@/context";
 import { cn } from "@/lib/utils";
 import { Collection } from "@/types";
 import Image from "next/image";
@@ -18,10 +18,10 @@ export default function FilterByCollections() {
 
   // Access the filter context to update selected collection
   const { updateSelectedCollection, filterState } = useFilter();
-  
+
   // Find the index of the currently selected collection
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
-  
+
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -56,7 +56,7 @@ export default function FilterByCollections() {
     if (collectionId === null) {
       setActiveIndex(0); // "All" is at index 0
     } else {
-      const index = displayCollections.findIndex(c => c.id === collectionId);
+      const index = displayCollections.findIndex((c) => c.id === collectionId);
       setActiveIndex(index >= 0 ? index : 0);
     }
   }, [filterState.selectedCollectionId, displayCollections]);
@@ -96,9 +96,10 @@ export default function FilterByCollections() {
   // Handle collection selection
   const handleCollectionSelect = (index: number) => {
     setActiveIndex(index);
-    
+
     // Map index to collection ID
-    const collectionId = index === 0 ? null : displayCollections[index]?.id || null;
+    const collectionId =
+      index === 0 ? null : displayCollections[index]?.id || null;
     updateSelectedCollection(collectionId);
   };
 
@@ -141,9 +142,9 @@ export default function FilterByCollections() {
   return (
     <div
       className={cn(
-        "w-full border-b border-zinc-800 py-4 px-3",
+        "w-full border-b border-border py-4 px-3",
         showButtons ? "lg:px-20" : "lg:px-6",
-        "bg-rose-50/70 relative"
+        "bg-white relative"
       )}
     >
       <div className="flex items-center">
@@ -192,20 +193,17 @@ export default function FilterByCollections() {
               key={collection.id}
               onClick={() => handleCollectionSelect(index)}
               className={cn(
-                "cursor-pointer transition-all duration-500 ease-in-out py-2",
+                "cursor-pointer py-2",
                 activeIndex === index
-                  ? "transform scale-105 z-10"
-                  : "scale-100 hover:scale-102",
+                  ? "transform scale-110 z-10  transition-all duration-500 ease-in-out"
+                  : "scale-100",
                 index === 0 && "ml-4" // This will apply to the "All" card
               )}
             >
               <div className="flex flex-col items-center justify-center">
                 <div
                   className={cn(
-                    "w-full flex items-center justify-center relative md:h-28 h-20 rounded overflow-hidden transition-all duration-500 ease-in-out",
-                    activeIndex === index
-                      ? "ring-2 ring-rose-400"
-                      : "bg-zinc-200"
+                    "w-full flex items-center justify-center relative md:h-28 h-20 overflow-hidden transition-all duration-500 ease-in-out"
                   )}
                 >
                   <Image
@@ -214,7 +212,7 @@ export default function FilterByCollections() {
                     width={500}
                     height={500}
                     className={cn(
-                      "w-full h-full object-cover absolute rounded inset-0 transition-all duration-500 ease-in-out",
+                      "w-full h-full object-cover absolute inset-0 transition-all duration-500 ease-in-out",
                       activeIndex === index
                         ? "brightness-100 contrast-105"
                         : "brightness-75 hover:brightness-90"

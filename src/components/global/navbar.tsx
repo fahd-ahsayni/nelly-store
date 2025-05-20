@@ -8,6 +8,7 @@ import { useShoppingCart } from "@/context/shopping-cart-context";
 import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
 import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { MenuIcon } from "lucide-react";
+import LogoVariable from "../design/logo-variable";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +17,7 @@ export default function Navbar() {
 
   return (
     <header className="w-full z-10 bg-white">
-      <div className="w-full border-b border-zinc-900">
+      <div className="w-full border-b border-border">
         <Banner />
         <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
           {/* Left section - Store and Home links */}
@@ -39,7 +40,7 @@ export default function Navbar() {
           <div className="text-2xl md:text-3xl font-medium">
             <div className="flex items-center gap-1 lg:gap-2">
               <Image src={logo} alt="Logo" width={50} height={50} />
-              <span>Nelly collection</span>
+              <LogoVariable />
             </div>
           </div>
 
@@ -50,7 +51,7 @@ export default function Navbar() {
               aria-label="View wishlist"
               onClick={openWishlist}
             >
-             <HeartIcon className="w-5 h-5" />
+              <HeartIcon className="w-5 h-5" />
             </button>
             <button
               className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
