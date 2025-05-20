@@ -29,7 +29,7 @@ export default function HeaderStore() {
   };
 
   return (
-    <div className="bg-white py-4 border-b border-zinc-200 sticky top-0 z-30 max-w-full px-3 lg:px-8">
+    <div className="bg-zinc-50 py-4 border-b border-zinc-200 sticky top-0 z-30 max-w-full px-3 lg:px-8">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <AnimationTextHeaderStore />
@@ -40,13 +40,13 @@ export default function HeaderStore() {
               <form onSubmit={handleSearch}>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MagnifyingGlassIcon className="h-5 w-5 text-zinc-400" />
+                    <MagnifyingGlassIcon className="h-5 w-5 text-zinc-600" />
                   </div>
                   <input
                     type="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-zinc-300 rounded-md text-sm placeholder-zinc-400 focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+                    className="block w-full pl-10 pr-3 py-2 bg-zinc-50 border border-border rounded-md text-sm placeholder-zinc-600 focus:outline-none focus:ring-rose-500 focus:border-rose-500"
                     placeholder="Search products..."
                   />
                 </div>
@@ -57,7 +57,7 @@ export default function HeaderStore() {
             <Button
               type="button"
               onClick={toggleFilterDrawer}
-              className="inline-flex items-center px-4 py-2 border border-zinc-300 rounded-md text-sm font-medium text-zinc-800 bg-white hover:bg-accent hover:text-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+              className="inline-flex items-center px-4 py-2 border border-zinc-600 rounded-md text-sm font-medium text-zinc-800 bg-white hover:bg-accent hover:text-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
             >
               <AdjustmentsHorizontalIcon className="h-5 w-5" />
               Filters
@@ -81,7 +81,7 @@ export default function HeaderStore() {
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-border rounded-md text-sm placeholder-zinc-800 focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+                className="block w-full pl-10 pr-3 py-2 border border-border text-sm placeholder-zinc-800 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-300"
                 placeholder="Search products..."
               />
             </div>

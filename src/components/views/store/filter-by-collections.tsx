@@ -1,9 +1,12 @@
 "use client";
 
 import { allCollections } from "@/assets";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useFilter, useSupabaseState } from "@/context";
 import { cn } from "@/lib/utils";
 import { Collection } from "@/types";
+import { AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -105,33 +108,37 @@ export default function FilterByCollections() {
 
   if (isLoading) {
     return (
-      <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-20 bg-rose-50/70 relative">
-        <div className="flex space-x-4 overflow-hidden">
-          {Array.from({ length: 5 }).map(
-            (
-              _,
-              index // Adjusted skeleton for potentially more items
-            ) => (
-              <div
-                key={index}
-                className="animate-pulse flex-shrink-0 w-48 h-28 bg-zinc-200 rounded"
-              ></div>
-            )
-          )}
+    <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-8 bg-zinc-50 relative">
+      <div className="flex space-x-4 overflow-hidden">
+        {Array.from({ length: 5 }).map((_, index) => (
+        <div key={index} className="flex-shrink-0 w-48 h-28">
+          <div className="flex flex-col items-center justify-center">
+            <div className="w-full flex items-center justify-center relative h-20 md:h-28 overflow-hidden">
+            <Skeleton className="w-full h-full rounded absolute inset-0 bg-zinc-100" />
+            <div className="relative z-10 text-center">
+              <Skeleton className="h-5 w-20 mx-auto mt-10 bg-zinc-200" />
+            </div>
+            </div>
+          </div>
         </div>
+        ))}
       </div>
+    </div>
     );
   }
 
   if (error) {
     return (
       <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-20 bg-rose-50/70 relative">
-        <p className="text-red-500">
-          Failed to load collections:{" "}
-          {typeof error === "object" && error !== null && "message" in error
-            ? (error as Error).message
-            : String(error)}
-        </p>
+        <div className="mx-auto max-w-3xl">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              Failed to load collections. Please try again later or contact support.
+            </AlertDescription>
+          </Alert>
+        </div>
       </div>
     );
   }
@@ -144,7 +151,7 @@ export default function FilterByCollections() {
       className={cn(
         "w-full border-b border-border py-4 px-3",
         showButtons ? "lg:px-20" : "lg:px-6",
-        "bg-white relative"
+        "bg-zinc-50 relative"
       )}
     >
       <div className="flex items-center">

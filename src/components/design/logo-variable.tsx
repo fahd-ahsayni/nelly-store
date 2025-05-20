@@ -15,7 +15,7 @@ export default function LogoVariable() {
           label={`Nelly Collection`}
           className="text-2xl md:text-3xl"
           fromFontVariationSettings="'wght' 400, 'slnt' 0"
-          toFontVariationSettings="'wght' 600, 'slnt' -10"
+          toFontVariationSettings="'wght' 900, 'slnt' -10"
           falloff="exponential"
           radius={70}
           containerRef={containerRef}

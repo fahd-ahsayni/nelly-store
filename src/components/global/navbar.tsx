@@ -9,6 +9,7 @@ import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
 import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { MenuIcon } from "lucide-react";
 import LogoVariable from "../design/logo-variable";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,18 +23,18 @@ export default function Navbar() {
         <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
           {/* Left section - Store and Home links */}
           <div className="hidden md:flex items-center gap-8">
-            <a
+            <Link
               href="/"
               className="hover:text-zinc-600 transition-colors text-lg"
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               href="/store"
               className="hover:text-zinc-600 transition-colors text-lg"
             >
               Store
-            </a>
+            </Link>
           </div>
 
           {/* Center section - Logo */}

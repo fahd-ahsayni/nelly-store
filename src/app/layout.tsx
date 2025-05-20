@@ -3,8 +3,15 @@ import ShoppingCart from "@/components/global/shopping-cart";
 import WishlistDrawer from "@/components/global/wishlist-drawer";
 import { ShoppingCartProvider, WishlistDrawerProvider, DialogProvider, SupabaseProvider, FilterProvider } from "@/context";
 import type { Metadata } from "next";
+import { Lora } from "next/font/google"; // Import Lora
 import { addProductDebugging } from '@/utils/product-debug';
 import "./globals.css";
+
+// Initialize Lora font
+const lora = Lora({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 // Only add debugging in development
 if (process.env.NODE_ENV === 'development') {
@@ -26,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="w-screen overflow-x-hidden bg-rose-50">
+      <body className={`${lora.className} w-screen overflow-x-hidden bg-rose-50`}> {/* Apply Lora font class */}
         <FilterProvider>
           <SupabaseProvider>
             <DialogProvider>
@@ -45,3 +52,4 @@ export default function RootLayout({
     </html>
   );
 }
+
