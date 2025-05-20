@@ -219,7 +219,7 @@ export default function FilterByCollections() {
                     width={500}
                     height={500}
                     className={cn(
-                      "w-full h-full object-cover absolute inset-0 transition-all duration-500 ease-in-out",
+                      "w-full h-full object-cover absolute inset-0 transition-all duration-500 ease-in-out bg-zinc-200",
                       activeIndex === index
                         ? "brightness-100 contrast-105"
                         : "brightness-75 hover:brightness-90"
