@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
+    Sheet,
+    SheetContent,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
 } from "@/components/ui/sheet";
 import { useFilter, useSupabaseState } from "@/context";
 import { cn } from "@/lib/utils";
 import { STANDARD_SIZES } from "@/types";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 export default function FilterDrawer() {
   const {
@@ -22,43 +22,15 @@ export default function FilterDrawer() {
     clearAllFilters,
     clearPendingColorFilters,
     clearPendingSizeFilters,
-    updatePendingPriceRange,
     updatePendingInStockFilter,
     applyFilters,
     resetPendingFilters,
     filteredProductCount,
-    totalProductCount,
   } = useFilter();
 
   const { colors } = useSupabaseState();
 
   const formRef = useRef<HTMLFormElement>(null);
-
-  // Track the local price range while slider is being adjusted
-  const [localPriceRange, setLocalPriceRange] = useState(
-    pendingFilterState.priceRange
-  );
-
-  // Update local price range when pendingFilterState changes
-  useEffect(() => {
-    setLocalPriceRange(pendingFilterState.priceRange);
-  }, [pendingFilterState.priceRange]);
-
-  // Apply price range when done adjusting
-  const handlePriceRangeChange = (type: "min" | "max", value: number) => {
-    const newRange = { ...localPriceRange };
-    if (type === "min") {
-      newRange.min = Math.min(value, newRange.max);
-    } else {
-      newRange.max = Math.max(value, newRange.min);
-    }
-    setLocalPriceRange(newRange);
-  };
-
-  // Apply price range to pending filters
-  const handlePriceRangeApply = () => {
-    updatePendingPriceRange(localPriceRange.min, localPriceRange.max);
-  };
 
   // Handle closing the drawer (cancel changes)
   const handleCloseDrawer = () => {
@@ -70,7 +42,6 @@ export default function FilterDrawer() {
   // Handler for Apply Filters button
   const handleApplyFilters = () => {
     // Update price range from local state to pending state
-    updatePendingPriceRange(localPriceRange.min, localPriceRange.max);
 
     // Apply all pending filters
     applyFilters();
@@ -85,11 +56,7 @@ export default function FilterDrawer() {
   const activePendingFilterCount =
     pendingFilterState.selectedColors.length +
     pendingFilterState.selectedSizes.length +
-    (pendingFilterState.isInStock !== null ? 1 : 0) +
-    (pendingFilterState.priceRange.min > 0 ||
-    pendingFilterState.priceRange.max < 1000
-      ? 1
-      : 0);
+    (pendingFilterState.isInStock !== null ? 1 : 0);
 
   return (
     <Sheet

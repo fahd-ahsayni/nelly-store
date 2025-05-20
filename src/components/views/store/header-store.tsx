@@ -17,10 +17,7 @@ export default function HeaderStore() {
   const activeFilterCount =
     filterState.selectedColors.length +
     filterState.selectedSizes.length +
-    (filterState.isInStock !== null ? 1 : 0) +
-    (filterState.priceRange.min > 0 || filterState.priceRange.max < 1000
-      ? 1
-      : 0);
+    (filterState.isInStock !== null ? 1 : 0)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
