@@ -293,7 +293,7 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
               colors.push({
                 name: String(colorObj.name || ''),
                 hex: String(colorObj.hex || ''),
-                selectedColor: String(colorObj.selectedcolor || ''),
+                selectedColor: String(colorObj.selected_color || ''), // Changed from selectedcolor to selected_color
               });
             }
           }

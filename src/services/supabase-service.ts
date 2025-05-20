@@ -89,7 +89,7 @@ export const supabaseService = {
         .from('product_colors')
         .select(`
           color_id,
-          colors:color_id(id, name, hex, selectedcolor)
+          colors:color_id(id, name, hex, selected_color)
         `)
         .eq('product_id', dbProduct.id);
         
@@ -115,7 +115,7 @@ export const supabaseService = {
                 colors.push({
                   name: String(colorObj.name || ''),
                   hex: String(colorObj.hex || ''),
-                  selectedColor: String(colorObj.selectedcolor || ''),
+                  selectedColor: String(colorObj.selected_color || ''), // Changed from selectedcolor to selected_color
                 });
               }
             }

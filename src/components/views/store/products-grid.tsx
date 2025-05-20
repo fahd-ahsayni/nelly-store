@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useFilter, useSupabaseState } from "@/context";
 import { Product } from "@/types";
 import { AlertTriangle } from "lucide-react";
-import React, { useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 
 export default function ProductsGrid() {
   // Use our filter hook to get filtered products
@@ -21,21 +21,21 @@ export default function ProductsGrid() {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Function to check if a product is new
-  const isNewProduct = (product: Product) => {
+  // Function to check if a product is new - memoize to avoid recreating on every render
+  const isNewProduct = useCallback((product: Product) => {
     if (!product.createdAt) return false;
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
     return new Date(product.createdAt) > oneMonthAgo;
-  };
+  }, []);
 
-  // Handle quick view
-  const openQuickView = (product: Product, e: React.MouseEvent) => {
+  // Handle quick view - use callback to avoid recreating on every render
+  const openQuickView = useCallback((product: Product, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setSelectedProduct(product);
     setQuickViewOpen(true);
-  };
+  }, []);
 
   // Show loading state
   if (isLoading) {
@@ -81,7 +81,7 @@ export default function ProductsGrid() {
   }
 
   return (
-    <div className="isolate relative overflow-hidden">
+    <div className="isolate relative">
       <div className="absolute inset-x-0 -Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
         <svg
           className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
@@ -108,7 +108,13 @@ export default function ProductsGrid() {
           </defs>
         </svg>
       </div>
-      <div className="py-8 px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="pb-8 px-4 sm:px-6 lg:px-8 relative z-10">
+       <div className="w-full flex justify-between items-center pb-4">
+              <h2 className="lg:text-3xl text-xl font-medium tracking-tight text-zinc-700">
+                Products
+              </h2>
+          
+            </div>
         {filteredProducts.length > 0 ? (
           <>
             {/* Products Grid */}

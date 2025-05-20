@@ -10,6 +10,7 @@ import { AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { PiHandSwipeLeft } from "react-icons/pi";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
@@ -33,6 +34,7 @@ export default function FilterByCollections() {
 
   const {
     collections: fetchedCollections,
+    products,
     isLoading,
     error,
   } = useSupabaseState();
@@ -48,10 +50,19 @@ export default function FilterByCollections() {
     []
   );
 
+  // Filter collections to only include those with at least one product
+  const filteredCollections = useMemo(() => {
+    if (!fetchedCollections || !products) return [];
+
+    return fetchedCollections.filter((collection) =>
+      products.some((product) => product.collection.id === collection.id)
+    );
+  }, [fetchedCollections, products]);
+
   // Create the list of collections to display, prepending the "All" card.
   const displayCollections = useMemo(() => {
-    return [allCollectionsCard, ...(fetchedCollections || [])];
-  }, [allCollectionsCard, fetchedCollections]);
+    return [allCollectionsCard, ...(filteredCollections || [])];
+  }, [allCollectionsCard, filteredCollections]);
 
   // Update activeIndex when filterState.selectedCollectionId changes
   useEffect(() => {
@@ -108,22 +119,22 @@ export default function FilterByCollections() {
 
   if (isLoading) {
     return (
-    <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-8 bg-zinc-50 relative">
-      <div className="flex space-x-4 overflow-hidden">
-        {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className="flex-shrink-0 w-48 h-28">
-          <div className="flex flex-col items-center justify-center">
-            <div className="w-full flex items-center justify-center relative h-20 md:h-28 overflow-hidden">
-            <Skeleton className="w-full h-full rounded absolute inset-0 bg-zinc-100" />
-            <div className="relative z-10 text-center">
-              <Skeleton className="h-5 w-20 mx-auto mt-10 bg-zinc-200" />
+      <div className="w-full border-b border-zinc-800 py-4 px-3 lg:px-8 bg-zinc-50 relative">
+        <div className="flex space-x-4 overflow-hidden">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className="flex-shrink-0 w-48 h-28">
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-full flex items-center justify-center relative h-20 md:h-28 overflow-hidden">
+                  <Skeleton className="w-full h-full rounded absolute inset-0 bg-zinc-100" />
+                  <div className="relative z-10 text-center">
+                    <Skeleton className="h-5 w-20 mx-auto mt-10 bg-zinc-200" />
+                  </div>
+                </div>
+              </div>
             </div>
-            </div>
-          </div>
+          ))}
         </div>
-        ))}
       </div>
-    </div>
     );
   }
 
@@ -135,7 +146,8 @@ export default function FilterByCollections() {
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>
-              Failed to load collections. Please try again later or contact support.
+              Failed to load collections. Please try again later or contact
+              support.
             </AlertDescription>
           </Alert>
         </div>
@@ -149,11 +161,19 @@ export default function FilterByCollections() {
   return (
     <div
       className={cn(
-        "w-full border-b border-border py-4 px-3",
+        "w-full py-4 px-3",
         showButtons ? "lg:px-20" : "lg:px-6",
-        "bg-zinc-50 relative"
+        "relative"
       )}
     >
+      <div className="w-full flex justify-between items-center pb-4">
+        <h2 className="lg:text-3xl text-xl font-medium tracking-tight text-zinc-700">
+          Collection
+        </h2>
+        <p className="text-rose-600 flex items-center space-x-2 text-sm px-1 lg:px-3">
+          <span>Swipe to see more</span> <PiHandSwipeLeft />
+        </p>
+      </div>
       <div className="flex items-center">
         <Swiper
           modules={[Navigation]}
@@ -210,7 +230,7 @@ export default function FilterByCollections() {
               <div className="flex flex-col items-center justify-center">
                 <div
                   className={cn(
-                    "w-full flex items-center justify-center relative md:h-28 h-20 overflow-hidden transition-all duration-500 ease-in-out"
+                    "w-full flex items-center justify-center relative md:h-28 h-20 transition-all duration-500 ease-in-out"
                   )}
                 >
                   <Image

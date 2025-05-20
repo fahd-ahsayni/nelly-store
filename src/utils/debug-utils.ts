@@ -120,6 +120,21 @@ SELECT * FROM product_colors LIMIT 1;
 /**
  * Create SQL to fix column names if needed
  */
+export function createSchemaFixSql(): string {
+  return `
+-- Fix 'selectedcolor' column name to 'selected_color' (snake_case convention)
+ALTER TABLE colors RENAME COLUMN selectedcolor TO selected_color;
+
+-- Verify the change
+SELECT column_name, data_type, is_nullable 
+FROM information_schema.columns
+WHERE table_name = 'colors' AND table_schema = 'public';
+`;
+}
+
+/**
+ * Create SQL to fix column names if needed
+ */
 export function createColumnFixSql(): string {
   return `
 -- If you need to rename columns to match your code

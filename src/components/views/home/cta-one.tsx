@@ -1,5 +1,6 @@
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
+import Image from "next/image";
 
 export default function CtaOne() {
   return (
@@ -37,24 +38,26 @@ export default function CtaOne() {
               <h1 className="text-4xl/14 md:text-6xl/24 text-zinc-800">
                 This is a{" "}
                 <span className="font-newyork italic">components</span>{" "}
-                {/* eslint-disable-next-line */}
-                <img
+                <Image
                   className="my-auto -mt-3 inline w-24 md:-mt-6 md:w-48 md:h-20 h-12 object-cover rounded-full"
                   width={192}
                   height={108}
-                  src="https://img.freepik.com/free-photo/medium-shot-muslim-woman-posing-with-flowers_23-2150494552.jpg?t=st=1747352398~exp=1747355998~hmac=28e3a3003dacf370da821d84a260e3a7c6119294a49508ac1b236f8340198da9&w=1380"
-                  alt=""
-                ></img>{" "}
-                with special {/* eslint-disable-next-line */}
-                <img
+                  src="/images/product-photos/product-1.jpg"
+                  alt="Product image"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                ></Image>{" "}
+                with special{" "}
+                <Image
                   className="my-auto -mt-3 inline w-24 md:-mt-6 md:w-48 md:h-20 h-12 object-cover rounded-full"
                   width={192}
                   height={108}
-                  src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1747352698~exp=1747356298~hmac=fb438ccbd3b5e8b4173651ee36f90834e70b6bdad1120cdfdd6e3f614e9c4aed&w=1380"
-                  alt=""
-                ></img>{" "}
+                  src="/images/product-photos/product-2.jpg"
+                  alt="Product image"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                ></Image>{" "}
                 image <span className="font-newyork italic">capabilities.</span>{" "}
-                {/* eslint-disable-next-line */}
               </h1>
             </div>
             <div className="w-full flex justify-center mt-8">

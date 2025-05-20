@@ -10,7 +10,6 @@ import {
 } from "@/context";
 import type { Metadata } from "next";
 import { Lora } from "next/font/google"; // Import Lora
-import { addProductDebugging } from "@/utils/product-debug";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -24,6 +23,7 @@ const lora = Lora({
 if (process.env.NODE_ENV === "development") {
   // Call this on the client side only
   if (typeof window !== "undefined") {
+    const { addProductDebugging } = require("@/utils/product-debug");
     addProductDebugging();
   }
 }

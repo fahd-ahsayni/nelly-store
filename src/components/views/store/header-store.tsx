@@ -26,7 +26,7 @@ export default function HeaderStore() {
   };
 
   return (
-    <div className="bg-zinc-50 py-4 border-b border-zinc-200 sticky top-0 z-30 max-w-full px-3 lg:px-8">
+    <div className="bg-white py-4 border-b border-zinc-200 sticky top-0 z-30 max-w-full px-3 lg:px-8">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <AnimationTextHeaderStore />
