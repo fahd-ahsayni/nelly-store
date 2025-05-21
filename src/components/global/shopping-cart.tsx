@@ -3,13 +3,12 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetClose,
 } from "@/components/ui/sheet";
 import { useShoppingCart } from "@/context/shopping-cart-context";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import ProductCard from "./product-card";
 
 export default function ShoppingCart() {

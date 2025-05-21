@@ -10,6 +10,7 @@ import {
   ProductsList,
   TestimonialGrid,
 } from "@/components/views/home";
+import SerumSection from "@/components/views/home/serum-section";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
         </span>
       </VelocityScroll>
       <ProductsList />
+      <SerumSection />
       <CollectionPerview />
       <CtaOne />
       <CoverSection />

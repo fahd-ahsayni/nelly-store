@@ -1,9 +1,11 @@
-const CreativeBtn = () => {
+import { ReactNode } from "react";
+
+const CreativeBtn = ({ children }: { children?: ReactNode }) => {
   return (
     <>
       <button className="group relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-rose-400 to-rose-500  font-medium text-white border-2 border-rose-300 transition-all duration-300 hover:w-40">
         <div className="inline-flex whitespace-nowrap opacity-0 transition-all duration-200 group-hover:-translate-x-3 group-hover:opacity-100 font-semibold tracking-wide">
-          Check Now
+          {children ? children : "Explore Now"}
         </div>
         <div className="absolute right-3.5">
           <svg
