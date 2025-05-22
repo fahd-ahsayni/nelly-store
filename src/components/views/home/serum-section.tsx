@@ -4,7 +4,7 @@ export default function SerumSection() {
   return (
     <div className="w-full px-3 lg:px-8 pb-20">
       <div className="mb-8 max-w-lg">
-        <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-2">
+        <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-2 font-recoleta">
           <span className="font-newyork italic">Trending</span> products
         </h2>
         <p className="text-muted-fourground pl-2">
@@ -21,8 +21,8 @@ export default function SerumSection() {
         </div>
         <div className="col-span-4 bg-rose-300 border border-border flex flex-col justify-end p-6">
           <div className="mb-8">
-            <h2 className="text-4xl font-semibold">
-              Descover on this look seerum for face 50%
+            <h2 className="text-4xl font-recoleta">
+              Descover on this look seerum for face <span className="font-newyork italic">50%</span>
             </h2>
             <p className="mt-4 leading-5 text-muted-forground">
               {" "}

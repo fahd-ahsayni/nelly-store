@@ -134,7 +134,7 @@ export default function ProductsList() {
             </defs>
           </svg>
         </div>
-        <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-8">
+        <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-8 font-recoleta">
           <span className="font-newyork italic">Trending</span> products
         </h2>
         <div className="md:flex md:items-center md:justify-between">

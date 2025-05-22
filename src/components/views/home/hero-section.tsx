@@ -56,7 +56,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recolta leading-tight text-zinc-800 capitalize -mt-10"
+            className="text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recoleta leading-tight text-zinc-800 capitalize -mt-10"
           >
             Elevate your <span className="font-newyork italic">style</span> with
             selections from <span className="font-newyork italic">Nelly</span>{" "}
