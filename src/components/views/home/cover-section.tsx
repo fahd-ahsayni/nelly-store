@@ -5,7 +5,7 @@ export default function CoverSection() {
   return (
     <div className="mx-auto px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-8">
-        <div className="flex flex-col lg:flex-row lg:justify-between items-start md:gap-12 bg-rose-200 border border-zinc-800 py-12 px-8 h-[550px] md:h-[400px] rounded">
+        <div className="flex flex-col lg:flex-row lg:justify-between items-start md:gap-12 bg-rose-300 border border-zinc-800 py-12 px-8 h-[550px] md:h-[400px] rounded">
           <h2 className="text-3xl lg:text-5xl font-medium text-zinc-800">
             The Lyra <span className="font-newyork italic">ecosystem</span>{" "}
             brings <span className="font-newyork italic">together</span> our
@@ -20,7 +20,7 @@ export default function CoverSection() {
           </div>
         </div>
         <div className="relative -top-[200px] px-6 lg:px-8 flex justify-center">
-          <div className="size-40 absolute bg-zinc-800 z-10 -bottom-20 lg:bottom-auto lg:-top-20 rounded-full lg:-mr-80 flex items-center justify-center  ring-8 lg:ring-rose-200 ring-rose-50">
+          <div className="size-40 absolute bg-zinc-800 z-10 -bottom-20 lg:bottom-auto lg:-top-20 rounded-full lg:-mr-80 flex items-center justify-center  ring-8 lg:ring-rose-300 ring-rose-50">
             <SpinningText radius={6} fontSize={1} className="text-rose-200">
               shop now shop now shop now
             </SpinningText>

@@ -3,7 +3,6 @@
 import { allCollections } from "@/assets";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFilter, useSupabaseState } from "@/context";
 import { cn } from "@/lib/utils";
 import { Collection } from "@/types";
 import { AlertCircle } from "lucide-react";
@@ -15,13 +14,16 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useFilterStore, useSelectedCollectionId } from "@/stores/filterStore";
+import { useCollections, useProducts, useProductsError, useProductsLoading } from "@/stores/productStore";
 
 export default function FilterByCollections() {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
 
-  // Access the filter context to update selected collection
-  const { updateSelectedCollection, filterState } = useFilter();
+  // Access the filter store to update selected collection
+  const { updateSelectedCollection } = useFilterStore();
+  const collectionId = useSelectedCollectionId();
 
   // Find the index of the currently selected collection
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -32,12 +34,11 @@ export default function FilterByCollections() {
   const [isTablet, setIsTablet] = useState(false);
   const [shouldShowNavigation, setShouldShowNavigation] = useState(true);
 
-  const {
-    collections: fetchedCollections,
-    products,
-    isLoading,
-    error,
-  } = useSupabaseState();
+  // Get data from product store
+  const fetchedCollections = useCollections();
+  const products = useProducts();
+  const isLoading = useProductsLoading();
+  const error = useProductsError();
 
   // Define the "All" collection card.
   const allCollectionsCard: Collection = useMemo(
@@ -64,16 +65,15 @@ export default function FilterByCollections() {
     return [allCollectionsCard, ...(filteredCollections || [])];
   }, [allCollectionsCard, filteredCollections]);
 
-  // Update activeIndex when filterState.selectedCollectionId changes
+  // Update activeIndex when collectionId changes
   useEffect(() => {
-    const collectionId = filterState.selectedCollectionId;
     if (collectionId === null) {
       setActiveIndex(0); // "All" is at index 0
     } else {
       const index = displayCollections.findIndex((c) => c.id === collectionId);
       setActiveIndex(index >= 0 ? index : 0);
     }
-  }, [filterState.selectedCollectionId, displayCollections]);
+  }, [collectionId, displayCollections]);
 
   // Check window size for responsive behavior
   useEffect(() => {
@@ -112,9 +112,9 @@ export default function FilterByCollections() {
     setActiveIndex(index);
 
     // Map index to collection ID
-    const collectionId =
+    const newCollectionId =
       index === 0 ? null : displayCollections[index]?.id || null;
-    updateSelectedCollection(collectionId);
+    updateSelectedCollection(newCollectionId);
   };
 
   if (isLoading) {

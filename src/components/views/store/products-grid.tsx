@@ -5,17 +5,19 @@ import ProductCard from "@/components/product/product-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFilter, useSupabaseState } from "@/context";
+import { useFilteredProducts, useFilterMetrics } from "@/stores/filterStore";
+import { useProductsError, useProductsLoading } from "@/stores/productStore";
 import { Product } from "@/types";
 import { AlertTriangle } from "lucide-react";
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 
 export default function ProductsGrid() {
-  // Use our filter hook to get filtered products
-  const { filteredProducts, filterState, totalProductCount } = useFilter();
-
-  // Supabase state for isNewProduct function
-  const { isLoading, error } = useSupabaseState();
+  // Use Zustand store hooks instead of context hooks
+  const filteredProducts = useFilteredProducts();
+  
+  // Use product store hooks
+  const isLoading = useProductsLoading();
+  const error = useProductsError();
 
   // State for quick view
   const [quickViewOpen, setQuickViewOpen] = useState(false);

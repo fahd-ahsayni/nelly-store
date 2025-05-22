@@ -8,17 +8,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useShoppingCart } from "@/context/shopping-cart-context";
+import { useCartDrawerState, useCartItems, useCartStore, useCartTotal } from "@/stores/cartStore";
 import ProductCard from "./product-card";
 
 export default function ShoppingCart() {
-  const { isCartOpen, closeCart, cartItems, updateQuantity, removeFromCart } =
-    useShoppingCart();
-
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const isCartOpen = useCartDrawerState();
+  const cartItems = useCartItems();
+  const subtotal = useCartTotal();
+  const { closeCart, updateQuantity, removeFromCart } = useCartStore();
 
   return (
     <Sheet
@@ -27,13 +24,15 @@ export default function ShoppingCart() {
         if (!open) closeCart();
       }}
     >
-      <SheetContent side="right" maxWidth="max-w-md" className="bg-white">
+      <SheetContent
+        side="right"
+        maxWidth="min-w-[95vw] lg:min-w-auto lg:max-w-sm"
+        className="bg-white"
+      >
         <div className="flex h-full flex-col">
           {/* Header */}
           <SheetHeader>
-            <SheetTitle className="text-lg">
-              Shopping Cart
-            </SheetTitle>
+            <SheetTitle className="text-lg">Shopping Cart</SheetTitle>
           </SheetHeader>
           {/* Main content - scrollable area */}
           {cartItems.length > 0 ? (

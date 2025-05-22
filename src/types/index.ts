@@ -3,22 +3,22 @@ import { StaticImageData } from "next/image";
 export interface Product {
   id: string;
   name: string;
-  collection: Collection;
   price: number;
+  rating: number;
   imageSrc: string;
   imageAlt: string;
-  inStock: boolean;
   colors: Color[];
   sizes: string[];
-  rating: number;
+  inStock: boolean;
   slug: string;
   images: string[];
+  collection: Collection;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 }
 
 // Define standard sizes for display
-export const STANDARD_SIZES = ["S", "M", "L", "XL", "2XL"];
+export const STANDARD_SIZES = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 
 export interface Collection {
   id: string;
@@ -28,9 +28,9 @@ export interface Collection {
 }
 
 export interface Color {
-  name: string | any;
-  hex: string | any;
-  selectedColor: string | any;
+  name: string;
+  hex: string;
+  selectedColor: string;
 }
 
 // Additional types needed for the application
@@ -48,15 +48,15 @@ export interface CartItem {
 
 export interface WishlistItem {
   id: string;
+  productId: string;
   name: string;
   price: number;
   image: string;
   slug: string;
   inStock: boolean;
-  productId: string;
-  colorName?: string; // Added
-  colorHex?: string;  // Added
-  size?: string;      // Added
+  colorName?: string;
+  colorHex?: string;
+  size?: string;
 }
 
 // Dialog context types

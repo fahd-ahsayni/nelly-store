@@ -3,17 +3,18 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetClose,
 } from "@/components/ui/sheet";
-import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useWishlistDrawerState, useWishlistItems, useWishlistStore } from "@/stores/wishlistStore";
 import WishlistCard from "./wishlist-card";
 
 export default function WishlistDrawer() {
-  const { isOpen, closeWishlist, wishlistItems } = useWishlistDrawer();
+  const isOpen = useWishlistDrawerState();
+  const wishlistItems = useWishlistItems();
+  const { closeWishlist } = useWishlistStore();
 
   return (
     <Sheet
@@ -24,16 +25,14 @@ export default function WishlistDrawer() {
     >
       <SheetContent
         side="right"
-        className="w-full bg-white"
-        maxWidth="max-w-md"
+        className="bg-white"
+        maxWidth="min-w-[95vw] lg:min-w-auto lg:max-w-sm"
       >
         <div className="flex flex-col h-full">
-            <SheetHeader>
-              <SheetTitle className="text-lg">
-                My Wishlist
-              </SheetTitle>
-            </SheetHeader>
-      
+          <SheetHeader>
+            <SheetTitle className="text-lg">My Wishlist</SheetTitle>
+          </SheetHeader>
+
           <ScrollArea className="relative flex-1 px-4 sm:px-6 mt-6">
             {wishlistItems.length > 0 ? (
               <div className="space-y-4">

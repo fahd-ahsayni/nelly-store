@@ -80,7 +80,7 @@ export const supabaseService = {
     console.log(`Retrieved ${productsData?.length || 0} products`);
     
     // For each product, get its related data
-    const productsWithRelations = await Promise.all(productsData.map(async (dbProduct) => {
+    const productsWithRelations = await Promise.all(productsData.map(async (dbProduct: any) => {
       // Debug the product to see what we're working with
       console.log(`Processing product: ${dbProduct.id}, instock value:`, dbProduct.instock);
       

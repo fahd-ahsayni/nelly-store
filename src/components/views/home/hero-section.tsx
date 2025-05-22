@@ -99,10 +99,10 @@ export default function HeroSection() {
         {/* Image Section */}
         <div className="col-span-12 md:col-span-7 w-full h-full relative flex items-center">
             <div className="size-28 rounded-full absolute -top-16 md:top-auto md:bottom-16 right-8 md:-left-16 z-60">
-            <div className="relative w-full h-full z-20 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
+            <div className="relative w-full h-full z-28 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
               <SpinningText
                 radius={5}
-                fontSize={0.8}
+                fontSize={0.9}
                 className="font-semibold leading-none text-zinc-700"
               >
                 {`pre-order • pre-order • pre-order • `}

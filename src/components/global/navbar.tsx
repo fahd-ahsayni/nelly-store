@@ -3,21 +3,27 @@
 import { useState } from "react";
 import Banner from "./banner";
 import Image from "next/image";
-import { logo, shoppingBagIcon } from "@/assets";
-import { useShoppingCart } from "@/context/shopping-cart-context";
-import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
+import { logo } from "@/assets";
 import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { MenuIcon } from "lucide-react";
 import LogoVariable from "../design/logo-variable";
 import Link from "next/link";
+import { useCartItemCount, useCartStore } from "@/stores/cartStore";
+import { useWishlistItemCount, useWishlistStore } from "@/stores/wishlistStore";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { openCart } = useShoppingCart();
-  const { openWishlist } = useWishlistDrawer();
+  
+  // Replace context hooks with Zustand store hooks
+  const { openCart } = useCartStore();
+  const { openWishlist } = useWishlistStore();
+  
+  // Get counts from Zustand stores for badges
+  const cartCount = useCartItemCount();
+  const wishlistCount = useWishlistItemCount();
 
   return (
-    <header className="w-full z-10 bg-white">
+    <header className="w-full z-10 bg-white relative">
       <div className="w-full border-b border-border">
         <Banner />
         <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
@@ -48,18 +54,28 @@ export default function Navbar() {
           {/* Right section - Wishlist and Cart icons */}
           <div className="flex items-center gap-2 lg:gap-4">
             <button
-              className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
+              className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors relative"
               aria-label="View wishlist"
               onClick={openWishlist}
             >
               <HeartIcon className="w-5 h-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {wishlistCount > 9 ? "9+" : wishlistCount}
+                </span>
+              )}
             </button>
             <button
-              className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors"
+              className="p-1.5 hover:bg-zinc-100 rounded-full transition-colors relative"
               aria-label="View shopping cart"
               onClick={openCart}
             >
               <ShoppingBagIcon className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartCount > 9 ? "9+" : cartCount}
+                </span>
+              )}
             </button>
 
             {/* Mobile menu button */}

@@ -2,27 +2,34 @@
 
 import AnimationTextHeaderStore from "@/components/design/animation-text-header-store";
 import { Button } from "@/components/ui/button";
-import { useFilter } from "@/context";
+import { useActiveFilterCount, useFilterStore, useSearchQuery } from "@/stores/filterStore";
 import {
-    AdjustmentsHorizontalIcon,
-    MagnifyingGlassIcon,
+  AdjustmentsHorizontalIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HeaderStore() {
-  const { filterState, toggleFilterDrawer } = useFilter();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // Get active filter count
-  const activeFilterCount =
-    filterState.selectedColors.length +
-    filterState.selectedSizes.length +
-    (filterState.isInStock !== null ? 1 : 0)
+  const { toggleFilterDrawer, setSearchQuery } = useFilterStore();
+  const activeFilterCount = useActiveFilterCount();
+  const currentQuery = useSearchQuery();
+  const [searchInputValue, setSearchInputValue] = useState("");
+  
+  // Initialize search input with the global query value
+  useEffect(() => {
+    setSearchInputValue(currentQuery);
+  }, [currentQuery]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implement search functionality here
-    console.log("Search for:", searchQuery);
+    setSearchQuery(searchInputValue);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchInputValue(value);
+    // Optionally update global search query on each change for real-time filtering
+    setSearchQuery(value);
   };
 
   return (
@@ -41,8 +48,8 @@ export default function HeaderStore() {
                   </div>
                   <input
                     type="search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    value={searchInputValue}
+                    onChange={handleSearchChange}
                     className="block w-full pl-10 pr-3 py-2 bg-white border border-border rounded-md text-sm placeholder-zinc-600 focus:outline-none focus:ring-rose-500 focus:border-rose-500"
                     placeholder="Search products..."
                   />
@@ -76,8 +83,8 @@ export default function HeaderStore() {
               </div>
               <input
                 type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchInputValue}
+                onChange={handleSearchChange}
                 className="block w-full pl-10 pr-3 py-2 border border-border text-sm placeholder-zinc-800 focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-rose-300"
                 placeholder="Search products..."
               />

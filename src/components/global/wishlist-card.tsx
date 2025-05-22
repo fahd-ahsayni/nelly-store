@@ -1,7 +1,7 @@
 "use client";
 
-import { useShoppingCart } from "@/context/shopping-cart-context";
-import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
+import { useCartStore } from "@/stores/cartStore";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { WishlistItem } from "@/types";
 import { ShoppingBagIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -25,8 +25,8 @@ interface WishlistCardProps {
 export default function WishlistCard({ item }: WishlistCardProps) {
   const [isRemoving, setIsRemoving] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const { removeFromWishlist } = useWishlistDrawer();
-  const { addToCart } = useShoppingCart();
+  const { removeFromWishlist } = useWishlistStore();
+  const { addToCart } = useCartStore();
 
   const handleRemoveFromWishlist = async () => {
     setIsRemoving(true);

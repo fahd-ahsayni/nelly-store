@@ -1,109 +1,93 @@
-import { Collection, Color, Product } from "@/types";
+import { Collection, Product } from "@/types";
 
 /**
- * Database column names for consistent reference
+ * Database column name mappings to handle discrepancies 
+ * between our model and the database
  */
 export const DB_COLUMNS = {
-  COLLECTIONS: {
-    ID: 'id',
-    NAME: 'name',
-    DESCRIPTION: 'description',
-    IMAGE_SRC: 'imagesrc', // Note lowercase in database
-    CREATED_AT: 'created_at',
-  },
   PRODUCTS: {
     ID: 'id',
     NAME: 'name',
-    COLLECTION_ID: 'collection_id',
     PRICE: 'price',
+    CREATED_AT: 'createdat', // Note lowercase in database
+    UPDATED_AT: 'updatedat', // Note lowercase in database
+    COLLECTION_ID: 'collection_id',
     IMAGE_SRC: 'imagesrc', // Note lowercase in database
     IMAGE_ALT: 'imagealt', // Note lowercase in database
-    IN_STOCK: 'instock',
+    IN_STOCK: 'instock', // Note lowercase in database
     RATING: 'rating',
     SLUG: 'slug',
-    DESCRIPTION: 'description',
-    CREATED_AT: 'createdat',
-    UPDATED_AT: 'updatedat',
-    SIZES: 'sizes',
     IMAGE_URLS: 'image_urls',
-  },
-  COLORS: {
-    NAME: 'name',
-    HEX: 'hex',
-    SELECTED_COLOR: 'selectedcolor',
+    SIZES: 'sizes',
   },
 };
 
 /**
- * Maps database product to our application model
+ * Maps a product from the database format to our application model format
  */
 export function mapDatabaseProductToModel(dbProduct: any): Product {
-  // Map images from string array stored in database to string[]
-  let images: string[] = [];
-  if (dbProduct.image_urls) {
-    try {
-      // If it's a string representation of an array, parse it
-      if (typeof dbProduct.image_urls === 'string') {
-        images = JSON.parse(dbProduct.image_urls);
-      } else if (Array.isArray(dbProduct.image_urls)) {
-        images = dbProduct.image_urls;
-      }
-    } catch (error) {
-      console.error("Error parsing product images:", error);
-    }
-  }
+  // Parse collection from the nested collection data
+  const collection: Collection = dbProduct.collections ? {
+    id: dbProduct.collections.id,
+    name: dbProduct.collections.name,
+    description: dbProduct.collections.description || '',
+    imageSrc: dbProduct.collections.imagesrc || '/placeholder.jpg',
+  } : {
+    id: 'unknown',
+    name: 'Unknown',
+    description: '',
+    imageSrc: '/placeholder.jpg',
+  };
 
-  // Map sizes from string array stored in database to string[]
+  // Parse sizes from array or string
   let sizes: string[] = [];
   if (dbProduct.sizes) {
-    try {
-      // If it's a string representation of an array, parse it
-      if (typeof dbProduct.sizes === 'string') {
+    if (typeof dbProduct.sizes === 'string') {
+      try {
         sizes = JSON.parse(dbProduct.sizes);
-      } else if (Array.isArray(dbProduct.sizes)) {
-        sizes = dbProduct.sizes;
+      } catch {
+        sizes = [dbProduct.sizes]; // If parsing fails, use as a single size
       }
-    } catch (error) {
-      console.error("Error parsing product sizes:", error);
+    } else if (Array.isArray(dbProduct.sizes)) {
+      sizes = dbProduct.sizes;
     }
   }
 
-  // Ensure boolean values are properly converted
-  const inStock = typeof dbProduct.instock === 'boolean' 
-    ? dbProduct.instock 
-    : dbProduct.instock === true || dbProduct.instock === 'true' || dbProduct.instock === 't';
+  // Parse images from array or string
+  let images: string[] = [];
+  if (dbProduct.image_urls) {
+    if (typeof dbProduct.image_urls === 'string') {
+      try {
+        images = JSON.parse(dbProduct.image_urls);
+      } catch {
+        images = [dbProduct.image_urls]; // If parsing fails, use as a single image
+      }
+    } else if (Array.isArray(dbProduct.image_urls)) {
+      images = dbProduct.image_urls;
+    }
+  }
 
+  // If no images found, fallback to the main image
+  if (images.length === 0 && dbProduct.imagesrc) {
+    images = [dbProduct.imagesrc];
+  }
+
+  // Map the database product to our model format
   return {
     id: dbProduct.id,
-    name: dbProduct.name,
-    collection: {
-      id: dbProduct.collections?.id || '',
-      name: dbProduct.collections?.name || '',
-      description: dbProduct.collections?.description || '',
-      imageSrc: dbProduct.collections?.imagesrc || '', // Note accessing as lowercase
-    },
-    price: parseFloat(dbProduct.price) || 0,
-    imageSrc: dbProduct.imagesrc || dbProduct.imageSrc || '',
-    imageAlt: dbProduct.imagealt || dbProduct.imageAlt || '',
-    inStock: inStock,
-    colors: [], // Colors are handled separately via joins
-    sizes: sizes.length > 0 ? sizes : ["ONE SIZE"],
-    rating: parseFloat(dbProduct.rating) || 0,
-    slug: dbProduct.slug || '',
-    images: images.length > 0 ? images : [dbProduct.imagesrc || dbProduct.imageSrc || ''],
-    createdAt: dbProduct.createdat || dbProduct.createdAt || new Date().toISOString(),
-    updatedAt: dbProduct.updatedat || dbProduct.updatedAt || new Date().toISOString(),
-  };
-}
-
-/**
- * Maps database collection to our application model
- */
-export function mapDatabaseCollectionToModel(dbCollection: any): Collection {
-  return {
-    id: dbCollection.id || '',
-    name: dbCollection.name || '',
-    description: dbCollection.description || '',
-    imageSrc: dbCollection.imagesrc || '', // Note accessing as lowercase
+    name: dbProduct.name || 'Unknown Product',
+    price: typeof dbProduct.price === 'number' ? dbProduct.price : parseFloat(dbProduct.price) || 0,
+    rating: typeof dbProduct.rating === 'number' ? dbProduct.rating : parseFloat(dbProduct.rating) || 0,
+    imageSrc: dbProduct.imagesrc || '/placeholder.jpg',
+    imageAlt: dbProduct.imagealt || dbProduct.name || 'Product image',
+    colors: [], // Colors are handled separately
+    sizes: sizes.length > 0 ? sizes : ['ONE SIZE'],
+    inStock: typeof dbProduct.instock === 'boolean' ? dbProduct.instock : 
+             typeof dbProduct.instock === 'string' ? dbProduct.instock.toLowerCase() === 'true' : true,
+    slug: dbProduct.slug || `product-${dbProduct.id}`,
+    images,
+    collection,
+    createdAt: dbProduct.createdat || new Date().toISOString(),
+    updatedAt: dbProduct.updatedat || new Date().toISOString(),
   };
 }

@@ -1,24 +1,38 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '@/types/database';
-
-// Check if required environment variables are defined
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  throw new Error('Missing environment variable: NEXT_PUBLIC_SUPABASE_URL');
-}
-
-if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  throw new Error('Missing environment variable: NEXT_PUBLIC_SUPABASE_ANON_KEY');
-}
 
 // Initialize the Supabase client
-export const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Helper function to handle errors consistently
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+/**
+ * Helper function to handle Supabase errors and return a user-friendly message
+ */
 export function handleSupabaseError(error: unknown): string {
-  console.error('Supabase error:', error);
-  if (error instanceof Error) return error.message;
-  return 'An unexpected error occurred';
+  if (typeof error === 'object' && error !== null) {
+    // Handle Supabase error object
+    if ('message' in error && typeof error.message === 'string') {
+      return error.message;
+    }
+    
+    // Handle PostgreSQL error code
+    if ('code' in error && typeof error.code === 'string') {
+      switch (error.code) {
+        case '23505':
+          return 'A record with this value already exists.';
+        case '23503':
+          return 'This record is referenced by another record and cannot be deleted.';
+        case '23502':
+          return 'A required field is missing.';
+        case 'PGRST116':
+          return 'No records found.';
+        default:
+          return `Database error (${error.code})`;
+      }
+    }
+  }
+  
+  // Generic error handler
+  return 'An unknown error occurred. Please try again later.';
 }

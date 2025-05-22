@@ -29,7 +29,6 @@ export default function CartCard({ item }: CartCardProps) {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500))
       // Here you would dispatch an action to remove the item from cart
-      console.log(`Removed ${item.name} from cart`)
     } catch (error) {
       console.error('Error removing from cart:', error)
     } finally {
@@ -43,7 +42,6 @@ export default function CartCard({ item }: CartCardProps) {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500))
       // Here you would dispatch an action to add the item to wishlist
-      console.log(`Added ${item.name} to wishlist`)
     } catch (error) {
       console.error('Error adding to wishlist:', error)
     } finally {

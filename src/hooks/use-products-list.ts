@@ -1,23 +1,20 @@
 "use client";
 
-import { useSupabaseState } from "@/context";
-import { Product } from "@/types";
-import { useEffect, useMemo, useState } from "react";
 import { filterNewProducts, filterProductsByCollection } from "@/lib/product-utils";
+import { useProducts, useProductsError, useProductsLoading, useProductStore } from "@/stores/productStore";
+import { Product } from "@/types";
+import { useMemo, useState } from "react";
 
 export function useProductsList() {
-  const { 
-    products, 
-    collections, 
-    isLoading, 
-    error,
-    fetchProducts 
-  } = useSupabaseState();
+  const products = useProducts();
+  const isLoading = useProductsLoading();
+  const error = useProductsError();
+  const { fetchProducts } = useProductStore();
   
-  // Use a local state for filtering, independent of the global FilterContext
+  // Use a local state for filtering, independent of the global FilterStore
   const [activeFilter, setActiveFilter] = useState<string>("all");
   
-  // Apply filtering locally instead of using FilterContext
+  // Apply filtering locally instead of using FilterStore
   const filteredProducts = useMemo(() => {
     if (!products || products.length === 0) {
       return [];

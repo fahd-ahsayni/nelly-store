@@ -1,6 +1,6 @@
 "use client";
 
-import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { Product } from "@/types";
 import { Heart } from "lucide-react";
 import Image from "next/image";
@@ -20,8 +20,8 @@ export default function ProductCard({
   onQuickView,
   className = "",
 }: ProductCardProps) {
-  // Wishlist integration
-  const { addToWishlist, isItemInWishlist } = useWishlistDrawer();
+  // Replace Context API with Zustand store
+  const { addToWishlist, isItemInWishlist } = useWishlistStore();
 
   // Handle adding to wishlist
   const handleAddToWishlist = (e: React.MouseEvent) => {

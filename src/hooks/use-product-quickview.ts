@@ -1,7 +1,7 @@
 "use client";
 
-import { useShoppingCart } from "@/context/shopping-cart-context";
-import { useWishlistDrawer } from "@/context/wishlist-drawer-context";
+import { useCartStore } from "@/stores/cartStore";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { Color, Product } from "@/types";
 import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -37,9 +37,9 @@ interface UseProductQuickviewProps {
 }
 
 interface UseProductQuickviewReturn {
-  selectedColor: Color | null; // Changed to allow null
+  selectedColor: Color | null;
   setSelectedColor: (color: Color) => void;
-  selectedSize: string | null; // Changed to allow null
+  selectedSize: string | null;
   setSelectedSize: (size: string) => void;
   quantity: number;
   increaseQuantity: () => void;
@@ -66,17 +66,16 @@ export function useProductQuickview({
   };
 
   // State management
-  const [selectedColor, setSelectedColor] = useState<Color | null>(null); // Initialize to null
-  const [selectedSize, setSelectedSize] = useState<string | null>(null); // Initialize to null
-
+  const [selectedColor, setSelectedColor] = useState<Color | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
   const [addingToWishlist, setAddingToWishlist] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Context hooks
-  const { addToCart } = useShoppingCart();
-  const { addToWishlist, isItemInWishlist } = useWishlistDrawer();
+  // Store hooks
+  const { addToCart } = useCartStore();
+  const { addToWishlist, isItemInWishlist } = useWishlistStore();
   const isInWishlist = product ? isItemInWishlist(product.id) : false;
 
   // Update state when product changes

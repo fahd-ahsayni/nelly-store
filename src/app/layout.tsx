@@ -1,36 +1,13 @@
-import { ConfirmDialog } from "@/components/global/confirm-dialog";
+import { StoreProvider } from "@/providers/store-provider";
 import ShoppingCart from "@/components/global/shopping-cart";
 import WishlistDrawer from "@/components/global/wishlist-drawer";
-import {
-  ShoppingCartProvider,
-  WishlistDrawerProvider,
-  DialogProvider,
-  SupabaseProvider,
-  FilterProvider,
-} from "@/context";
 import type { Metadata } from "next";
-import { Lora } from "next/font/google"; // Import Lora
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-
-// Initialize Lora font
-const lora = Lora({
-  subsets: ["latin"],
-  display: "swap",
-});
-
-// Only add debugging in development
-if (process.env.NODE_ENV === "development") {
-  // Call this on the client side only
-  if (typeof window !== "undefined") {
-    const { addProductDebugging } = require("@/utils/product-debug");
-    addProductDebugging();
-  }
-}
 
 export const metadata: Metadata = {
-  title: "Modern E-commerce",
-  description: "A modern e-commerce website with Next.js and TypeScript",
+  title: "My Shop",
+  description: "Modern e-commerce application",
 };
 
 export default function RootLayout({
@@ -39,25 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${lora.className} w-screen overflow-x-hidden bg-rose-50`}
-      >
-        {/* Apply Lora font class */}
-        <FilterProvider>
-          <SupabaseProvider>
-            <DialogProvider>
-              <ShoppingCartProvider>
-                <WishlistDrawerProvider>
-                  {children}
-                  <ShoppingCart />
-                  <WishlistDrawer />
-                  <Toaster />
-                </WishlistDrawerProvider>
-              </ShoppingCartProvider>
-            </DialogProvider>
-          </SupabaseProvider>
-        </FilterProvider>
+    <html lang="en">
+      <body>
+          <StoreProvider>
+            <ShoppingCart />
+            <WishlistDrawer />
+            {children}
+          </StoreProvider>
       </body>
     </html>
   );
