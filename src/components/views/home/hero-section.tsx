@@ -7,11 +7,19 @@ import ImageCarousel from "@/components/ui/images-carousel";
 import { SpinningText } from "@/components/ui/spinning-text";
 import UnderlineToBackground from "@/components/ui/underline-to-background";
 import { carouselImages } from "@/constants";
+import { useLoading } from "@/providers/loading-provider";
 import { motion } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import Image from "next/image";
 
 export default function HeroSection() {
+  const { showPageContent } = useLoading();
+  
+  // Animation controls that only trigger when loading is complete
+  const initialState = { opacity: 0, y: 20 };
+  const animateState = showPageContent ? { opacity: 1, y: 0 } : initialState;
+  const buttonAnimateState = showPageContent ? { opacity: 1 } : { opacity: 0 };
+  
   return (
     <section className="flex flex-col w-full h-screen overflow-hidden">
       {/* Header */}
@@ -53,8 +61,8 @@ export default function HeroSection() {
             priority
           />
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={initialState}
+            animate={animateState}
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recoleta leading-tight text-zinc-800 capitalize -mt-10"
           >
@@ -65,7 +73,7 @@ export default function HeroSection() {
 
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={buttonAnimateState}
             transition={{ delay: 0.6, duration: 0.8 }}
             className="mt-6 md:mt-10"
           >
@@ -74,8 +82,8 @@ export default function HeroSection() {
 
           {/* Social Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={initialState}
+            animate={animateState}
             transition={{ delay: 0.8, duration: 0.6 }}
             className="absolute bottom-8 flex items-center gap-x-8"
           >
