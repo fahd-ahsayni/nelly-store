@@ -96,7 +96,7 @@ export function useReadLocalStorage<T>(
 
   // this is a custom event, triggered in writeValueToLocalStorage
   // See: useLocalStorage()
-  useEventListener("local-storage", handleStorageChange);
+  useEventListener("local-storage" as any, handleStorageChange);
 
   return storedValue;
 }
