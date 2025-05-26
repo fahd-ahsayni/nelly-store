@@ -15,7 +15,6 @@ import Image from "next/image";
 export default function HeroSection() {
   const { showPageContent } = useLoading();
   
-  // Animation controls that only trigger when loading is complete
   const initialState = { opacity: 0, y: 20 };
   const animateState = showPageContent ? { opacity: 1, y: 0 } : initialState;
   const buttonAnimateState = showPageContent ? { opacity: 1 } : { opacity: 0 };
