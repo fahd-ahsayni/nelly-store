@@ -56,9 +56,9 @@ export function LoadingProvider({ children }: LoadingProviderProps) {
 
       {/* Apply fade-in transition to main content */}
       <div 
+        className="transition-opacity duration-800 ease-in-out"
         style={{ 
           opacity: showPageContent ? 1 : 0,
-          transition: "opacity 0.8s ease-in-out",
           visibility: showPageContent ? "visible" : "hidden"
         }}
       >

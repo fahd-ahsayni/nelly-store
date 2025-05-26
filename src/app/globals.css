@@ -167,3 +167,24 @@
     radial-gradient(circle at 99% 20%, hsl(348, 63%, 60%) 1%, transparent 68%);
   background-blend-mode: overlay, normal, normal, normal, normal, normal, normal;
 }
+
+/* Loading screen animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader .word,
+.loader .digit {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.loader .block {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.loader .divider {
+  transform-origin: center top;
+  will-change: transform;
+}
