@@ -1,7 +1,9 @@
-import React from "react";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
-interface SlideArrowButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface SlideArrowButtonProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   text?: string;
   primaryColor?: string;
 }
@@ -13,7 +15,8 @@ export default function SlideArrowButton({
   ...props
 }: SlideArrowButtonProps) {
   return (
-    <button
+    <Link
+      href="/store"
       className={`group relative rounded-full border border-zinc-600 bg-white p-2 text-xl font-semibold ${className}`}
       {...props}
     >
@@ -28,6 +31,6 @@ export default function SlideArrowButton({
       <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-zinc-800 transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-white">
         {text}
       </span>
-    </button>
+    </Link>
   );
 }
