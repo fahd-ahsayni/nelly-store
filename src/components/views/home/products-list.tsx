@@ -14,6 +14,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useRef, useState } from "react";
 import { useProductStore } from "@/stores/productStore";
+import Link from "next/link";
 
 export default function ProductsList() {
   const [api, setApi] = useState<
@@ -31,9 +32,6 @@ export default function ProductsList() {
     error,
     isNewProduct,
   } = useProductsList();
-
-  // Replace context with Zustand store
-  const { fetchProducts } = useProductStore();
 
   // Create a ref to store the autoplay plugin instance
   const autoplayRef = useRef<any>(Autoplay({ delay: 2000 }));
@@ -134,9 +132,18 @@ export default function ProductsList() {
             </defs>
           </svg>
         </div>
-        <h2 className="md:text-5xl text-4xl tracking-tight text-zinc-800 mb-8 font-recoleta">
-          <span className="font-newyork italic">Trending</span> products
-        </h2>
+        <div className="w-full flex justify-between items-center">
+          <h2 className="md:text-5xl text-4xl tracking-tight mb-8 font-serif">
+            Trending <span className="font-light italic text-rose-600">Product</span>
+          </h2>
+          <Link
+            href="/shop"
+            className="hidden font-medium text-rose-600 hover:text-rose-500 md:block"
+          >
+            Shop the collection
+            <span aria-hidden="true"> &rarr;</span>
+          </Link>
+        </div>
         <div className="md:flex md:items-center md:justify-between">
           <div className="md:flex-1 md:pr-4 max-w-full">
             <ScrollArea className="w-full whitespace-nowrap">
@@ -188,17 +195,6 @@ export default function ProductsList() {
               <ScrollBar orientation="horizontal" className="h-0" />
             </ScrollArea>
           </div>
-
-          {/* Only show "Shop the collection" if we have collections */}
-          {uniqueCollections.length > 0 && (
-            <a
-              href="#"
-              className="hidden font-medium text-rose-600 hover:text-rose-500 md:block"
-            >
-              Shop the collection
-              <span aria-hidden="true"> &rarr;</span>
-            </a>
-          )}
         </div>
 
         <div className="mt-10 relative">

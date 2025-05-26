@@ -5,5 +5,16 @@ import profile from "./images/profile.jpg";
 import logo from "./logo/logo.webp";
 import shoppingBagIcon from "./svgs/shopping bag.svg";
 
-export { allCollections, logo, noiseBackground, noiseGradient, profile, shoppingBagIcon };
+import hero1Image from "./images/hero1.webp";
+import hero2Image from "./images/hero2.webp";
 
+export {
+  allCollections,
+  hero1Image,
+  hero2Image,
+  logo,
+  noiseBackground,
+  noiseGradient,
+  profile,
+  shoppingBagIcon,
+};

@@ -169,7 +169,7 @@ export default function ProductQuickview({
 
                     {/* Price section */}
                     <p className="text-xl font-medium text-zinc-900 mt-1">
-                      ${displayProduct.price.toFixed(2)}
+                      {displayProduct.price.toFixed(2)} Dhs
                     </p>
 
                     {/* Reviews */}

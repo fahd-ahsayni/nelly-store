@@ -24,10 +24,10 @@ export default function Home() {
         className="bg-accent py-4 relative z-20"
       >
         <span className="inline-flex items-center gap-2 whitespace-nowrap">
-          <span className="tracking-widest text-rose-200 font-newyork">
+          <span className="text-rose-200 font-serif">
             Nelly Collection
           </span>
-          <SvgStar className="w-8 h-8 text-rose-200 ml-4" />
+          <SvgStar className="w-7 h-7 text-rose-200 ml-4" />
         </span>
       </VelocityScroll>
       <ProductsList />

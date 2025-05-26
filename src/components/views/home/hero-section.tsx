@@ -1,6 +1,6 @@
 "use client";
 
-import { noiseBackground, shoppingBagIcon } from "@/assets";
+import { noiseBackground } from "@/assets";
 import Navbar from "@/components/global/navbar";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import ImageCarousel from "@/components/ui/images-carousel";
@@ -9,16 +9,17 @@ import UnderlineToBackground from "@/components/ui/underline-to-background";
 import { carouselImages } from "@/constants";
 import { useLoading } from "@/providers/loading-provider";
 import { motion } from "framer-motion";
-import { ArrowDownRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   const { showPageContent } = useLoading();
-  
+
   const initialState = { opacity: 0, y: 20 };
   const animateState = showPageContent ? { opacity: 1, y: 0 } : initialState;
   const buttonAnimateState = showPageContent ? { opacity: 1 } : { opacity: 0 };
-  
+
   return (
     <section className="flex flex-col w-full h-screen overflow-hidden">
       {/* Header */}
@@ -63,11 +64,14 @@ export default function HeroSection() {
             initial={initialState}
             animate={animateState}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl relative md:text-5xl lg:text-[3.68vw] text-balance font-recoleta leading-tight text-zinc-800 capitalize -mt-10"
+            className="text-4xl relative md:text-5xl lg:text-6xl font-serif capitalize -mt-10"
           >
-            Elevate your <span className="font-newyork italic">style</span> with
-            selections from <span className="font-newyork italic">Nelly</span>{" "}
-            Collection.
+            Elevate your{" "}
+            <span className="font-serif italic font-light text-rose-600">style</span> with
+            selections from{" "}
+            <span className="font-serif italic font-light text-rose-600">
+              Nelly Collections
+            </span>.
           </motion.h1>
 
           <motion.div
@@ -76,7 +80,9 @@ export default function HeroSection() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="mt-6 md:mt-10"
           >
-            <InteractiveHoverButton>Shop Now</InteractiveHoverButton>
+            <Link href="/store">
+              <InteractiveHoverButton>Shop Now</InteractiveHoverButton>
+            </Link>
           </motion.div>
 
           {/* Social Links */}
@@ -105,8 +111,8 @@ export default function HeroSection() {
 
         {/* Image Section */}
         <div className="col-span-12 md:col-span-7 w-full h-full relative flex items-center">
-            <div className="size-28 rounded-full absolute -top-16 md:top-auto md:bottom-16 right-8 md:-left-16 z-60">
-            <div className="relative w-full h-full z-28 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
+          <div className="size-28 rounded-full absolute -top-16 md:top-auto md:bottom-16 right-8 md:-left-16 z-60">
+            <div className="relative w-full h-full z-10 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
               <SpinningText
                 radius={5}
                 fontSize={0.9}
@@ -114,7 +120,10 @@ export default function HeroSection() {
               >
                 {`pre-order • pre-order • pre-order • `}
               </SpinningText>
-              <ArrowDownRight strokeWidth={1} className="absolute text-zinc-700 size-[40px]" />
+              <ArrowUpRight
+                strokeWidth={1}
+                className="absolute text-zinc-700 size-[40px]"
+              />
             </div>
           </div>
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden">

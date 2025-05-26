@@ -13,7 +13,7 @@ export default function LogoVariable() {
       <div className="w-full h-full items-center justify-center grid text-justify">
         <VariableFontCursorProximity
           label={`Nelly Collection`}
-          className="text-2xl md:text-3xl"
+          className="text-2xl md:text-3xl !font-serif"
           fromFontVariationSettings="'wght' 400, 'slnt' 0"
           toFontVariationSettings="'wght' 900, 'slnt' -10"
           falloff="exponential"

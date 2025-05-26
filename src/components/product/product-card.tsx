@@ -124,14 +124,14 @@ export default function ProductCard({
       </div>
 
       <div className="mt-4">
-        <h3 className="text-zinc-700 line-clamp-1">
+        <h3 className="line-clamp-1 font-medium">
           {product.name}
         </h3>
-        <p className="text-zinc-500 mt-1">
+        <p className="text-zinc-600 mt-1">
           {product.collection.name}
         </p>
         <p className="font-medium text-zinc-900 mt-1">
-          ${product.price.toFixed(2)}
+          {product.price.toFixed(2)} Dhs
         </p>
       </div>
     </div>
