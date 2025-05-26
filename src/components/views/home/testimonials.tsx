@@ -53,13 +53,9 @@ export default function TestimonialGrid() {
     <section className="pb-12 px-4 md:px-8 -mt-20">
       <div className="">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl mb-3">
-            What Our <span className="font-newyork italic">Customers</span> Say
+          <h2 className="text-3xl md:text-5xl mb-3 font-serif">
+            What Our <span className="font-light text-rose-600 italic">Customers</span> Say
           </h2>
-          <p className="text-zinc-600 max-w-2xl mx-auto">
-            Real feedback from our community of beautiful hijabis who love our
-            collections
-          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">

@@ -10,7 +10,7 @@ export default function AnimationTextHeaderStore() {
       <LayoutGroup>
         <motion.span className="flex whitespace-pre" layout>
           <motion.span
-            className="pt-0.5 sm:pt-1 md:pt-2 font-newyork italic"
+            className="font-serif"
             layout
             transition={{ type: "spring", damping: 30, stiffness: 400 }}
           >
@@ -23,7 +23,7 @@ export default function AnimationTextHeaderStore() {
               "Exclusives",
               "Premium ✨",
             ]}
-            mainClassName="text-primary px-2 sm:px-2 md:px-3 bg-[#f4d1d3] overflow-hidden py-0.5 sm:py-1 justify-center"
+            mainClassName="text-primary font-serif italic font-light overflow-hidden justify-center"
             staggerFrom={"last"}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}

@@ -1,10 +1,9 @@
-import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
 import Image from "next/image";
 
 export default function CtaOne() {
   return (
-    <div className="isolate relative z-0">
+    <div className="isolate relative z-0 py-12 lg:py-24">
       <main>
         <div className=" px-6 lg:px-8">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
@@ -35,9 +34,12 @@ export default function CtaOne() {
           </div>
           <div className="mx-auto max-w-5xl py-16 sm:py-24 lg:pb-28 lg:pt-0">
             <div className="text-center">
-              <h1 className="text-4xl/14 md:text-6xl/24 text-zinc-800">
-                This is a{" "}
-                <span className="font-newyork italic">components</span>{" "}
+              <h1 className="text-4xl/14 md:text-7xl/24 font-serif">
+                Modest{" "}
+                <span className="text-rose-600 font-light italic">
+                  {" "}
+                  fashion
+                </span>{" "}
                 <Image
                   className="my-auto -mt-3 inline w-24 md:-mt-6 md:w-48 md:h-20 h-12 object-cover rounded-full"
                   width={192}
@@ -47,7 +49,7 @@ export default function CtaOne() {
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
                 ></Image>{" "}
-                with special{" "}
+                designed for{" "}
                 <Image
                   className="my-auto -mt-3 inline w-24 md:-mt-6 md:w-48 md:h-20 h-12 object-cover rounded-full"
                   width={192}
@@ -57,7 +59,11 @@ export default function CtaOne() {
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
                 ></Image>{" "}
-                image <span className="font-newyork italic">capabilities.</span>{" "}
+                <span className="text-rose-600 font-light italic">
+                  confidence
+                </span>{" "}
+                and{" "}
+                <span className="text-rose-600 font-light italic">grace</span>.
               </h1>
             </div>
             <div className="w-full flex justify-center mt-8">

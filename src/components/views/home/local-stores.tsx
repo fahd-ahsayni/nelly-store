@@ -30,13 +30,12 @@ export default function LocalStores() {
         </svg>
       </div>
       <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-5xl mb-3">
-          What Our <span className="font-newyork italic">Customers</span> Say
+        <h2 className="text-3xl md:text-5xl font-serif mb-3">
+          Visit
+          <span className="font-light text-rose-600 italic">
+            Our Stores
+          </span>{" "}
         </h2>
-        <p className="text-zinc-600 max-w-2xl mx-auto">
-          Real feedback from our community of beautiful hijabis who love our
-          collections
-        </p>
       </div>
       <div className="mx-auto max-w-7xl grid min-h-full grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 px-0 lg:px-8 gap-4 h-[799px]">
         <div className="relative flex">

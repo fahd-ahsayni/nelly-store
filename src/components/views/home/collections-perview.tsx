@@ -55,14 +55,18 @@ export default function CollectionPerview() {
             <div className="absolute inset-0 bg-white overflow-hidden">
               <Image
                 src={collection1}
-                alt=""
+                alt="Collection Foulard"
                 className="h-full w-full object-cover object-center brightness-75"
+                priority
+                quality={90}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="eager"
               />
             </div>
             <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
                 <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                  Collection Foulard – كولكشن الحجابـات
+                  Collection Foulard
                 </p>
               </div>
             </div>
@@ -73,14 +77,17 @@ export default function CollectionPerview() {
             <div className="absolute inset-0 overflow-hidden">
               <Image
                 src={collection3}
-                alt=""
+                alt="Collection des Robes"
                 className="h-full w-full object-cover object-center brightness-75"
+                quality={90}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
               />
             </div>
             <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
                 <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                  Collection des Robes – كولكشن فساتين
+                  Collection des Robes
                 </p>
               </div>
             </div>
@@ -91,15 +98,18 @@ export default function CollectionPerview() {
             <div className="absolute inset-0 overflow-hidden">
               <Image
                 src={collection4}
-                alt=""
+                alt="Serum anti taches"
                 className="h-full w-full object-cover object-center brightness-75"
+                quality={90}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
               />
             </div>
             <div className="relative flex h-full flex-col justify-end overflow-hidden">
               <div className="absolute inset-0 flex flex-col justify-end">
                 <div className="px-8 pb-8 sm:px-10 sm:pb-10">
                   <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                    Serum anti taches – سيروم الكلف و التصبغات
+                    Serum anti taches
                   </p>
                 </div>
               </div>
@@ -111,14 +121,17 @@ export default function CollectionPerview() {
             <div className="absolute inset-0 overflow-hidden">
               <Image
                 src={collection2}
-                alt=""
+                alt="Collection Khimar"
                 className="h-full w-full object-cover object-center brightness-75"
+                quality={90}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
               />
             </div>
             <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
                 <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                  Collection Khimar - كولكشن خمار
+                  Collection Khimar
                 </p>
               </div>
             </div>

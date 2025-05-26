@@ -13,11 +13,11 @@ import { useWishlistItemCount, useWishlistStore } from "@/stores/wishlistStore";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   // Replace context hooks with Zustand store hooks
   const { openCart } = useCartStore();
   const { openWishlist } = useWishlistStore();
-  
+
   // Get counts from Zustand stores for badges
   const cartCount = useCartItemCount();
   const wishlistCount = useWishlistItemCount();
@@ -47,7 +47,7 @@ export default function Navbar() {
           <div className="text-2xl md:text-3xl font-medium">
             <div className="flex items-center gap-1 lg:gap-2">
               <Image src={logo} alt="Logo" width={50} height={50} />
-              <LogoVariable />
+              <span className="text-2xl lg:text-3xl">Nelly Collection</span>
             </div>
           </div>
 
