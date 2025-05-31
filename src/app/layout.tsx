@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Crimson_Pro, Montserrat } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const crimsonPro = Crimson_Pro({
   weight: ['300', '400', '500', '600', '700'],
@@ -38,6 +39,7 @@ export default function RootLayout({
             {/* Fixed components that should persist through the animation */}
             <ShoppingCart />
             <WishlistDrawer />
+            <Toaster />
             {/* Main content */}
             <main className="content-wrapper">{children}</main>
           </StoreProvider>

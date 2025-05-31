@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import Banner from "./banner";
-import Image from "next/image";
 import { logo } from "@/assets";
-import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
-import { MenuIcon } from "lucide-react";
-import LogoVariable from "../design/logo-variable";
-import Link from "next/link";
 import { useCartItemCount, useCartStore } from "@/stores/cartStore";
 import { useWishlistItemCount, useWishlistStore } from "@/stores/wishlistStore";
+import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import Banner from "./banner";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,10 +23,13 @@ export default function Navbar() {
   const wishlistCount = useWishlistItemCount();
 
   return (
-    <header className="w-full z-10 bg-white relative">
+    <header className="w-full bg-white relative z-50">
       <div className="w-full border-b border-border">
         <Banner />
-        <nav className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
+        <nav
+          data-state={isMenuOpen && "active"}
+          className="px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center"
+        >
           {/* Left section - Store and Home links */}
           <div className="hidden md:flex items-center gap-8">
             <Link
@@ -80,33 +83,69 @@ export default function Navbar() {
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden ml-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
+              className="md:hidden ml-2 relative z-[60] -m-2.5 -mr-4 block cursor-pointer p-2.5"
+              onClick={() => {
+                console.log("Menu state:", !isMenuOpen);
+                setIsMenuOpen(!isMenuOpen);
+              }}
+              aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
             >
-              <MenuIcon className="w-6 h-6 text-zinc-800" />
+              <Menu
+                className={`m-auto size-6 transition-all duration-200 ${
+                  isMenuOpen
+                    ? "rotate-180 scale-0 opacity-0"
+                    : "rotate-0 scale-100 opacity-100"
+                }`}
+              />
+              <X
+                className={`absolute inset-0 m-auto size-6 transition-all duration-200 ${
+                  isMenuOpen
+                    ? "rotate-0 scale-100 opacity-100"
+                    : "-rotate-180 scale-0 opacity-0"
+                }`}
+              />
             </button>
           </div>
         </nav>
-
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-3 px-4 bg-white border-t border-zinc-200">
-            <a
-              href="/"
-              className="block py-2 hover:text-zinc-600 transition-colors"
-            >
-              Home
-            </a>
-            <a
-              href="/store"
-              className="block py-2 hover:text-zinc-600 transition-colors"
-            >
-              Store
-            </a>
-          </div>
-        )}
       </div>
+
+      {/* Mobile menu overlay with animation */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full  z-[10000] overflow-hidden">
+          <AnimatePresence>
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="size-full border-b bg-white shadow-2xl shadow-zinc-300/20"
+            >
+              <div className="p-6">
+                <ul className="space-y-6 text-base">
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-zinc-700 hover:text-zinc-900 block duration-150 text-lg"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span>Home</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/store"
+                      className="text-zinc-700 hover:text-zinc-900 block duration-150 text-lg"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span>Store</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      )}
     </header>
   );
 }

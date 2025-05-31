@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @font-face {
   font-family: "NewYork";
   src: url("/font/NewYork.woff2") format("woff2");

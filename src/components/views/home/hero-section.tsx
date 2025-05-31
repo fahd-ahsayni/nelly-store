@@ -104,7 +104,7 @@ export default function HeroSection() {
 
         {/* Image Section */}
         <div className="col-span-12 md:col-span-7 w-full h-full relative flex items-center">
-          <div className="size-28 rounded-full absolute -top-16 md:top-auto md:bottom-16 right-8 md:-left-16 z-60">
+          <div className="size-32 rounded-full absolute -top-16 md:top-auto md:bottom-16 right-8 md:-left-16 z-60">
             <div className="relative w-full h-full z-10 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
               <SpinningText
                 radius={5}
