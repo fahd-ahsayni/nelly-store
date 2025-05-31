@@ -39,7 +39,7 @@ export default function RootLayout({
             {/* Fixed components that should persist through the animation */}
             <ShoppingCart />
             <WishlistDrawer />
-            <Toaster />
+            <Toaster position="top-right" />
             {/* Main content */}
             <main className="content-wrapper">{children}</main>
           </StoreProvider>
