@@ -18,7 +18,7 @@ export interface Product {
 }
 
 // Define standard sizes for display
-export const STANDARD_SIZES = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+export const STANDARD_SIZES = ["M", "L", "XL", "XXL"];
 
 export interface Collection {
   id: string;

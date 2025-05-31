@@ -170,7 +170,7 @@ export default function FilterByCollections() {
         <h2 className="lg:text-3xl text-xl font-medium tracking-tight text-zinc-700">
           Collection
         </h2>
-        <p className="text-rose-600 flex items-center space-x-2 text-sm px-1 lg:px-3">
+        <p className="text-rose-600 flex items-center space-x-2 px-1 lg:px-3">
           <span>Swipe to see more</span> <PiHandSwipeLeft />
         </p>
       </div>

@@ -90,7 +90,7 @@ export default function ProductQuickview({
               <div className="grid w-full grid-cols-1 items-start gap-x-4 gap-y-6 sm:grid-cols-12 lg:items-center lg:gap-x-8">
                 {/* Image section - adjusted for better display on mobile */}
                 <div className="relative sm:col-span-4 lg:col-span-5">
-                  <div className="w-full relative">
+                  <div className="w-full relative h-full">
                     {!displayProduct.inStock && (
                       <div className="absolute top-4 right-4 bg-zinc-800 text-rose-200 text-xs px-2 py-1 z-10">
                         Out of stock
@@ -125,7 +125,7 @@ export default function ProductQuickview({
                       </div>
 
                       {carouselImages.length > 1 && (
-                        <CarouselThumbsContainer className="flex-shrink-0 h-20 pb-0">
+                        <CarouselThumbsContainer className="flex-shrink-0 h-20 pb-0 gap-x-1">
                           {carouselImages.map((image, idx) => (
                             <SliderThumbItem
                               key={idx}

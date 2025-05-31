@@ -2,7 +2,6 @@
 
 import { useWishlistStore } from "@/stores/wishlistStore";
 import { Product } from "@/types";
-import { Heart } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -59,14 +58,14 @@ export default function ProductCard({
   const isNew = isNewProduct ? isNewProduct(product) : false;
 
   return (
-    <div 
+    <div
       className={`group relative ${className} cursor-pointer`}
       onClick={handleCardClick}
       role="button"
       tabIndex={0}
       aria-label={`View details for ${product.name}`}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           handleCardClick(e as unknown as React.MouseEvent);
         }
@@ -91,45 +90,18 @@ export default function ProductCard({
             Out of stock
           </div>
         )}
-        
+
         {/* New badge - show if product is new */}
         {isNew && (
           <div className="absolute top-2 left-2 bg-rose-600 text-white text-xs px-2 py-1 z-10">
             NEW
           </div>
         )}
-
-        {/* Quick view and wishlist buttons */}
-        <div className="absolute inset-0 flex items-end justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/20 px-4 pb-4 z-10">
-          <button
-            onClick={handleQuickView}
-            className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-4 py-2 font-medium relative cursor-pointer flex-1 tracking-wide"
-          >
-            Quick View
-          </button>
-          <button
-            onClick={handleAddToWishlist}
-            className="bg-white border border-zinc-800 transition-colors duration-200 text-zinc-800 px-2.5 py-2.5 font-medium relative cursor-pointer"
-          >
-            <Heart
-              size={20}
-              className={
-                isItemInWishlist(product.id)
-                  ? "fill-pink-600 text-pink-600"
-                  : ""
-              }
-            />
-          </button>
-        </div>
       </div>
 
       <div className="mt-4">
-        <h3 className="line-clamp-1 font-medium">
-          {product.name}
-        </h3>
-        <p className="text-zinc-600 mt-1">
-          {product.collection.name}
-        </p>
+        <h3 className="line-clamp-1 font-medium">{product.name}</h3>
+        <p className="text-zinc-600 mt-1">{product.collection.name}</p>
         <p className="font-medium text-zinc-900 mt-1">
           {product.price.toFixed(2)} Dhs
         </p>

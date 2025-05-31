@@ -9,6 +9,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useCartDrawerState, useCartItems, useCartStore, useCartTotal } from "@/stores/cartStore";
+import { useRouter } from "next/navigation";
 import ProductCard from "./product-card";
 
 export default function ShoppingCart() {
@@ -16,6 +17,12 @@ export default function ShoppingCart() {
   const cartItems = useCartItems();
   const subtotal = useCartTotal();
   const { closeCart, updateQuantity, removeFromCart } = useCartStore();
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    closeCart();
+    router.push("/checkout");
+  };
 
   return (
     <Sheet
@@ -60,7 +67,9 @@ export default function ShoppingCart() {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-                  <button className="w-full rounded-md border border-transparent bg-rose-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
+                  <button 
+                    onClick={handleCheckout}
+                    className="w-full rounded-md border border-transparent bg-rose-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
                     Checkout
                   </button>
                 </div>

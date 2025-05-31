@@ -132,6 +132,52 @@ export interface Database {
           created_at?: string
         }
       }
+      
+      // Reservations table
+      reservations: {
+        Row: {
+          id: string
+          customer_first_name: string
+          customer_last_name: string
+          customer_mobile: string
+          customer_secondary_mobile: string | null
+          customer_address: string
+          customer_city: string
+          items: Json // JSONB array of order items
+          total_amount: number
+          status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          customer_first_name: string
+          customer_last_name: string
+          customer_mobile: string
+          customer_secondary_mobile?: string | null
+          customer_address: string
+          customer_city: string
+          items: Json
+          total_amount: number
+          status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          customer_first_name?: string
+          customer_last_name?: string
+          customer_mobile?: string
+          customer_secondary_mobile?: string | null
+          customer_address?: string
+          customer_city?: string
+          items?: Json
+          total_amount?: number
+          status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
