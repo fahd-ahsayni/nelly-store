@@ -1,16 +1,19 @@
 {
-  "common": {
-    "welcome": "Bienvenue",
-    "language": "Langue",
-    "selectLanguage": "Sélectionner la langue"
+  "banner": {
+    "text": "Grandes nouvelles ! Nous sommes ravis d'annoncer un nouveau site web"
   },
-  "home": {
-    "title": "Accueil",
-    "description": "Bienvenue dans notre application Next.js multilingue",
-    "getStarted": "Commencer"
+  "navigation": {
+    "home": "Accueil",
+    "store": "Boutique",
+    "favorites": "Favoris",
+    "cart": "Panier",
+    "menu": "Menu",
+    "closeMenu": "Fermer le menu",
+    "items": "articles dans le panier, voir le sac",
+    "changeLanguage": "Changer de langue"
   },
   "seo": {
     "title": "Application Next.js multilingue",
     "description": "Une application Next.js avec support d'internationalisation"
   }
-} 
+}

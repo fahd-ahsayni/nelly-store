@@ -1,16 +1,19 @@
 {
-  "common": {
-    "welcome": "مرحبا",
-    "language": "اللغة",
-    "selectLanguage": "اختر اللغة"
+  "banner": {
+    "text": "!أخبار كبيرة! نحن متحمسون للإعلان عن موقع إلكتروني جديد"
   },
-  "home": {
-    "title": "الرئيسية",
-    "description": "مرحبا بك في تطبيق Next.js متعدد اللغات",
-    "getStarted": "ابدأ الآن"
+  "navigation": {
+    "home": "الرئيسية",
+    "store": "المتجر",
+    "favorites": "المفضلة",
+    "cart": "العربة",
+    "menu": "القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "items": "عناصر في العربة، عرض الحقيبة",
+    "changeLanguage": "تغيير اللغة"
   },
   "seo": {
     "title": "تطبيق Next.js متعدد اللغات",
     "description": "تطبيق Next.js مع دعم التدويل"
   }
-} 
+}

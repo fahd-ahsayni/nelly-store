@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n/utils';
 import '../globals.css';
+import { cn } from '@/lib/utils';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -45,7 +46,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>
-      <body className={inter.className}>
+      <body className={cn(inter.className, "bg-background")}>
         {children}
       </body>
     </html>

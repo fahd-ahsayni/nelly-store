@@ -1,16 +1,26 @@
 {
-  "common": {
-    "welcome": "Welcome",
-    "language": "Language",
-    "selectLanguage": "Select Language"
+  "banner": {
+    "text": "Big news! We're excited to announce a new website."
   },
-  "home": {
-    "title": "Home",
-    "description": "Welcome to our multilingual Next.js application",
-    "getStarted": "Get Started"
+  "navigation": {
+    "home": "Home",
+    "store": "Store",
+    "favorites": "Favorites",
+    "cart": "Cart",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "items": "items in cart, view bag",
+    "changeLanguage": "Change language"
+  },
+  "hero": {
+    "tile-part1": "Elevate your",
+    "tile-part2": "style",
+    "tile-part3": "with selections from",
+    "tile-part4": "Nelly Collections",
+    "button": "Shop now"
   },
   "seo": {
     "title": "Multilingual Next.js App",
     "description": "A Next.js application with internationalization support"
   }
-} 
+}
