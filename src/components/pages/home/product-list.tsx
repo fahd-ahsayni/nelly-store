@@ -1,6 +1,7 @@
 "use client";
 
 import type { ProductFull } from "@/types/database";
+import Link from "next/link";
 
 interface ProductListProps {
   translations: any;
@@ -26,13 +27,13 @@ export default function ProductList({
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Trending products
           </h2>
-          <a
-            href="#"
+          <Link
+            href="/shop"
             className="hidden text-sm font-medium text-rose-600 hover:text-rose-500 md:block"
           >
             Shop the collection
             <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </Link>
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-5 md:gap-y-0 lg:gap-x-8">
