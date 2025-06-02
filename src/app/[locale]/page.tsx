@@ -1,8 +1,10 @@
 import Banner from "@/components/layout/banner";
 import Header from "@/components/layout/header";
+import CollectionPerview from "@/components/pages/home/collections-perview";
 import ProductList from "@/components/pages/home/product-list";
-import { Button } from "@/components/ui/button";
+import TrendProduct from "@/components/pages/home/trend-product";
 import { StoreProvider } from "@/components/providers/store-provider";
+import { Button } from "@/components/ui/button";
 import { type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { getProductsFull } from "@/lib/supabase-server";
@@ -72,6 +74,8 @@ export default async function Home({
           locale={locale}
           initialProducts={products}
         />
+        <TrendProduct translations={translations} locale={locale} />
+        <CollectionPerview />
       </main>
     </StoreProvider>
   );

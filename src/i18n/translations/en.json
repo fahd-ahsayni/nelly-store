@@ -19,6 +19,15 @@
     "tile-part4": "Nelly Collections",
     "button": "Shop now"
   },
+  "productsList": {
+    "title-part1": "Trending",
+    "title-part2": "Products",
+    "link": "View all products"
+  },
+  "trendProduct": {
+    "title": " Advanced Anti-Tache Serum 50% OFF.",
+    "paragraph": "Discover the power of our Advanced Anti-Tache Serum, now at 50% OFF. Say goodbye to dark spots and hello to radiant skin. Limited time offer!"
+  },
   "seo": {
     "title": "Multilingual Next.js App",
     "description": "A Next.js application with internationalization support"
