@@ -1,4 +1,5 @@
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
+import { cn } from "@/lib/utils";
 
 export default function TrendProduct({
   translations,
@@ -9,10 +10,12 @@ export default function TrendProduct({
 }) {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pb-20">
-      <div className="mb-8 max-w-lg">
+      <div className="mb-8">
         <h2 className="md:text-5xl text-4xl font-serif text-gray-800">
-          Anti-Tache{" "}
-          <span className="italic text-rose-600">Serum</span>
+          {translations.trendProduct["title-part1"]}{" "}
+          <span className="italic text-rose-600">
+            {translations.trendProduct["title-part2"]}
+          </span>
         </h2>
       </div>
       <div className="grid w-full grid-cols-1 md:grid-cols-12 mt-4 gap-4 md:gap-x-2 relative z-30">
@@ -23,9 +26,9 @@ export default function TrendProduct({
             alt="Anti-tache serum bottle"
           />
         </div>
-        <div className="md:col-span-4 rounded-r-lg bg-rose-100 border border-border flex flex-col justify-end p-4 md:p-6">
+        <div className="md:col-span-4 rounded-r-lg bg-rose-200 border border-border flex flex-col justify-end p-4 md:p-6">
           <div className="mb-4 md:mb-8">
-            <h2 className="text-2xl md:text-4xl font-semibold">
+            <h2 className={cn("text-2xl md:text-4xl text-gray-900", locale === "ar" ? "font-semibold" : "font-serif font-medium" )}>
               {translations.trendProduct.title}
             </h2>
             <p className="mt-4 text-zinc-600 text-sm md:text-base">

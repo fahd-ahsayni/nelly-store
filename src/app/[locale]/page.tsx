@@ -1,13 +1,16 @@
 import Banner from "@/components/layout/banner";
 import Header from "@/components/layout/header";
+import ImageCarousel from "@/components/layout/images-carousel";
 import CollectionPerview from "@/components/pages/home/collections-perview";
 import ProductList from "@/components/pages/home/product-list";
 import TrendProduct from "@/components/pages/home/trend-product";
 import { StoreProvider } from "@/components/providers/store-provider";
 import { Button } from "@/components/ui/button";
+import { carouselImages } from "@/constants";
 import { type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { getProductsFull } from "@/lib/supabase-server";
+import { cn } from "@/lib/utils";
 
 export default async function Home({
   params,
@@ -42,13 +45,30 @@ export default async function Home({
               </div>
               <div className="px-6 lg:col-span-5 lg:px-0 lg:h-full pb-12 lg:pb-0">
                 <div className="max-w-lg flex lg:h-full flex-col justify-center">
-                  <h1 className="mt-24 text-4xl tracking-tight font-medium text-pretty text-gray-900 sm:mt-10 sm:text-5xl">
+                  <h1
+                    className={cn(
+                      "mt-24 tracking-tight font-medium text-pretty text-gray-800 sm:mt-10",
+                      locale !== "ar"
+                        ? "font-serif text-4xl sm:text-5xl"
+                        : "font-semibold text-5xl sm:text-6xl leading-18"
+                    )}
+                  >
                     {translations.hero["tile-part1"]}{" "}
-                    <span className="text-rose-600 italic">
+                    <span
+                      className={cn(
+                        "text-rose-600",
+                        locale !== "ar" && "italic"
+                      )}
+                    >
                       {translations.hero["tile-part2"]}
                     </span>{" "}
                     {translations.hero["tile-part3"]}{" "}
-                    <span className="text-rose-600 italic">
+                    <span
+                      className={cn(
+                        "text-rose-600",
+                        locale !== "ar" && "italic"
+                      )}
+                    >
                       {translations.hero["tile-part4"]}
                     </span>
                     .
@@ -58,12 +78,8 @@ export default async function Home({
                   </div>
                 </div>
               </div>
-              <div className="relative lg:col-span-7 lg:-mr-8 lg:mt-0 lg:h-full">
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2102&q=80"
-                  className="aspect-3/2 w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
-                />
+              <div className={cn("relative lg:col-span-7 lg:mt-0 lg:h-full",  locale !== "ar" ? "lg:-mr-8" : "lg:-ml-8")}>
+                <ImageCarousel images={carouselImages} />
               </div>
             </div>
           </div>
@@ -75,7 +91,7 @@ export default async function Home({
           initialProducts={products}
         />
         <TrendProduct translations={translations} locale={locale} />
-        <CollectionPerview />
+        <CollectionPerview translations={translations} locale={locale} />
       </main>
     </StoreProvider>
   );

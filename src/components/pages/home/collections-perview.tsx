@@ -2,7 +2,7 @@ import { collection1, collection2, collection3, collection4 } from "@/assets";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CollectionPerview() {
+export default function CollectionPerview({translations, locale}: {translations: any; locale: string}) {
   return (
     <div className="pb-16 sm:pb-24 relative isolate">
       <div className="absolute inset-x-0 -Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
@@ -35,9 +35,9 @@ export default function CollectionPerview() {
         <div className="md:flex md:items-center md:justify-between">
           <div className="flex items-center gap-x-4">
             <h2 className="md:text-5xl text-4xl text-gray-800 font-serif">
-              Discover Our{" "}
+              {translations.collection["title-part1"]}{" "}
               <span className="text-rose-600 italic">
-                New Collections
+                {translations.collection["title-part2"]}
               </span>
             </h2>
           </div>
@@ -52,7 +52,7 @@ export default function CollectionPerview() {
         <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 lg:h-[700px]">
           {/* Card 1 */}
           <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:row-span-2">
-            <div className="absolute inset-0 bg-white overflow-hidden">
+            <div className="absolute rounded-l-lg inset-0 bg-white overflow-hidden">
               <Image
                 src={collection1}
                 alt="Collection Foulard"
@@ -65,8 +65,8 @@ export default function CollectionPerview() {
             </div>
             <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                  Collection Foulard
+                <p className="mt-2 text-3xl font-semibold text-white text-center sm:text-left">
+                  {translations.collection1}
                 </p>
               </div>
             </div>
@@ -86,8 +86,8 @@ export default function CollectionPerview() {
             </div>
             <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                  Collection des Robes
+                <p className="mt-2 text-3xl font-semibold text-white text-center sm:text-left">
+                   {translations.collection3}
                 </p>
               </div>
             </div>
@@ -108,8 +108,8 @@ export default function CollectionPerview() {
             <div className="relative flex h-full flex-col justify-end overflow-hidden">
               <div className="absolute inset-0 flex flex-col justify-end">
                 <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                  <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                    Serum anti taches
+                  <p className="mt-2 text-3xl font-semibold text-white text-center sm:text-left">
+                     {translations.collection4}
                   </p>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function CollectionPerview() {
           </div>
 
           {/* Card 4 */}
-          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:col-start-3 lg:row-span-2">
+          <div className="relative rounded-r-lg overflow-hidden h-[400px] sm:h-[450px] lg:h-auto lg:col-start-3 lg:row-span-2">
             <div className="absolute inset-0 overflow-hidden">
               <Image
                 src={collection2}
@@ -130,8 +130,8 @@ export default function CollectionPerview() {
             </div>
             <div className="absolute inset-0 flex flex-col justify-end">
               <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-2xl font-semibold text-white text-center sm:text-left">
-                  Collection Khimar
+                <p className="mt-2 text-3xl font-semibold text-white text-center sm:text-left">
+                   {translations.collection2}
                 </p>
               </div>
             </div>

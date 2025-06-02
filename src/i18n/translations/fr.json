@@ -1,6 +1,6 @@
 {
   "banner": {
-    "text": "Grandes nouvelles ! Nous sommes ravis d'annoncer un nouveau site web"
+    "text": "Grande nouvelle ! Nous sommes ravis d'annoncer un nouveau site web."
   },
   "navigation": {
     "home": "Accueil",
@@ -10,10 +10,36 @@
     "menu": "Menu",
     "closeMenu": "Fermer le menu",
     "items": "articles dans le panier, voir le sac",
-    "changeLanguage": "Changer de langue"
+    "changeLanguage": "Changer la langue"
+  },
+  "hero": {
+    "tile-part1": "Élevez votre",
+    "tile-part2": "style",
+    "tile-part3": "avec des sélections de",
+    "tile-part4": "Collections Nelly",
+    "button": "Acheter maintenant"
+  },
+  "productsList": {
+    "title-part1": "Produits",
+    "title-part2": "Tendance",
+    "link": "Voir tous les produits"
+  },
+  "trendProduct": {
+    "title-part1": "Découvrez Notre",
+    "title-part2": "Nouveau Produit",
+    "title": "Sérum Anti-Taches Avancé 50% DE RÉDUCTION",
+    "paragraph": "Découvrez la puissance de notre Sérum Anti-Taches Avancé, maintenant à 50% DE RÉDUCTION. Dites adieu aux taches sombres et bonjour à une peau radieuse. Offre limitée !"
+  },
+  "collection": {
+    "title-part1": "Découvrez Notre",
+    "title-part2": "Nouvelle Collection",
+    "collection1": "Collection Foulard",
+    "collection2": "Collection Hijab",
+    "collection3": "Collection Burkini",
+    "collection4": "Collection Abaya"
   },
   "seo": {
-    "title": "Application Next.js multilingue",
+    "title": "Application Next.js Multilingue",
     "description": "Une application Next.js avec support d'internationalisation"
   }
 }

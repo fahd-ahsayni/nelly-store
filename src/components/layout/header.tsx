@@ -150,7 +150,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                 <div className="flex lg:ml-6">
                   <Link
                     href="#"
-                    className="p-2 text-gray-400 hover:text-gray-500"
+                    className="p-2 text-gray-700 hover:text-gray-800"
                   >
                     <span className="sr-only">{t("navigation.favorites")}</span>
                     <HeartIcon aria-hidden="true" className="size-6" />
@@ -167,7 +167,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                   <Link href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
-                      className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="size-6 shrink-0 text-gray-700 group-hover:text-gray-800"
                     />
                     <span
                       className={cn(

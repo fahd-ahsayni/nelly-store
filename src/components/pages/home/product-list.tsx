@@ -5,6 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
@@ -45,9 +46,9 @@ export default function ProductList({
         />
       </div>
       <div className="md:flex md:items-center md:justify-between">
-        <h2 className="md:text-5xl text-4xl font-serif text-gray-800">
+        <h2 className={cn("text-gray-800", locale === "ar" ? "font-semibold md:text-4xl text-3xl" : "font-serif md:text-5xl text-4xl")}>
           {translations.productsList["title-part1"]}{" "}
-          <span className="text-rose-600 italic">
+          <span className={cn("text-rose-600", locale !== "ar" && "italic")}>
             {translations.productsList["title-part2"]}
           </span>
         </h2>
@@ -56,11 +57,15 @@ export default function ProductList({
           className="hidden font-medium text-rose-600 hover:text-rose-500 md:block"
         >
           {translations.productsList.link}
-          <span aria-hidden="true"> &rarr;</span>
+          {locale === "ar" ? (
+            <span aria-hidden="true"> &larr;</span>
+          ) : (
+            <span aria-hidden="true"> &rarr;</span>
+          )}
         </Link>
       </div>
 
-      <div className="relative mt-4 md:mt-8">
+      <div className="relative mt-4 md:mt-8" dir="ltr">
         <Carousel
           opts={{
             loop: true,
