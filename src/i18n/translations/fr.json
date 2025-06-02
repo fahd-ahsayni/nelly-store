@@ -1,0 +1,16 @@
+{
+  "common": {
+    "welcome": "Bienvenue",
+    "language": "Langue",
+    "selectLanguage": "Sélectionner la langue"
+  },
+  "home": {
+    "title": "Accueil",
+    "description": "Bienvenue dans notre application Next.js multilingue",
+    "getStarted": "Commencer"
+  },
+  "seo": {
+    "title": "Application Next.js multilingue",
+    "description": "Une application Next.js avec support d'internationalisation"
+  }
+} 

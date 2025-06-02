@@ -1,0 +1,16 @@
+{
+  "common": {
+    "welcome": "مرحبا",
+    "language": "اللغة",
+    "selectLanguage": "اختر اللغة"
+  },
+  "home": {
+    "title": "الرئيسية",
+    "description": "مرحبا بك في تطبيق Next.js متعدد اللغات",
+    "getStarted": "ابدأ الآن"
+  },
+  "seo": {
+    "title": "تطبيق Next.js متعدد اللغات",
+    "description": "تطبيق Next.js مع دعم التدويل"
+  }
+} 
