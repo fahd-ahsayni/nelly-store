@@ -1,24 +1,24 @@
-const products = [
-  {
-    id: 1,
-    name: "Leather Long Wallet",
-    color: "Natural",
-    price: "$75",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-04-trending-product-02.jpg",
-    imageAlt: "Hand stitched, orange leather long wallet.",
-  },
-  // More products...
-];
+"use client";
+
+import type { ProductFull } from "@/types/database";
+
+interface ProductListProps {
+  translations: any;
+  locale: string;
+  initialProducts: ProductFull[];
+}
 
 export default function ProductList({
   translations,
   locale,
-}: {
-  translations: any;
-  locale: string;
-}) {
+  initialProducts,
+}: ProductListProps) {
+  // Get featured products (top 10 highest rated, in stock products)
+  const featuredProducts = initialProducts
+    .filter((product) => product.instock)
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, 10);
+
   return (
     <div>
       <div className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
@@ -36,34 +36,33 @@ export default function ProductList({
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-5 md:gap-y-0 lg:gap-x-8">
-          {products.map((product) => (
+          {featuredProducts.map((product) => (
             <div key={product.id} className="group relative">
               <div className="h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
                 <img
-                  alt={product.imageAlt}
-                  src={product.imageSrc}
+                  alt={product.name}
+                  src={product.imagesrc || "/placeholder.jpg"}
                   className="size-full object-cover"
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">
-                <a href={product.href}>
+                <a href={`/${locale}/product/${product.slug}`}>
                   <span className="absolute inset-0" />
                   {product.name}
                 </a>
               </h3>
-              <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {product.collections.name}
+              </p>
               <p className="mt-1 text-sm font-medium text-gray-900">
-                {product.price}
+                {product.price} MAD
               </p>
             </div>
           ))}
         </div>
 
         <div className="mt-8 text-sm md:hidden">
-          <a
-            href="#"
-            className="font-medium text-rose-600 hover:text-rose-500"
-          >
+          <a href="#" className="font-medium text-rose-600 hover:text-rose-500">
             Shop the collection
             <span aria-hidden="true"> &rarr;</span>
           </a>

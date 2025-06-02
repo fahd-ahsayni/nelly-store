@@ -1,0 +1,132 @@
+import { useEffect } from 'react';
+import { useStore } from '@/store/useStore';
+import type { ProductFull } from '@/types/database';
+
+// Hook to fetch all data on app initialization
+export const useInitializeStore = () => {
+  const fetchAllData = useStore((state) => state.fetchAllData);
+  const loading = useStore((state) => state.loading);
+  const errors = useStore((state) => state.errors);
+
+  useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
+
+  const isLoading = Object.values(loading).some(Boolean);
+  const hasErrors = Object.values(errors).some(Boolean);
+
+  return { isLoading, hasErrors, errors };
+};
+
+// Hook to get a specific product by slug
+export const useProductBySlug = (slug: string): ProductFull | undefined => {
+  return useStore((state) => state.getProductBySlug(slug));
+};
+
+// Hook to get products by collection
+export const useProductsByCollection = (collectionId: string): ProductFull[] => {
+  return useStore((state) => state.getProductsByCollection(collectionId));
+};
+
+// Hook to get products with search and filter capabilities
+export const useProductsFiltered = (filters?: {
+  searchTerm?: string;
+  collectionId?: string;
+  inStockOnly?: boolean;
+  minPrice?: number;
+  maxPrice?: number;
+  type?: string;
+}): ProductFull[] => {
+  return useStore((state) => {
+    const products = state.getProductsFull();
+    
+    if (!filters) return products;
+
+    return products.filter((product) => {
+      // Search term filter
+      if (filters.searchTerm) {
+        const term = filters.searchTerm.toLowerCase();
+        const matchesSearch = 
+          product.name.toLowerCase().includes(term) ||
+          product.description?.toLowerCase().includes(term) ||
+          product.collections.name.toLowerCase().includes(term);
+        
+        if (!matchesSearch) return false;
+      }
+
+      // Collection filter
+      if (filters.collectionId && product.collection_id !== filters.collectionId) {
+        return false;
+      }
+
+      // In stock filter
+      if (filters.inStockOnly && !product.instock) {
+        return false;
+      }
+
+      // Price filters
+      if (filters.minPrice && product.price < filters.minPrice) {
+        return false;
+      }
+
+      if (filters.maxPrice && product.price > filters.maxPrice) {
+        return false;
+      }
+
+      // Type filter
+      if (filters.type && product.type !== filters.type) {
+        return false;
+      }
+
+      return true;
+    });
+  });
+};
+
+// Hook for featured products (highest rated)
+export const useFeaturedProducts = (limit: number = 8): ProductFull[] => {
+  return useStore((state) => {
+    return state.getProductsFull()
+      .filter(product => product.instock)
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, limit);
+  });
+};
+
+// Hook for latest products
+export const useLatestProducts = (limit: number = 8): ProductFull[] => {
+  return useStore((state) => {
+    return state.getProductsFull()
+      .filter(product => product.instock)
+      .sort((a, b) => new Date(b.createdat).getTime() - new Date(a.createdat).getTime())
+      .slice(0, limit);
+  });
+};
+
+// Hook for collections with product counts
+export const useCollectionsWithCounts = () => {
+  return useStore((state) => {
+    const collections = state.collections;
+    const products = state.products;
+
+    return collections.map(collection => ({
+      ...collection,
+      productCount: products.filter(product => 
+        product.collection_id === collection.id && product.instock
+      ).length,
+    }));
+  });
+};
+
+// Hook for color statistics
+export const useColorStats = () => {
+  return useStore((state) => {
+    const colors = state.colors;
+    const productColors = state.productColors;
+
+    return colors.map(color => ({
+      ...color,
+      productCount: productColors.filter(pc => pc.color_id === color.id).length,
+    }));
+  });
+};
