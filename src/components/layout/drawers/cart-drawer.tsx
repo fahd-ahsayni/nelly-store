@@ -165,11 +165,13 @@ export default function CartDrawer({
                           </div>
                           <div className="text-right">
                             <div className="font-semibold text-gray-900">
-                              ${(item.price * item.quantity).toFixed(2)}
+                              {(item.price * item.quantity).toFixed(2)}{" "}
+                              {translations.currency.mad}
                             </div>
                             {item.quantity > 1 && (
-                              <div className="text-xs text-gray-500">
-                                ${item.price.toFixed(2)}{" "}
+                              <div className="text-xs mt-1 text-gray-500">
+                                {item.price.toFixed(2)}{" "}
+                                {translations.currency.mad}{" "}
                                 {translations.cart.each}
                               </div>
                             )}
@@ -184,7 +186,9 @@ export default function CartDrawer({
               <div className="border-t border-gray-200 pt-6 space-y-4 bg-white px-6 pb-6">
                 <div className="flex justify-between text-base font-semibold">
                   <span>{translations.cart.total}</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>
+                    {total.toFixed(2)} {translations.currency.mad}
+                  </span>
                 </div>
 
                 <div className="space-y-3">
