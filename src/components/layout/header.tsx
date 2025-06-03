@@ -15,6 +15,7 @@ import { Heading } from "../ui/heading";
 import LanguageSwitcher from "./language-switcher";
 import WishlistDrawer from "./drawers/wishlist-drawer";
 import CartDrawer from "./drawers/cart-drawer";
+import { useCart } from "@/hooks/useCart";
 
 interface HeaderProps {
   translations: any;
@@ -26,6 +27,7 @@ export default function Header({ translations, locale }: HeaderProps) {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const t = useTranslations(translations);
+  const { getTotalItems } = useCart();
 
   return (
     // Set the document direction based on locale conditions
@@ -89,16 +91,14 @@ export default function Header({ translations, locale }: HeaderProps) {
       <WishlistDrawer
         open={wishlistOpen}
         onClose={() => setWishlistOpen(false)}
-        title={t("navigation.favorites")}
-        closeButtonLabel={t("navigation.closeMenu")}
+        translations={translations}
       />
 
       {/* Cart drawer */}
       <CartDrawer
         open={cartOpen}
         onClose={() => setCartOpen(false)}
-        title="Shopping Cart"
-        closeButtonLabel={t("navigation.closeMenu")}
+        translations={translations}
       />
 
       <header className="relative bg-white">
@@ -186,7 +186,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                         "ltr:ml-2 rtl:mr-2"
                       )}
                     >
-                      0
+                      {getTotalItems()}
                     </span>
                     <span className="sr-only">{t("navigation.items")}</span>
                   </button>

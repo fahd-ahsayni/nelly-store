@@ -17,7 +17,7 @@ export default function TrendProduct({
           </span>
         </h2>
       </div>
-      <div className="grid w-full grid-cols-1 md:grid-cols-12 mt-4 gap-4 md:gap-x-2 relative z-30">
+      <div className="grid w-full grid-cols-1 md:grid-cols-12 mt-4 gap-4 md:gap-x-2">
         <div className="md:col-span-8 bg-gray-200 overflow-hidden min-h-[300px] md:min-h-[400px]">
           <img
             src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1748902063~exp=1748905663~hmac=a44c8e3c62c09ea2753087023bffb9bc2a430566dd2d60dc98c41057dd4b488a&w=1380"

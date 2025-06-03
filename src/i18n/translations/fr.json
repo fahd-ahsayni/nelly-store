@@ -56,8 +56,41 @@
     "title-part1": "Ce que disent",
     "title-part2": "nos clients"
   },
+  "productQuickview": {
+    "close": "Fermer",
+    "productInformation": "Informations sur le produit",
+    "reviews": "avis",
+    "outOfStars": "sur 5 étoiles",
+    "productOptions": "Options du produit",
+    "chooseColor": "Choisir une couleur",
+    "color": "Couleur",
+    "chooseSize": "Choisir une taille",
+    "size": "Taille",
+    "addToBag": "Ajouter au panier"
+  },
+  "currency": {
+    "mad": "MAD"
+  },
   "seo": {
     "title": "Application Next.js Multilingue",
     "description": "Une application Next.js avec support d'internationalisation"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": {
+      "title": "Votre panier est vide",
+      "subtitle": "Ajoutez quelques articles pour commencer"
+    },
+    "item": "article",
+    "items": "articles",
+    "size": "Taille",
+    "color": "Couleur",
+    "each": "chacun",
+    "total": "Total",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "tax": "Taxe",
+    "free": "Gratuit",
+    "proceedToCheckout": "Procéder au paiement"
   }
 }

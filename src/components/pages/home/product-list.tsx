@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -10,6 +11,7 @@ import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
+import ProductQuickview from "@/components/layout/dialog/product-quickview";
 
 const AUTOPLAY_DELAY = 4000;
 
@@ -24,6 +26,9 @@ export default function ProductList({
   locale,
   initialProducts,
 }: ProductListProps) {
+  const [selectedProduct, setSelectedProduct] = useState<ProductFull | null>(null);
+  const [isQuickviewOpen, setIsQuickviewOpen] = useState(false);
+
   // Get featured products (top 10 highest rated, in stock products)
   const featuredProducts = initialProducts
     .filter((product) => product.instock)
@@ -31,6 +36,11 @@ export default function ProductList({
     .slice(0, 10);
 
   const shopCollectionHref = `/${locale}/shop`;
+
+  const handleProductClick = (product: ProductFull) => {
+    setSelectedProduct(product);
+    setIsQuickviewOpen(true);
+  };
 
   return (
     <section className="px-4 py-16 sm:px-6 sm:py-32 lg:px-8 relative isolate">
@@ -96,7 +106,11 @@ export default function ProductList({
                 key={product.id}
                 className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
-                <ProductCard product={product} locale={locale} />
+                <ProductCard 
+                  product={product} 
+                  locale={locale} 
+                  onClick={() => handleProductClick(product)}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -112,6 +126,13 @@ export default function ProductList({
           <span aria-hidden="true"> &rarr;</span>
         </Link>
       </div>
+      <ProductQuickview
+        translations={translations}
+        locale={locale}
+        product={selectedProduct}
+        open={isQuickviewOpen}
+        onClose={() => setIsQuickviewOpen(false)}
+      />
     </section>
   );
 }

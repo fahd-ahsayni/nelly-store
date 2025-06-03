@@ -56,6 +56,39 @@
     "title-part1": "What Our",
     "title-part2": "Customers Say"
   },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": {
+      "title": "Your cart is empty",
+      "subtitle": "Add some items to get started"
+    },
+    "item": "item",
+    "items": "items",
+    "size": "Size",
+    "color": "Color",
+    "each": "each",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "tax": "Tax",
+    "free": "Free",
+    "proceedToCheckout": "Proceed to Checkout"
+  },
+  "productQuickview": {
+    "close": "Close",
+    "productInformation": "Product information",
+    "reviews": "reviews",
+    "outOfStars": "out of 5 stars",
+    "productOptions": "Product options",
+    "chooseColor": "Choose a color",
+    "color": "Color",
+    "chooseSize": "Choose a size",
+    "size": "Size",
+    "addToBag": "Add to bag"
+  },
+  "currency": {
+    "mad": "MAD"
+  },
   "seo": {
     "title": "Multilingual Next.js App",
     "description": "A Next.js application with internationalization support"

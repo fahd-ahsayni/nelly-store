@@ -58,5 +58,38 @@
   "testimonials": {
     "title-part1": "ماذا يقول",
     "title-part2": "عملاؤنا"
+  },
+  "productQuickview": {
+    "close": "إغلاق",
+    "productInformation": "معلومات المنتج",
+    "reviews": "تقييم",
+    "outOfStars": "من 5 نجوم",
+    "productOptions": "خيارات المنتج",
+    "chooseColor": "اختر لونًا",
+    "color": "اللون",
+    "chooseSize": "اختر المقاس",
+    "size": "المقاس",
+    "addToBag": "أضف للسلة"
+  },
+  "currency": {
+    "mad": "درهم"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": {
+      "title": "سلتك فارغة",
+      "subtitle": "أضف بعض العناصر للبدء"
+    },
+    "item": "عنصر",
+    "items": "عناصر",
+    "size": "المقاس",
+    "color": "اللون",
+    "each": "لكل واحد",
+    "total": "المجموع",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "tax": "الضريبة",
+    "free": "مجاني",
+    "proceedToCheckout": "متابعة الدفع"
   }
 }

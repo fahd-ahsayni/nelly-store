@@ -2,18 +2,19 @@ import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import Link from "next/link";
 
 export interface ProductCardProps {
   product: ProductFull;
   locale: string;
+  onClick?: () => void;
 }
 
-export default function ProductCard({ product, locale }: ProductCardProps) {
-  const href = `/${locale}/product/${product.id}`;
-
+export default function ProductCard({ product, locale, onClick }: ProductCardProps) {
   return (
-    <Link href={href} className="block w-full max-w-[280px] group">
+    <div
+      onClick={onClick}
+      className="block w-full max-w-[280px] group cursor-pointer"
+    >
       <div
         className={cn(
           "relative rounded-2xl",
@@ -82,6 +83,6 @@ export default function ProductCard({ product, locale }: ProductCardProps) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
