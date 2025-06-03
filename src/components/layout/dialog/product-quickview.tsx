@@ -1,18 +1,22 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { styles } from "@/constants";
+import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
-import { useCart } from "@/hooks/useCart";
 import {
-    Dialog,
-    DialogBackdrop,
-    DialogPanel,
-    Radio,
-    RadioGroup,
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Radio,
+  RadioGroup,
 } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ExclamationTriangleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -110,7 +114,7 @@ export default function ProductQuickview({
               <button
                 type="button"
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
+                className="absolute top-4 ltr:right-4 rtl:left-4 text-gray-400 hover:text-gray-500 sm:top-8 ltr:sm:right-6 rtl:sm:left-6 md:top-6 ltr:md:right-6 rtl:md:left-6 lg:top-8 ltr:lg:right-8 rtl:lg:left-8"
               >
                 <span className="sr-only">
                   {translations.productQuickview.close}
@@ -149,7 +153,7 @@ export default function ProductQuickview({
                       <h4 className="sr-only">
                         {translations.productQuickview.reviews}
                       </h4>
-                      <div className="flex items-center">
+                      <div className="flex items-center gap-x-1">
                         <div className="flex items-center">
                           {[0, 1, 2, 3, 4].map((rating) => (
                             <StarIcon
@@ -168,13 +172,13 @@ export default function ProductQuickview({
                           {product.rating}{" "}
                           {translations.productQuickview.outOfStars}
                         </p>
-                        <a
-                          href="#"
-                          className="ml-3 text-sm font-medium text-rose-600 hover:text-rose-500"
+                        <Badge
+                          color="rose"
+                          className="border border-amber-500"
                         >
-                          {Math.floor(product.rating * 20)}{" "}
+                          {product.rating}{" "}
                           {translations.productQuickview.reviews}
-                        </a>
+                        </Badge>
                       </div>
                     </div>
                   </section>
@@ -187,8 +191,18 @@ export default function ProductQuickview({
                     <form onSubmit={handleAddToBag}>
                       {/* Error message */}
                       {error && (
-                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                          <p className="text-sm text-red-600">{error}</p>
+                        <div className="ltr:border-l-4 rtl:border-r-4 border-red-600 bg-red-100 p-4 mb-4">
+                          <div className="flex">
+                            <div className="flex-shrink-0">
+                              <ExclamationTriangleIcon
+                                className="h-5 w-5 text-red-600"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            <div className="ltr:ml-3 rtl:mr-3">
+                              <p className="text-sm text-red-700">{error}</p>
+                            </div>
+                          </div>
                         </div>
                       )}
 
@@ -269,12 +283,14 @@ export default function ProductQuickview({
                         </fieldset>
                       )}
 
-                      <button
-                        type="submit"
-                        className={cn(styles.primaryButton, "mt-8")}
-                      >
-                        {translations.productQuickview.addToBag}
-                      </button>
+                      <div>
+                        <button
+                          type="submit"
+                          className={cn(styles.primaryButton, "mt-8")}
+                        >
+                          {translations.productQuickview.addToBag}
+                        </button>
+                      </div>
                     </form>
                   </section>
                 </div>

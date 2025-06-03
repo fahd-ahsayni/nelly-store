@@ -14,8 +14,8 @@
     "changeLanguage": "تغيير اللغة"
   },
   "seo": {
-    "title": "تطبيق Next.js متعدد اللغات",
-    "description": "تطبيق Next.js مع دعم التدويل"
+    "title": "مجموعة نيلي - متجر الأزياء",
+    "description": "اكتشف أحدث صيحات الموضة في مجموعة نيلي"
   },
   "hero": {
     "tile-part1": "ارتقي بـ",
@@ -93,5 +93,43 @@
     "tax": "الضريبة",
     "free": "مجاني",
     "proceedToCheckout": "متابعة الدفع"
+  },
+  "checkout": {
+    "title": "الدفع",
+    "contactInformation": "معلومات الاتصال",
+    "shippingInformation": "معلومات الشحن",
+    "orderSummary": "ملخص الطلب",
+    "cartEmpty": {
+      "title": "عربة التسوق فارغة",
+      "description": "أضف بعض العناصر إلى عربة التسوق للمتابعة",
+      "continueShopping": "متابعة التسوق"
+    },
+    "form": {
+      "mobileNumber": "رقم الهاتف المحمول",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "address": "العنوان",
+      "city": "المدينة",
+      "secondaryMobileNumber": "رقم الهاتف المحمول الثانوي",
+      "required": "*",
+      "processing": "جاري المعالجة...",
+      "confirmOrder": "تأكيد الطلب"
+    },
+    "validation": {
+      "requiredFields": "يرجى ملء جميع الحقول المطلوبة",
+      "cartEmpty": "عربة التسوق فارغة"
+    },
+    "success": {
+      "orderPlaced": "تم تقديم الطلب بنجاح!",
+      "failed": "فشل في تقديم الطلب. يرجى المحاولة مرة أخرى.",
+      "error": "حدث خطأ. يرجى المحاولة مرة أخرى."
+    },
+    "item": {
+      "quantity": "الكمية",
+      "size": "المقاس",
+      "color": "اللون",
+      "total": "المجموع",
+      "remove": "إزالة"
+    }
   }
 }

@@ -92,7 +92,45 @@
     "mad": "MAD"
   },
   "seo": {
-    "title": "Multilingual Next.js App",
-    "description": "A Next.js application with internationalization support"
+    "title": "Nelly Collection - Fashion Store",
+    "description": "Discover the latest fashion trends at Nelly Collection"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "contactInformation": "Contact information",
+    "shippingInformation": "Shipping information",
+    "orderSummary": "Order summary",
+    "cartEmpty": {
+      "title": "Your cart is empty",
+      "description": "Add some items to your cart to continue shopping",
+      "continueShopping": "Continue Shopping"
+    },
+    "form": {
+      "mobileNumber": "Mobile Number",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "address": "Address",
+      "city": "City",
+      "secondaryMobileNumber": "Secondary Mobile Number",
+      "required": "*",
+      "processing": "Processing...",
+      "confirmOrder": "Confirm order"
+    },
+    "validation": {
+      "requiredFields": "Please fill in all required fields",
+      "cartEmpty": "Your cart is empty"
+    },
+    "success": {
+      "orderPlaced": "Order placed successfully!",
+      "failed": "Failed to place order. Please try again.",
+      "error": "An error occurred. Please try again."
+    },
+    "item": {
+      "quantity": "Qty",
+      "size": "Size",
+      "color": "Color",
+      "total": "Total",
+      "remove": "Remove"
+    }
   }
 }

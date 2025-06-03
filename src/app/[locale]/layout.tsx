@@ -5,6 +5,7 @@ import { locales, type Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n/utils';
 import '../globals.css';
 import { cn } from '@/lib/utils';
+import { ToastProvider } from '@/components/ui/toast';
 
 const inter = Inter({ subsets: ['latin'] });
 const cairo = Cairo({ subsets: ['arabic'] });
@@ -53,6 +54,7 @@ export default async function LocaleLayout({
     <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>
       <body className={cn(fontClass, "bg-background")}>
         {children}
+        <ToastProvider />
       </body>
     </html>
   );

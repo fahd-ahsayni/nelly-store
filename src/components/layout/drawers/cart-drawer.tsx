@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/hooks/useCart";
+import { useCartStore } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
@@ -15,6 +15,7 @@ import { Heading } from "../../ui/heading";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { Badge } from "@/components/ui/badge";
 import { styles } from "@/constants";
+import { useRouter, useParams } from "next/navigation";
 
 interface CartDrawerProps {
   open: boolean;
@@ -27,14 +28,26 @@ export default function CartDrawer({
   onClose,
   translations,
 }: CartDrawerProps) {
-  const { items, updateQuantity, removeItem, getTotalItems, getSubtotal } =
-    useCart();
+  const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string;
+
+  const items = useCartStore((state) => state.items);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeItem = useCartStore((state) => state.removeItem);
+  const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const getSubtotal = useCartStore((state) => state.getSubtotal);
 
   const totalItems = getTotalItems();
   const subtotal = getSubtotal();
   const shipping = subtotal > 100 ? 0 : 9.99;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
+
+  const handleCheckout = () => {
+    onClose(); // Close the drawer first
+    router.push(`/${locale}/checkout`);
+  };
 
   return (
     <Dialog open={open} onClose={onClose} className="relative z-40">
@@ -192,7 +205,14 @@ export default function CartDrawer({
                 </div>
 
                 <div className="space-y-3">
-                  <button className={cn(styles.primaryButton)}>
+                  <button
+                    onClick={handleCheckout}
+                    disabled={items.length === 0}
+                    className={cn(
+                      styles.primaryButton,
+                      "w-full disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    )}
+                  >
                     {translations.cart.proceedToCheckout}
                   </button>
                 </div>

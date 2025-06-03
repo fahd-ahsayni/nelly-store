@@ -74,8 +74,8 @@
     "mad": "MAD"
   },
   "seo": {
-    "title": "Application Next.js Multilingue",
-    "description": "Une application Next.js avec support d'internationalisation"
+    "title": "Collection Nelly - Boutique de Mode",
+    "description": "Découvrez les dernières tendances de mode chez Collection Nelly"
   },
   "cart": {
     "title": "Panier",
@@ -94,5 +94,43 @@
     "tax": "Taxe",
     "free": "Gratuit",
     "proceedToCheckout": "Procéder au paiement"
+  },
+  "checkout": {
+    "title": "Commande",
+    "contactInformation": "Informations de contact",
+    "shippingInformation": "Informations de livraison",
+    "orderSummary": "Résumé de commande",
+    "cartEmpty": {
+      "title": "Votre panier est vide",
+      "description": "Ajoutez des articles à votre panier pour continuer vos achats",
+      "continueShopping": "Continuer les achats"
+    },
+    "form": {
+      "mobileNumber": "Numéro de téléphone portable",
+      "firstName": "Prénom",
+      "lastName": "Nom de famille",
+      "address": "Adresse",
+      "city": "Ville",
+      "secondaryMobileNumber": "Numéro de téléphone portable secondaire",
+      "required": "*",
+      "processing": "En cours...",
+      "confirmOrder": "Confirmer la commande"
+    },
+    "validation": {
+      "requiredFields": "Veuillez remplir tous les champs obligatoires",
+      "cartEmpty": "Votre panier est vide"
+    },
+    "success": {
+      "orderPlaced": "Commande passée avec succès!",
+      "failed": "Échec de la commande. Veuillez réessayer.",
+      "error": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "item": {
+      "quantity": "Qté",
+      "size": "Taille",
+      "color": "Couleur",
+      "total": "Total",
+      "remove": "Supprimer"
+    }
   }
 }
