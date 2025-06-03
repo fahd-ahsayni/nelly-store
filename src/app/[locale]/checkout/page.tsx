@@ -38,6 +38,7 @@ export default function Checkout() {
   const { toast } = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     mobileNumber: "",
     firstName: "",
@@ -205,10 +206,12 @@ export default function Checkout() {
       // Clear cart only after successful order placement
       clearCart();
 
-      // Small delay to let user see the success message before redirect
+      // Set redirecting state and redirect after a delay
+      setIsRedirecting(true);
+
       setTimeout(() => {
         router.push(`/${locale}/order-success?orderId=${data.id}`);
-      }, 1500);
+      }, 2000);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error(translations.checkout.success.error);
@@ -247,6 +250,48 @@ export default function Checkout() {
             >
               {translations.checkout.cartEmpty.continueShopping}
             </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show redirecting state
+  if (isRedirecting) {
+    return (
+      <div className="relative isolate min-h-screen">
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center space-y-6">
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100">
+              <svg
+                className="h-8 w-8 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-semibold text-gray-900">
+                {translations.checkout.success.orderPlaced}
+              </h2>
+              <p className="text-gray-600">
+                {translations.checkout.redirecting ||
+                  "Redirecting to order details..."}
+              </p>
+            </div>
+            <div className="flex items-center justify-center space-x-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-rose-600"></div>
+              <span className="text-sm text-gray-500">
+                {translations.checkout.pleaseWait || "Please wait..."}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -529,10 +574,10 @@ export default function Checkout() {
                             {item.color}
                           </p>
                           <p className="mt-1 text-sm text-zinc-500">
-                            {translations.checkout.item.size}: {item.size}
+                            {translations?.checkout?.item?.size || "Size"}: {item.size}
                           </p>
                           <p className="mt-1 text-sm text-zinc-500">
-                            {translations.checkout.item.quantity}:{" "}
+                            {translations?.checkout?.item?.quantity || "Quantity"}:{" "}
                             {item.quantity}
                           </p>
                         </div>
@@ -542,10 +587,10 @@ export default function Checkout() {
                             type="button"
                             onClick={() => removeFromCart(item.id)}
                             className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-zinc-400 hover:text-zinc-500"
-                            aria-label={`${translations.checkout.item.remove} ${item.name}`}
+                            aria-label={`${translations?.checkout?.item?.remove || "Remove"} ${item.name}`}
                           >
                             <span className="sr-only">
-                              {translations.checkout.item.remove}
+                              {translations?.checkout?.item?.remove || "Remove"}
                             </span>
                             <TrashIcon aria-hidden="true" className="size-5" />
                           </button>
@@ -564,7 +609,7 @@ export default function Checkout() {
               <dl className="space-y-6 border-t border-zinc-200 px-4 py-6 sm:px-6">
                 <div className="flex items-center justify-between">
                   <dt className="text-base font-medium">
-                    {translations.checkout.item.total}
+                    {translations?.checkout?.item?.total || "Total"}
                   </dt>
                   <dd className="text-base font-medium text-zinc-900">
                     {subtotal.toFixed(2)} Dhs
@@ -575,15 +620,19 @@ export default function Checkout() {
               <div className="border-t border-zinc-200 px-4 py-6 sm:px-6">
                 <button
                   type="submit"
-                  disabled={isSubmitting || cartItems.length === 0}
+                  disabled={isSubmitting || cartItems.length === 0 || isRedirecting}
                   className={cn(
                     styles.primaryButton,
-                    "w-full disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
+                    "w-full disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50",
+                    "flex items-center justify-center gap-2"
                   )}
                 >
+                  {isSubmitting && (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  )}
                   {isSubmitting
-                    ? translations.checkout.form.processing
-                    : translations.checkout.form.confirmOrder}
+                    ? (translations?.checkout?.form?.processing || "Processing...")
+                    : (translations?.checkout?.form?.confirmOrder || "Confirm order")}
                 </button>
               </div>
             </div>

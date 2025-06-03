@@ -131,6 +131,50 @@
       "color": "Color",
       "total": "Total",
       "remove": "Remove"
+    },
+    "redirecting": "Redirecting to order details...",
+    "pleaseWait": "Please wait..."
+  },
+  "orderSuccess": {
+    "title": "Order Confirmed!",
+    "subtitle": "Thank you for your order",
+    "orderNumber": "Order Number",
+    "orderDetails": "Order Details",
+    "customerInfo": "Customer Information",
+    "shippingInfo": "Shipping Information",
+    "items": "Items Ordered",
+    "total": "Total Amount",
+    "status": "Status",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "processing": "Processing",
+    "shipped": "Shipped",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled",
+    "name": "Name",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "quantity": "Qty",
+    "price": "Price",
+    "subtotal": "Subtotal",
+    "nextSteps": {
+      "title": "What's Next?",
+      "step1": "We'll process your order within 24 hours",
+      "step2": "You'll receive a confirmation call on your provided number",
+      "step3": "Your order will be prepared and shipped",
+      "step4": "Track your order status via phone or WhatsApp"
+    },
+    "actions": {
+      "continueShopping": "Continue Shopping",
+      "viewOrders": "View My Orders",
+      "contactSupport": "Contact Support"
+    },
+    "support": {
+      "title": "Need Help?",
+      "phone": "Call us at",
+      "whatsapp": "WhatsApp us",
+      "email": "Email us"
     }
   }
 }

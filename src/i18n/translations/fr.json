@@ -131,6 +131,50 @@
       "color": "Couleur",
       "total": "Total",
       "remove": "Supprimer"
+    },
+    "redirecting": "Redirection vers les détails de la commande...",
+    "pleaseWait": "Veuillez patienter..."
+  },
+  "orderSuccess": {
+    "title": "Commande Confirmée!",
+    "subtitle": "Merci pour votre commande",
+    "orderNumber": "Numéro de Commande",
+    "orderDetails": "Détails de la Commande",
+    "customerInfo": "Informations Client",
+    "shippingInfo": "Informations de Livraison",
+    "items": "Articles Commandés",
+    "total": "Montant Total",
+    "status": "Statut",
+    "pending": "En Attente",
+    "confirmed": "Confirmé",
+    "processing": "En Traitement",
+    "shipped": "Expédié",
+    "delivered": "Livré",
+    "cancelled": "Annulé",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "quantity": "Qté",
+    "price": "Prix",
+    "subtotal": "Sous-total",
+    "nextSteps": {
+      "title": "Étapes Suivantes",
+      "step1": "Nous traiterons votre commande dans les 24 heures",
+      "step2": "Vous recevrez un appel de confirmation sur votre numéro",
+      "step3": "Votre commande sera préparée et expédiée",
+      "step4": "Suivez le statut de votre commande par téléphone ou WhatsApp"
+    },
+    "actions": {
+      "continueShopping": "Continuer les Achats",
+      "viewOrders": "Voir Mes Commandes",
+      "contactSupport": "Contacter le Support"
+    },
+    "support": {
+      "title": "Besoin d'Aide?",
+      "phone": "Appelez-nous au",
+      "whatsapp": "WhatsApp nous",
+      "email": "Envoyez-nous un email"
     }
   }
 }
