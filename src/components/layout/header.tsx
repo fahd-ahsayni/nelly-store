@@ -16,6 +16,8 @@ import LanguageSwitcher from "./language-switcher";
 import WishlistDrawer from "./drawers/wishlist-drawer";
 import CartDrawer from "./drawers/cart-drawer";
 import { useCart } from "@/hooks/useCart";
+import { logo } from "@/assets";
+import Image from "next/image";
 
 interface HeaderProps {
   translations: any;
@@ -141,10 +143,10 @@ export default function Header({ translations, locale }: HeaderProps) {
               <div className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")}>
                 <Link href="#" className="flex items-center gap-x-2">
                   <span className="sr-only">Nelly Collection</span>
-                  <img
+                  <Image
                     alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=rose&shade=600"
-                    className="h-8 w-auto"
+                    src={logo}
+                    className="h-12 w-auto"
                   />
                   <Heading className="ltr:font-serif ltr:italic rtl:font-bold">{translations.navigation.logo}</Heading>
                 </Link>

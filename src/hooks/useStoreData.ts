@@ -125,6 +125,29 @@ export const useLatestProducts = (limit: number = 8): ProductFull[] => {
   });
 };
 
+// Hook to check if products are new (last 20 created)
+export const useNewProducts = (): Set<string> => {
+  return useStore((state) => {
+    const products = state.getProductsFull();
+    const sortedProducts = products
+      .slice()
+      .sort((a, b) => new Date(b.createdat).getTime() - new Date(a.createdat).getTime());
+    
+    const last20Products = sortedProducts.slice(0, 20);
+    return new Set(last20Products.map(p => p.id));
+  });
+};
+
+// Helper function to check if a product is new
+export const isProductNew = (productId: string, allProducts: ProductFull[]): boolean => {
+  const sortedProducts = allProducts
+    .slice()
+    .sort((a, b) => new Date(b.createdat).getTime() - new Date(a.createdat).getTime());
+  
+  const last20Products = sortedProducts.slice(0, 20);
+  return last20Products.some(p => p.id === productId);
+};
+
 // Hook for collections with product counts
 export const useCollectionsWithCounts = () => {
   return useStore((state) => {

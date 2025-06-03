@@ -110,6 +110,10 @@ export default function ProductList({
                   product={product} 
                   locale={locale} 
                   onClick={() => handleProductClick(product)}
+                  allProducts={initialProducts}
+                  translations={{
+                    new: translations.product?.new || "New"
+                  }}
                 />
               </CarouselItem>
             ))}

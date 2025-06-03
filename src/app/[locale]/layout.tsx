@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Inter, Noto_Naskh_Arabic } from 'next/font/google';
+import { Inter, Tajawal } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { getTranslations } from '@/i18n/utils';
@@ -8,7 +8,10 @@ import { cn } from '@/lib/utils';
 import { ToastProvider } from '@/components/ui/toast';
 
 const inter = Inter({ subsets: ['latin'] });
-const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ['arabic'] });
+const tajawal = Tajawal({ 
+  subsets: ['arabic'],
+  weight: ['200', '300', '400', '500', '700', '800', '900']
+});
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -48,7 +51,7 @@ export default async function LocaleLayout({
 
   const translations = await getTranslations(locale as Locale);
   const isRTL = locale === 'ar';
-  const fontClass = locale === 'ar' ? notoNaskhArabic.className : inter.className;
+  const fontClass = locale === 'ar' ? tajawal.className : inter.className;
 
   return (
     <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>

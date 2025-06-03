@@ -76,6 +76,9 @@
   "currency": {
     "mad": "درهم"
   },
+  "product": {
+    "new": "جديد"
+  },
   "cart": {
     "title": "سلة التسوق",
     "empty": {

@@ -173,8 +173,8 @@ export default function ProductQuickview({
                           {translations.productQuickview.outOfStars}
                         </p>
                         <Badge
-                          color="rose"
-                          className="border border-amber-500"
+                          color="yellow"
+                          className="border border-yellow-500"
                         >
                           {product.rating}{" "}
                           {translations.productQuickview.reviews}

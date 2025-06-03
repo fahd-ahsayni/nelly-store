@@ -73,6 +73,9 @@
   "currency": {
     "mad": "MAD"
   },
+  "product": {
+    "new": "Nouveau"
+  },
   "seo": {
     "title": "Collection Nelly - Boutique de Mode",
     "description": "Découvrez les dernières tendances de mode chez Collection Nelly"

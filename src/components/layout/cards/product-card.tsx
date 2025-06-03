@@ -7,24 +7,54 @@ export interface ProductCardProps {
   product: ProductFull;
   locale: string;
   onClick?: () => void;
+  allProducts?: ProductFull[];
+  translations?: {
+    new: string;
+  };
 }
 
-export default function ProductCard({ product, locale, onClick }: ProductCardProps) {
+// Helper function to check if product is in the last 20 created products
+const isProductNew = (
+  product: ProductFull,
+  allProducts: ProductFull[] = []
+): boolean => {
+  if (allProducts.length === 0) return false;
+
+  const sortedProducts = allProducts
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdat).getTime() - new Date(a.createdat).getTime()
+    );
+
+  const last20Products = sortedProducts.slice(0, 20);
+  return last20Products.some((p) => p.id === product.id);
+};
+
+export default function ProductCard({
+  product,
+  locale,
+  onClick,
+  allProducts = [],
+  translations,
+}: ProductCardProps) {
+  const isNew = isProductNew(product, allProducts);
+
   return (
     <div
       onClick={onClick}
-      className="block w-full max-w-[280px] group cursor-pointer"
+      className="block w-full aspect-[3/4] group cursor-pointer"
     >
       <div
         className={cn(
-          "relative rounded-2xl",
+          "relative rounded-2xl h-full w-full",
           "bg-white/80 dark:bg-gray-900/80",
           "shadow-xs",
           "transition-all duration-300",
           "hover:shadow-md group"
         )}
       >
-        <div className="relative h-[320px] overflow-hidden">
+        <div className="relative overflow-hidden h-full w-full">
           <Image
             src={product.imagesrc}
             alt={product.name}
@@ -41,8 +71,8 @@ export default function ProductCard({ product, locale, onClick }: ProductCardPro
           )}
         />
 
-        {product.instock && (
-          <div className="absolute top-3 right-3">
+        {isNew && (
+          <div className="absolute top-3 ltr:right-3 rtl:left-3">
             <span
               className={cn(
                 "px-2.5 py-1 rounded-lg text-xs font-medium",
@@ -52,7 +82,7 @@ export default function ProductCard({ product, locale, onClick }: ProductCardPro
                 "border border-white/20"
               )}
             >
-              New
+              {translations?.new || "New"}
             </span>
           </div>
         )}
