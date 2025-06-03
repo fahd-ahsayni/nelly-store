@@ -11,9 +11,9 @@ export default function TrendProduct({
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pb-20">
       <div className="mb-8">
-        <h2 className="md:text-5xl text-4xl font-serif text-gray-800">
+        <h2 className="ltr:md:text-5xl rtl:md:text-4xl ltr:text-4xl rtl:text-3xl text-gray-800 ltr:font-serif rtl:font-semibold font-medium">
           {translations.trendProduct["title-part1"]}{" "}
-          <span className="italic text-rose-600">
+          <span className="ltr:italic text-rose-600">
             {translations.trendProduct["title-part2"]}
           </span>
         </h2>
@@ -28,7 +28,7 @@ export default function TrendProduct({
         </div>
         <div className="md:col-span-4 rounded-r-lg bg-rose-200 border border-border flex flex-col justify-end p-4 md:p-6">
           <div className="mb-4 md:mb-8">
-            <h2 className={cn("text-2xl md:text-4xl text-gray-900", locale === "ar" ? "font-semibold" : "font-serif font-medium" )}>
+            <h2 className="text-2xl md:text-4xl text-gray-900 ltr:font-medium ltr:font-serif rtl:font-bold">
               {translations.trendProduct.title}
             </h2>
             <p className="mt-4 text-zinc-600 text-sm md:text-base">
@@ -37,7 +37,7 @@ export default function TrendProduct({
           </div>
           <SlideArrowButton
             className="w-[200px] cursor-pointer"
-            text="Shop now"
+            text={translations.trendProduct.ctaButton}
           />
         </div>
       </div>

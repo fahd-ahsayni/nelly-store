@@ -1,13 +1,13 @@
 "use client";
 
 import { useTranslations } from "@/i18n/utils";
-import { cn } from "@/lib/utils"; // Add this import
+import { cn } from "@/lib/utils";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
-    Bars3Icon,
-    HeartIcon,
-    ShoppingBagIcon,
-    XMarkIcon,
+  Bars3Icon,
+  HeartIcon,
+  ShoppingBagIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
@@ -22,17 +22,10 @@ interface HeaderProps {
 export default function Header({ translations, locale }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations(translations);
-  const isRTL = false;
-
-  const navigation = {
-    pages: [
-      { name: t("navigation.home"), href: `/${locale}` },
-      { name: t("navigation.store"), href: `/${locale}/store` },
-    ],
-  };
 
   return (
-    <div className="bg-white" dir="ltr">
+    // Set the document direction based on locale conditions
+    <div className="bg-white">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
@@ -45,12 +38,11 @@ export default function Header({ translations, locale }: HeaderProps) {
             transition
             className={cn(
               "relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out",
-              isRTL
-                ? "data-closed:translate-x-full"
-                : "data-closed:-translate-x-full"
+              // ltr: slide from left, rtl: slide from right
+              "ltr:data-closed:-translate-x-full rtl:data-closed:translate-x-full"
             )}
           >
-            <div className={cn("flex px-4 pt-5 pb-2", isRTL && "justify-end")}>
+            <div className={cn("flex px-4 pt-5 pb-2 rtl:justify-end")}>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -63,7 +55,10 @@ export default function Header({ translations, locale }: HeaderProps) {
             </div>
 
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              {navigation.pages.map((page) => (
+              {[
+                { name: t("navigation.home"), href: `/${locale}` },
+                { name: t("navigation.store"), href: `/${locale}/store` },
+              ].map((page) => (
                 <div key={page.name} className="flow-root">
                   <Link
                     href={page.href}
@@ -95,7 +90,8 @@ export default function Header({ translations, locale }: HeaderProps) {
                 onClick={() => setOpen(true)}
                 className={cn(
                   "relative rounded-md bg-white p-2 text-gray-400 lg:hidden",
-                  isRTL && "order-1"
+                  // In rtl, place button to the start (first)
+                  "rtl:order-first"
                 )}
               >
                 <span className="absolute -inset-0.5" />
@@ -105,13 +101,11 @@ export default function Header({ translations, locale }: HeaderProps) {
 
               {/* Flyout menus */}
               <div className="hidden lg:inline-block">
-                <div
-                  className={cn(
-                    "flex h-full",
-                    isRTL ? "space-x-reverse space-x-8" : "space-x-8"
-                  )}
-                >
-                  {navigation.pages.map((page) => (
+                <div className="flex h-full rtl:space-x-8 ltr:space-x-8">
+                  {[
+                    { name: t("navigation.home"), href: `/${locale}` },
+                    { name: t("navigation.store"), href: `/${locale}/store` },
+                  ].map((page) => (
                     <Link
                       key={page.name}
                       href={page.href}
@@ -124,7 +118,7 @@ export default function Header({ translations, locale }: HeaderProps) {
               </div>
 
               {/* Logo */}
-              <div className={cn("flex", isRTL ? "mr-auto" : "ml-auto")}>
+              <div className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")} dir="ltr">
                 <Link href="#" className="flex items-center gap-x-2">
                   <span className="sr-only">Your Company</span>
                   <img
@@ -132,22 +126,17 @@ export default function Header({ translations, locale }: HeaderProps) {
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=rose&shade=600"
                     className="h-8 w-auto"
                   />
-                  <Heading>Nelly Collection</Heading>
+                  <Heading className="font-serif italic">Nelly Collection</Heading>
                 </Link>
               </div>
 
-              <div
-                className={cn(
-                  "flex items-center",
-                  isRTL ? "mr-auto" : "ml-auto"
-                )}
-              >
-                <div className="hidden lg:ml-8 lg:flex">
+              <div className="flex items-center ltr:ml-auto rtl:mr-auto">
+                <div className="hidden ltr:lg:ml-8 rtl:mr-8 lg:flex">
                   <LanguageSwitcher translations={t} showText={true} />
                 </div>
 
                 {/* Favorites */}
-                <div className="flex lg:ml-6">
+                <div className="flex ltr:lg:ml-6 rtl:mr-6">
                   <Link
                     href="#"
                     className="p-2 text-gray-700 hover:text-gray-800"
@@ -158,12 +147,11 @@ export default function Header({ translations, locale }: HeaderProps) {
                 </div>
 
                 {/* Cart */}
-                <div
-                  className={cn(
-                    "flow-root",
-                    isRTL ? "mr-4 lg:mr-6" : "ml-4 lg:ml-6"
-                  )}
-                >
+                <div className={cn(
+                  "flow-root",
+                  // ltr: margin left, rtl: margin right
+                  "ltr:ml-4 lg:ltr:ml-6 rtl:mr-4 lg:rtl:mr-6"
+                )}>
                   <Link href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
@@ -172,7 +160,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                     <span
                       className={cn(
                         "text-sm font-medium text-gray-700 group-hover:text-gray-800",
-                        isRTL ? "mr-2" : "ml-2"
+                        "ltr:ml-2 rtl:mr-2"
                       )}
                     >
                       0

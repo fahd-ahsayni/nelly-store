@@ -27,12 +27,14 @@
   "trendProduct": {
     "title-part1": "Découvrez Notre",
     "title-part2": "Nouveau Produit",
+    "ctaButton": "Acheter Maintenant",
     "title": "Sérum Anti-Taches Avancé 50% DE RÉDUCTION",
     "paragraph": "Découvrez la puissance de notre Sérum Anti-Taches Avancé, maintenant à 50% DE RÉDUCTION. Dites adieu aux taches sombres et bonjour à une peau radieuse. Offre limitée !"
   },
-  "collection": {
+  "collections": {
     "title-part1": "Découvrez Notre",
     "title-part2": "Nouvelle Collection",
+    "link": "Voir tous les collections",
     "collection1": "Collection Foulard",
     "collection2": "Collection Hijab",
     "collection3": "Collection Burkini",

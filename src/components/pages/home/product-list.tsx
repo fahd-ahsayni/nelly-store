@@ -8,6 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 import Link from "next/link";
 
 const AUTOPLAY_DELAY = 4000;
@@ -46,9 +47,16 @@ export default function ProductList({
         />
       </div>
       <div className="md:flex md:items-center md:justify-between">
-        <h2 className={cn("text-gray-800", locale === "ar" ? "font-semibold md:text-4xl text-3xl" : "font-serif md:text-5xl text-4xl")}>
+        <h2
+          className={cn(
+            "text-gray-800",
+            locale === "ar"
+              ? "font-semibold md:text-4xl text-3xl"
+              : "font-serif md:text-5xl text-4xl"
+          )}
+        >
           {translations.productsList["title-part1"]}{" "}
-          <span className={cn("text-rose-600", locale !== "ar" && "italic")}>
+          <span className="text-rose-600 ltr:italic">
             {translations.productsList["title-part2"]}
           </span>
         </h2>
@@ -84,10 +92,15 @@ export default function ProductList({
         >
           <CarouselContent>
             {featuredProducts.map((product) => (
-              <CarouselItem key={product.id} className="basis-1/2 md:basis-1/3 lg:basis-1/5">
+              <CarouselItem
+                key={product.id}
+                className="basis-1/2 md:basis-1/3 lg:basis-1/5"
+              >
                 <div className="group relative">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                    <img
+                    <Image
+                      width={300}
+                      height={400}
                       src={product.imagesrc}
                       alt={product.name}
                       className="h-full w-full object-cover object-center lg:h-full lg:w-full"

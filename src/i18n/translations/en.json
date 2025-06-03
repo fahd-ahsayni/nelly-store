@@ -27,17 +27,20 @@
   "trendProduct": {
     "title-part1": "Discover Our",
     "title-part2": "New Product",
+    "ctaButton": "Shop Now",
     "title": " Advanced Anti-Tache Serum 50% OFF.",
     "paragraph": "Discover the power of our Advanced Anti-Tache Serum, now at 50% OFF. Say goodbye to dark spots and hello to radiant skin. Limited time offer!"
   },
-  "collection": {
+  "collections": {
     "title-part1": "Discover Our",
     "title-part2": "New Collection",
+    "link": "View all Collections",
     "collection1": "Foular Collection",
     "collection2": "Hijab Collection",
     "collection3": "Burkini Collection",
     "collection4": "Abaya Collection"
   },
+
   "seo": {
     "title": "Multilingual Next.js App",
     "description": "A Next.js application with internationalization support"
