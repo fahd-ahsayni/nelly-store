@@ -19,11 +19,13 @@ interface CartStore {
   addItem: (item: Omit<CartItem, "quantity"> & { quantity?: number }) => void;
   updateQuantity: (id: string, quantity: number) => void;
   removeItem: (id: string) => void;
-  removeFromCart: (id: string) => void; // Alias for removeItem
+  removeFromCart: (id: string) => void;
   clearCart: () => void;
   getTotalItems: () => number;
   getSubtotal: () => number;
   setItems: (items: CartItem[]) => void;
+  backupCart: () => void;
+  restoreCart: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -61,16 +63,35 @@ export const useCartStore = create<CartStore>()(
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
         })),
-      removeFromCart: (id) => get().removeItem(id), // Alias for removeItem
+      removeFromCart: (id) => get().removeItem(id),
       clearCart: () => set({ items: [] }),
       getTotalItems: () => get().items.reduce((sum, item) => sum + item.quantity, 0),
       getSubtotal: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),
       setItems: (items) => set({ items }),
+      backupCart: () => {
+        const { items } = get();
+        if (typeof window !== "undefined") {
+          localStorage.setItem("cart-backup", JSON.stringify(items));
+        }
+      },
+      restoreCart: () => {
+        if (typeof window !== "undefined") {
+          const backup = localStorage.getItem("cart-backup");
+          if (backup) {
+            try {
+              const items = JSON.parse(backup);
+              set({ items });
+              localStorage.removeItem("cart-backup");
+            } catch (error) {
+              console.error("Failed to restore cart backup:", error);
+            }
+          }
+        }
+      },
     }),
     {
       name: "cart-storage",
       storage: createJSONStorage(() => {
-        // Ensure localStorage is only accessed on client
         if (typeof window === "undefined") {
           return {
             getItem: () => null,
@@ -81,6 +102,13 @@ export const useCartStore = create<CartStore>()(
         return localStorage;
       }),
       skipHydration: true,
+      version: 1,
+      migrate: (persistedState: any, version: number) => {
+        if (version === 0) {
+          return persistedState;
+        }
+        return persistedState;
+      },
     }
   )
 );

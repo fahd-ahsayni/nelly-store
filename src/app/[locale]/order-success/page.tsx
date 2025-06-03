@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { getTranslations } from "@/i18n/utils";
 import type { Locale } from "@/i18n/config";
@@ -9,6 +9,7 @@ import { CheckCircleIcon, PhoneIcon, ChatBubbleLeftRightIcon } from "@heroicons/
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 import { styles } from "@/constants";
+import Spinner from "@/components/ui/spinner";
 
 interface OrderData {
   id: string;
@@ -24,6 +25,9 @@ interface OrderData {
   created_at: string;
 }
 
+// Cache for order data to prevent refetching
+const orderCache = new Map<string, OrderData>();
+
 export default function OrderSuccess() {
   const params = useParams();
   const router = useRouter();
@@ -36,24 +40,31 @@ export default function OrderSuccess() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Load translations
-  useEffect(() => {
-    const loadTranslations = async () => {
-      try {
-        const t = await getTranslations(locale);
-        setTranslations(t);
-      } catch (error) {
-        console.error("Failed to load translations:", error);
-      }
-    };
-    loadTranslations();
-  }, [locale]);
+  // Memoize translations loading
+  const translationsPromise = useMemo(() => getTranslations(locale), [locale]);
 
-  // Fetch order data
+  // Load translations with caching
+  useEffect(() => {
+    translationsPromise
+      .then(setTranslations)
+      .catch((error) => {
+        console.error("Failed to load translations:", error);
+      });
+  }, [translationsPromise]);
+
+  // Fetch order data with caching
   useEffect(() => {
     const fetchOrder = async () => {
       if (!orderId) {
         setError(true);
+        setLoading(false);
+        return;
+      }
+
+      // Check cache first
+      const cachedOrder = orderCache.get(orderId);
+      if (cachedOrder) {
+        setOrderData(cachedOrder);
         setLoading(false);
         return;
       }
@@ -69,6 +80,8 @@ export default function OrderSuccess() {
           console.error("Error fetching order:", error);
           setError(true);
         } else {
+          // Cache the order data
+          orderCache.set(orderId, data);
           setOrderData(data);
         }
       } catch (error) {
@@ -82,35 +95,8 @@ export default function OrderSuccess() {
     fetchOrder();
   }, [orderId]);
 
-  // Loading state
-  if (loading || !translations) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error || !orderData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Order not found
-          </h1>
-          <button
-            onClick={() => router.push(`/${locale}`)}
-            className={cn(styles.primaryButton)}
-          >
-            Go Home
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const getStatusColor = (status: string) => {
+  // Memoize status functions
+  const getStatusColor = useMemo(() => (status: string) => {
     switch (status) {
       case "confirmed":
         return "text-green-600 bg-green-100";
@@ -125,11 +111,39 @@ export default function OrderSuccess() {
       default:
         return "text-yellow-600 bg-yellow-100";
     }
-  };
+  }, []);
 
-  const getStatusText = (status: string) => {
-    return translations.orderSuccess[status] || status;
-  };
+  const getStatusText = useMemo(() => (status: string) => {
+    return translations?.orderSuccess?.[status] || status;
+  }, [translations]);
+
+  // Loading state
+  if (loading || !translations) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !orderData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            {translations?.orderSuccess?.orderNotFound || "Order not found"}
+          </h1>
+          <button
+            onClick={() => router.push(`/${locale}`)}
+            className={cn(styles.primaryButton)}
+          >
+            {translations?.orderSuccess?.actions?.goHome || "Go Home"}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">

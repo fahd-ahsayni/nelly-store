@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useIsomorphicLayoutEffect } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState, useRef } from "react";
 
 interface FormData {
   mobileNumber: string;
@@ -30,6 +30,7 @@ export default function Checkout() {
   const locale = params.locale as Locale;
   const [translations, setTranslations] = useState<any>(null);
   const [isClient, setIsClient] = useState(false);
+  const orderCompletedRef = useRef(false);
 
   const cartItems = useCartItems();
   const subtotal = useCartTotal();
@@ -88,6 +89,18 @@ export default function Checkout() {
       }
     }
   }, [formData, isClient]);
+
+  // Clear cart only when page is about to unload after successful order
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (orderCompletedRef.current) {
+        clearCart();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [clearCart]);
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -203,13 +216,15 @@ export default function Checkout() {
         localStorage.removeItem("checkout-form-data");
       }
 
-      // Clear cart only after successful order placement
-      clearCart();
+      // Mark order as completed but don't clear cart yet
+      orderCompletedRef.current = true;
 
       // Set redirecting state and redirect after a delay
       setIsRedirecting(true);
 
       setTimeout(() => {
+        // Clear cart just before redirect
+        clearCart();
         router.push(`/${locale}/order-success?orderId=${data.id}`);
       }, 2000);
     } catch (error) {

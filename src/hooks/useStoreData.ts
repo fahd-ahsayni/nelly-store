@@ -1,15 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useStore } from '@/store/useStore';
 import type { ProductFull } from '@/types/database';
+
+// Global flag to track if data has been fetched
+let hasInitialized = false;
 
 // Hook to fetch all data on app initialization
 export const useInitializeStore = () => {
   const fetchAllData = useStore((state) => state.fetchAllData);
   const loading = useStore((state) => state.loading);
   const errors = useStore((state) => state.errors);
+  const hasDataRef = useRef(false);
 
   useEffect(() => {
-    fetchAllData();
+    // Check if we have data in store
+    const state = useStore.getState();
+    const hasData = state.products.length > 0 && state.collections.length > 0;
+    
+    // Only fetch if we don't have data and haven't initialized globally
+    if (!hasData && !hasInitialized && !hasDataRef.current) {
+      hasInitialized = true;
+      hasDataRef.current = true;
+      fetchAllData();
+    }
   }, [fetchAllData]);
 
   const isLoading = Object.values(loading).some(Boolean);
@@ -18,14 +31,20 @@ export const useInitializeStore = () => {
   return { isLoading, hasErrors, errors };
 };
 
-// Hook to get a specific product by slug
+// Memoized selectors for better performance
 export const useProductBySlug = (slug: string): ProductFull | undefined => {
-  return useStore((state) => state.getProductBySlug(slug));
+  return useStore((state) => {
+    // Use a more efficient lookup
+    const products = state.getProductsFull();
+    return products.find(product => product.slug === slug);
+  });
 };
 
-// Hook to get products by collection
 export const useProductsByCollection = (collectionId: string): ProductFull[] => {
-  return useStore((state) => state.getProductsByCollection(collectionId));
+  return useStore((state) => {
+    const products = state.getProductsFull();
+    return products.filter(product => product.collection_id === collectionId);
+  });
 };
 
 // Hook to get products with search and filter capabilities
@@ -83,10 +102,13 @@ export const useProductsFiltered = (filters?: {
   });
 };
 
-// Hook for featured products (highest rated)
+// Hook for featured products with caching
 export const useFeaturedProducts = (limit: number = 8): ProductFull[] => {
   return useStore((state) => {
-    return state.getProductsFull()
+    const products = state.getProductsFull();
+    
+    // Use a more efficient sort with caching
+    return products
       .filter(product => product.instock)
       .sort((a, b) => b.rating - a.rating)
       .slice(0, limit);

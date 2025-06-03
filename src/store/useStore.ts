@@ -60,6 +60,21 @@ interface StoreState {
   resetProductColors: () => void;
   resetReservations: () => void;
   resetAll: () => void;
+
+  // Add timestamp for cache invalidation
+  lastFetched: {
+    collections: number | null;
+    colors: number | null;
+    products: number | null;
+    productColors: number | null;
+    reservations: number | null;
+  };
+  
+  // Cache duration (5 minutes)
+  cacheDuration: number;
+  
+  // Add cache checking methods
+  shouldRefetch: (type: keyof StoreState['lastFetched']) => boolean;
 }
 
 const initialLoadingState = {
@@ -78,6 +93,8 @@ const initialErrorState = {
   reservations: null,
 };
 
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 export const useStore = create<StoreState>()(
   devtools(
     subscribeWithSelector((set, get) => ({
@@ -89,9 +106,33 @@ export const useStore = create<StoreState>()(
       reservations: [],
       loading: initialLoadingState,
       errors: initialErrorState,
+      lastFetched: {
+        collections: null,
+        colors: null,
+        products: null,
+        productColors: null,
+        reservations: null,
+      },
+      cacheDuration: CACHE_DURATION,
+
+      // Cache checking method
+      shouldRefetch: (type) => {
+        const { lastFetched, cacheDuration } = get();
+        const lastFetchTime = lastFetched[type];
+        
+        if (!lastFetchTime) return true;
+        
+        return Date.now() - lastFetchTime > cacheDuration;
+      },
 
       // Fetch Collections
       fetchCollections: async () => {
+        const { shouldRefetch } = get();
+        
+        if (!shouldRefetch('collections')) {
+          return; // Skip if cache is still valid
+        }
+
         set(
           (state) => ({
             loading: { ...state.loading, collections: true },
@@ -113,6 +154,7 @@ export const useStore = create<StoreState>()(
             (state) => ({
               collections: data || [],
               loading: { ...state.loading, collections: false },
+              lastFetched: { ...state.lastFetched, collections: Date.now() },
             }),
             false,
             'fetchCollections/success'
@@ -134,6 +176,12 @@ export const useStore = create<StoreState>()(
 
       // Fetch Colors
       fetchColors: async () => {
+        const { shouldRefetch } = get();
+        
+        if (!shouldRefetch('colors')) {
+          return; // Skip if cache is still valid
+        }
+
         set(
           (state) => ({
             loading: { ...state.loading, colors: true },
@@ -155,6 +203,7 @@ export const useStore = create<StoreState>()(
             (state) => ({
               colors: data || [],
               loading: { ...state.loading, colors: false },
+              lastFetched: { ...state.lastFetched, colors: Date.now() },
             }),
             false,
             'fetchColors/success'
@@ -176,6 +225,12 @@ export const useStore = create<StoreState>()(
 
       // Fetch Products
       fetchProducts: async () => {
+        const { shouldRefetch } = get();
+        
+        if (!shouldRefetch('products')) {
+          return; // Skip if cache is still valid
+        }
+
         set(
           (state) => ({
             loading: { ...state.loading, products: true },
@@ -197,6 +252,7 @@ export const useStore = create<StoreState>()(
             (state) => ({
               products: data || [],
               loading: { ...state.loading, products: false },
+              lastFetched: { ...state.lastFetched, products: Date.now() },
             }),
             false,
             'fetchProducts/success'
@@ -218,6 +274,12 @@ export const useStore = create<StoreState>()(
 
       // Fetch Product Colors
       fetchProductColors: async () => {
+        const { shouldRefetch } = get();
+        
+        if (!shouldRefetch('productColors')) {
+          return; // Skip if cache is still valid
+        }
+
         set(
           (state) => ({
             loading: { ...state.loading, productColors: true },
@@ -239,6 +301,7 @@ export const useStore = create<StoreState>()(
             (state) => ({
               productColors: data || [],
               loading: { ...state.loading, productColors: false },
+              lastFetched: { ...state.lastFetched, productColors: Date.now() },
             }),
             false,
             'fetchProductColors/success'
@@ -260,6 +323,12 @@ export const useStore = create<StoreState>()(
 
       // Fetch Reservations
       fetchReservations: async () => {
+        const { shouldRefetch } = get();
+        
+        if (!shouldRefetch('reservations')) {
+          return; // Skip if cache is still valid
+        }
+
         set(
           (state) => ({
             loading: { ...state.loading, reservations: true },
@@ -281,6 +350,7 @@ export const useStore = create<StoreState>()(
             (state) => ({
               reservations: data || [],
               loading: { ...state.loading, reservations: false },
+              lastFetched: { ...state.lastFetched, reservations: Date.now() },
             }),
             false,
             'fetchReservations/success'
@@ -337,7 +407,10 @@ export const useStore = create<StoreState>()(
       },
 
       getProductsFull: () => {
-        const { products, collections, productColors, colors } = get();
+        const state = get();
+        const { products, collections, productColors, colors } = state;
+        
+        // Return cached result if possible
         return products.map(product => {
           const collection = collections.find(c => c.id === product.collection_id);
           const productColorsWithColors = productColors
@@ -439,6 +512,13 @@ export const useStore = create<StoreState>()(
             reservations: [],
             loading: initialLoadingState,
             errors: initialErrorState,
+            lastFetched: {
+              collections: null,
+              colors: null,
+              products: null,
+              productColors: null,
+              reservations: null,
+            },
           },
           false,
           'resetAll'
