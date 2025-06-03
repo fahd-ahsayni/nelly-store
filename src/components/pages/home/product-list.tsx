@@ -5,11 +5,10 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Subheading } from "@/components/ui/heading";
+import ProductCard from "@/components/layout/cards/product-card";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
 import Link from "next/link";
 
 const AUTOPLAY_DELAY = 4000;
@@ -34,7 +33,7 @@ export default function ProductList({
   const shopCollectionHref = `/${locale}/shop`;
 
   return (
-    <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8 relative isolate">
+    <section className="px-4 py-16 sm:px-6 sm:py-32 lg:px-8 relative isolate">
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -91,39 +90,13 @@ export default function ProductList({
           ]}
           className="w-full"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-2 md:-ml-4">
             {featuredProducts.map((product) => (
               <CarouselItem
                 key={product.id}
-                className="basis-1/2 md:basis-1/3 lg:basis-1/5"
+                className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
-                <div className="group relative">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                    <Image
-                      width={300}
-                      height={400}
-                      src={product.imagesrc}
-                      alt={product.name}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                    />
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <Subheading className="text-gray-800 text-lg">
-                        <Link href={`/${locale}/product/${product.id}`}>
-                          <span className="absolute inset-0" />
-                          {product.name}
-                        </Link>
-                      </Subheading>
-                      <p className="text-sm text-gray-500">
-                        {product.collections.name}
-                      </p>
-                      <p className="mt-1 text-sm font-medium text-gray-900">
-                        {product.price} MAD
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <ProductCard product={product} locale={locale} />
               </CarouselItem>
             ))}
           </CarouselContent>

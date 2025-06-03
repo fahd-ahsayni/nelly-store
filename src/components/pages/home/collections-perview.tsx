@@ -10,7 +10,7 @@ export default function CollectionPerview({
   locale: string;
 }) {
   return (
-    <div className="pb-16 sm:pb-24 relative isolate">
+    <div className="pb-16 sm:py-24 relative isolate">
       <div className="absolute inset-x-0 -Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
         <svg
           className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
@@ -62,7 +62,7 @@ export default function CollectionPerview({
         <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 lg:h-[700px]">
           {/* Card 1 */}
           <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:row-span-2">
-            <div className="absolute ltr:rounded-l-lg rtl:rounded-r-lg inset-0 bg-white overflow-hidden">
+            <div className="absolute inset-0 bg-white overflow-hidden">
               <Image
                 src={collection1}
                 alt="Collection Foulard"
@@ -127,7 +127,7 @@ export default function CollectionPerview({
           </div>
 
           {/* Card 4 */}
-          <div className="relative ltr:rounded-r-lg rtl:rounded-l-lg overflow-hidden h-[400px] sm:h-[450px] lg:h-auto lg:col-start-3 lg:row-span-2">
+          <div className="relative overflow-hidden h-[400px] sm:h-[450px] lg:h-auto lg:col-start-3 lg:row-span-2">
             <div className="absolute inset-0 overflow-hidden">
               <Image
                 src={collection2}

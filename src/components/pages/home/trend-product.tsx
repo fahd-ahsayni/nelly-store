@@ -1,5 +1,4 @@
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
-import { cn } from "@/lib/utils";
 
 export default function TrendProduct({
   translations,
@@ -19,14 +18,14 @@ export default function TrendProduct({
         </h2>
       </div>
       <div className="grid w-full grid-cols-1 md:grid-cols-12 mt-4 gap-4 md:gap-x-2 relative z-30">
-        <div className="md:col-span-8 bg-gray-200 rounded-l-lg overflow-hidden min-h-[300px] md:min-h-[400px]">
+        <div className="md:col-span-8 bg-gray-200 overflow-hidden min-h-[300px] md:min-h-[400px]">
           <img
             src="https://img.freepik.com/free-photo/beautiful-woman-wearing-hijab_23-2149288964.jpg?t=st=1748902063~exp=1748905663~hmac=a44c8e3c62c09ea2753087023bffb9bc2a430566dd2d60dc98c41057dd4b488a&w=1380"
             className="w-full h-full object-cover"
             alt="Anti-tache serum bottle"
           />
         </div>
-        <div className="md:col-span-4 rounded-r-lg bg-rose-200 border border-border flex flex-col justify-end p-4 md:p-6">
+        <div className="md:col-span-4 bg-rose-200 border border-border flex flex-col justify-end p-4 md:p-6">
           <div className="mb-4 md:mb-8">
             <h2 className="text-2xl md:text-4xl text-gray-900 ltr:font-medium ltr:font-serif rtl:font-bold">
               {translations.trendProduct.title}
