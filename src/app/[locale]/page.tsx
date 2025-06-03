@@ -31,11 +31,11 @@ export default async function Home({
   return (
     <StoreProvider>
       <main>
+        <Banner text={translations.banner.text} />
+        <nav className="w-full sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
+          <Header translations={translations} locale={locale} />
+        </nav>
         <section className="flex h-screen flex-col items-center w-full">
-          <Banner text={translations.banner.text} />
-          <nav className="w-full">
-            <Header translations={translations} locale={locale} />
-          </nav>
           <div className="relative w-full flex-1 isolate z-10">
             <div className="h-full overflow-hidden relative isolate flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
               <div

@@ -1,16 +1,11 @@
-import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
-import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
 
 export interface ProductCardProps {
   product: ProductFull;
   locale: string;
   onClick?: () => void;
   allProducts?: ProductFull[];
-  translations?: {
-    new: string;
-  };
+  translations: any;
 }
 
 // Helper function to check if product is in the last 20 created products
@@ -41,77 +36,34 @@ export default function ProductCard({
   const isNew = isProductNew(product, allProducts);
 
   return (
-    <div
-      onClick={onClick}
-      className="block w-full aspect-[3/4] group cursor-pointer"
-    >
-      <div
-        className={cn(
-          "relative rounded-2xl h-full w-full",
-          "bg-white/80 dark:bg-gray-900/80",
-          "shadow-xs",
-          "transition-all duration-300",
-          "hover:shadow-md group"
-        )}
-      >
-        <div className="relative overflow-hidden h-full w-full">
-          <Image
-            src={product.imagesrc}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-          />
+    <div key={product.id} className="group relative">
+      <img
+        alt={product.name}
+        src={product.imagesrc}
+        className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+      />
+
+      {isNew && (
+        <div className="absolute top-3 right-3">
+          <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-white text-gray-800 shadow-sm">
+            {translations?.new || "New"}
+          </span>
         </div>
+      )}
 
-        <div
-          className={cn(
-            "absolute inset-0",
-            "bg-gradient-to-t from-black/90 via-black/40 to-transparent"
-          )}
-        />
-
-        {isNew && (
-          <div className="absolute top-3 ltr:right-3 rtl:left-3">
-            <span
-              className={cn(
-                "px-2.5 py-1 rounded-lg text-xs font-medium",
-                "bg-white text-gray-800",
-                "backdrop-blur-md",
-                "shadow-xs",
-                "border border-white/20"
-              )}
-            >
-              {translations?.new || "New"}
-            </span>
-          </div>
-        )}
-
-        <div className="absolute bottom-0 left-0 right-0 p-5">
-          <div className="flex items-center justify-between gap-3">
-            <div className="space-y-1.5">
-              <h3 className="text-lg font-semibold text-white dark:text-gray-100 leading-snug tracking-tighter">
-                {product.name}
-              </h3>
-              <p className="text-sm text-gray-200 dark:text-gray-300 line-clamp-1 tracking-tight">
-                {product.collections.name}
-              </p>
-              <p className="text-sm font-medium text-white">
-                {product.price} MAD
-              </p>
+      <div className="mt-4 flex justify-between">
+        <div>
+          <h3 className="text-gray-80 font-medium line-clamp-1">
+            <div onClick={onClick} className="cursor-pointer">
+              <span aria-hidden="true" className="absolute inset-0" />
+              {product.name}
             </div>
-            <div
-              className={cn(
-                "p-2 rounded-full",
-                "bg-rose-500",
-                "group-hover:bg-rose-600",
-                "transition-colors duration-300"
-              )}
-            >
-              <ArrowUpRightIcon className="w-4 h-4 text-white group-hover:-rotate-12 transition-transform duration-300" />
-            </div>
-          </div>
+          </h3>
+          <p className="text-gray-600">{product.collections.name}</p>
         </div>
+        <p className="font-medium text-gray-900">
+          {product.price} {translations?.currency?.mad || "MAD"}
+        </p>
       </div>
     </div>
   );

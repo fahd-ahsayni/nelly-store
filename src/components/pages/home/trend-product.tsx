@@ -30,7 +30,7 @@ export default function TrendProduct({
             <h2 className="text-2xl md:text-4xl text-gray-900 ltr:font-medium ltr:font-serif rtl:font-bold">
               {translations.trendProduct.title}
             </h2>
-            <p className="mt-4 text-gray-600 text-sm md:text-base">
+            <p className="mt-4 text-gray-700 text-sm md:text-base">
               {translations.trendProduct.paragraph}
             </p>
           </div>

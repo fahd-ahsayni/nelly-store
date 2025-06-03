@@ -125,7 +125,7 @@ export default function TestimonialGrid({
                 <h3 className="text-xl mb-1">
                   {locale === "ar" ? testimonial.name.ar : testimonial.name.en}
                 </h3>
-                <p className="text-gray-600 text-sm line-clamp-2">
+                <p className="text-gray-700 line-clamp-2">
                   {locale === "ar"
                     ? testimonial.comment.ar
                     : testimonial.comment.en}

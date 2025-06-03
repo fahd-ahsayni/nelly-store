@@ -146,7 +146,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                   <Image
                     alt=""
                     src={logo}
-                    className="h-12 w-auto"
+                    className="h-14 w-auto"
                   />
                   <Heading className="ltr:font-serif ltr:italic rtl:font-bold">{translations.navigation.logo}</Heading>
                 </Link>

@@ -1,5 +1,6 @@
 "use client";
 
+import Banner from "@/components/layout/banner";
 import Header from "@/components/layout/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -344,6 +345,10 @@ export default function Checkout() {
 
   return (
     <div className="relative isolate">
+      {/* Header */}
+      <Banner text={translations.banner.text} />
+      <Header translations={translations} locale={locale} />
+      
       {/* Background decoration */}
       <div className="absolute inset-x-0 bottom-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:bottom-[-20rem]">
         <svg
