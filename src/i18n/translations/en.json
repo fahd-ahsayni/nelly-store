@@ -84,7 +84,9 @@
     "color": "Color",
     "chooseSize": "Choose a size",
     "size": "Size",
-    "addToBag": "Add to bag"
+    "addToBag": "Add to bag",
+    "selectColor": "Please select a color",
+    "selectSize": "Please select a size"
   },
   "currency": {
     "mad": "MAD"

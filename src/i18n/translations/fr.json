@@ -66,7 +66,9 @@
     "color": "Couleur",
     "chooseSize": "Choisir une taille",
     "size": "Taille",
-    "addToBag": "Ajouter au panier"
+    "addToBag": "Ajouter au panier",
+    "selectColor": "Veuillez sélectionner une couleur",
+    "selectSize": "Veuillez sélectionner une taille"
   },
   "currency": {
     "mad": "MAD"

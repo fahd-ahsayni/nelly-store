@@ -14,6 +14,7 @@ import Image from "next/image";
 import { Heading } from "../../ui/heading";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { Badge } from "@/components/ui/badge";
+import { styles } from "@/constants";
 
 interface CartDrawerProps {
   open: boolean;
@@ -66,7 +67,9 @@ export default function CartDrawer({
               className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500"
             >
               <span className="absolute -inset-0.5" />
-              <span className="sr-only">{translations.navigation.closeMenu}</span>
+              <span className="sr-only">
+                {translations.navigation.closeMenu}
+              </span>
               <XMarkIcon aria-hidden="true" className="size-6" />
             </button>
           </div>
@@ -96,7 +99,7 @@ export default function CartDrawer({
                           src={item.image || "/placeholder.svg"}
                           alt={item.name}
                           fill
-                          className="object-cover"
+                          className="object-cover h-full"
                         />
                       </div>
 
@@ -108,14 +111,24 @@ export default function CartDrawer({
                             </h3>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {item.size && (
-                                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                <Badge className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                                   {translations.cart.size}: {item.size}
-                                </span>
+                                </Badge>
                               )}
                               {item.color && (
-                                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                                  {translations.cart.color}: {item.color}
-                                </span>
+                                <Badge className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                  <span>{translations.cart.color}:</span>
+                                  <div className="flex items-center gap-1">
+                                    {item.colorHex && (
+                                      <div
+                                        className="w-3 h-3 rounded-full border border-gray-300"
+                                        style={{
+                                          backgroundColor: item.colorHex,
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                </Badge>
                               )}
                             </div>
                           </div>
@@ -175,9 +188,9 @@ export default function CartDrawer({
                 </div>
 
                 <div className="space-y-3">
-                  <Button className="w-full h-12 text-base font-medium">
+                  <button className={cn(styles.primaryButton)}>
                     {translations.cart.proceedToCheckout}
-                  </Button>
+                  </button>
                 </div>
               </div>
             </>

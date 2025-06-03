@@ -6,10 +6,11 @@ export interface CartItem {
   id: string;
   name: string;
   price: number;
-  image: string;
   quantity: number;
-  size?: string;
+  image?: string;
   color?: string;
+  colorHex?: string;
+  size?: string;
 }
 
 interface CartStore {

@@ -32,6 +32,7 @@ export default function ProductQuickview({
   locale,
 }: ProductQuickviewProps) {
   const { addItem } = useCart();
+  const [error, setError] = useState<string>("");
 
   // Create default color and size options based on database structure
   const colors =
@@ -39,7 +40,7 @@ export default function ProductQuickview({
       id: pc.colors.id,
       name: pc.colors.name,
       hex: pc.colors.hex,
-      selectedClass: "ring-rose-400",
+      selectedClass: pc.colors.selectedcolor,
     })) || [];
 
   const sizes =
@@ -56,8 +57,23 @@ export default function ProductQuickview({
 
   const handleAddToBag = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     if (!product) return;
+
+    // Validation: Check if color is required and selected
+    const hasColors = colors.length > 0;
+    const hasSizes = sizes.length > 0;
+
+    if (hasColors && !selectedColor) {
+      setError(translations.productQuickview.selectColor);
+      return;
+    }
+
+    if (hasSizes && !selectedSize) {
+      setError(translations.productQuickview.selectSize);
+      return;
+    }
 
     addItem({
       id: `${product.id}-${selectedColor?.id || "no-color"}-${
@@ -67,6 +83,7 @@ export default function ProductQuickview({
       price: product.price,
       image: product.image_urls?.[0] || product.imagesrc,
       color: selectedColor?.name,
+      colorHex: selectedColor?.hex,
       size: selectedSize?.name,
     });
 
@@ -168,6 +185,13 @@ export default function ProductQuickview({
                     </h3>
 
                     <form onSubmit={handleAddToBag}>
+                      {/* Error message */}
+                      {error && (
+                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+                          <p className="text-sm text-red-600">{error}</p>
+                        </div>
+                      )}
+
                       {/* Colors - Only show if colors exist */}
                       {colors.length > 0 && (
                         <fieldset
@@ -175,6 +199,7 @@ export default function ProductQuickview({
                         >
                           <legend className="text-sm font-medium text-gray-900">
                             {translations.productQuickview.color}
+                            <span className="text-red-500 ml-1">*</span>
                           </legend>
 
                           <RadioGroup
@@ -212,6 +237,7 @@ export default function ProductQuickview({
                           <div className="flex items-center justify-between">
                             <div className="text-sm font-medium text-gray-900">
                               {translations.productQuickview.size}
+                              <span className="text-red-500 ml-1">*</span>
                             </div>
                           </div>
 

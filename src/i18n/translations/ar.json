@@ -69,7 +69,9 @@
     "color": "اللون",
     "chooseSize": "اختر المقاس",
     "size": "المقاس",
-    "addToBag": "أضف للسلة"
+    "addToBag": "أضف للسلة",
+    "selectColor": "يرجى اختيار لون",
+    "selectSize": "يرجى اختيار مقاس"
   },
   "currency": {
     "mad": "درهم"
