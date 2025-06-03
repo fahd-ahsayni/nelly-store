@@ -76,6 +76,10 @@
   "product": {
     "new": "Nouveau"
   },
+  "shop": {
+    "shopByCollection": "Acheter par Collection",
+    "exploreWhatsNew": "Découvrez les Nouveautés"
+  },
   "seo": {
     "title": "Collection Nelly - Boutique de Mode",
     "description": "Découvrez les dernières tendances de mode chez Collection Nelly"

@@ -80,6 +80,10 @@
   "product": {
     "new": "جديد"
   },
+  "shop": {
+    "shopByCollection": "تسوق حسب المجموعة",
+    "exploreWhatsNew": "اكتشف الجديد"
+  },
   "cart": {
     "title": "سلة التسوق",
     "empty": {

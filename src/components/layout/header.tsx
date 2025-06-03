@@ -65,7 +65,7 @@ export default function Header({ translations, locale }: HeaderProps) {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {[
                 { name: t("navigation.home"), href: `/${locale}` },
-                { name: t("navigation.store"), href: `/${locale}/store` },
+                { name: t("navigation.store"), href: `/${locale}/shop` },
               ].map((page) => (
                 <div key={page.name} className="flow-root">
                   <Link
@@ -126,7 +126,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                 <div className="flex h-full rtl:space-x-8 ltr:space-x-8">
                   {[
                     { name: t("navigation.home"), href: `/${locale}` },
-                    { name: t("navigation.store"), href: `/${locale}/store` },
+                    { name: t("navigation.store"), href: `/${locale}/shop` },
                   ].map((page) => (
                     <Link
                       key={page.name}

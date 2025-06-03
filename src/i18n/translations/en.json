@@ -94,6 +94,10 @@
   "product": {
     "new": "New"
   },
+  "shop": {
+    "shopByCollection": "Shop by Collection",
+    "exploreWhatsNew": "Explore What's New"
+  },
   "seo": {
     "title": "Nelly Collection - Fashion Store",
     "description": "Discover the latest fashion trends at Nelly Collection"
