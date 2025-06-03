@@ -1,8 +1,10 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/lib/cart-store";
+import { styles } from "@/constants";
 import { useCart } from "@/hooks/useCart";
+import { useCartStore } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
@@ -11,13 +13,11 @@ import {
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
-import { Heading } from "../../ui/heading";
 import { TrashIcon } from "@heroicons/react/24/solid";
-import { Badge } from "@/components/ui/badge";
-import { styles } from "@/constants";
-import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Heading } from "../../ui/heading";
 
 interface CartDrawerProps {
   open: boolean;
@@ -183,7 +183,7 @@ export default function CartDrawer({
                             </div>
                           </div>
                           <Button
-                            color="dark/white"
+                            plain
                             onClick={() => removeItem(item.id)}
                             className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0 text-gray-400 hover:text-red-500"
                           >
@@ -194,7 +194,7 @@ export default function CartDrawer({
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <Button
-                              color="dark/white"
+                              plain
                               onClick={() =>
                                 updateQuantity(item.id, item.quantity - 1)
                               }
@@ -205,7 +205,7 @@ export default function CartDrawer({
                               {item.quantity}
                             </span>
                             <Button
-                              color="dark/white"
+                              plain
                               onClick={() =>
                                 updateQuantity(item.id, item.quantity + 1)
                               }

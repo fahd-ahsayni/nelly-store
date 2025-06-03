@@ -29,7 +29,7 @@ interface OrderData {
 // Cache for order data to prevent refetching
 const orderCache = new Map<string, OrderData>();
 
-function OrderSuccessContent() {
+async function OrderSuccessContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();

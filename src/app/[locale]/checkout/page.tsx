@@ -1,7 +1,9 @@
 "use client";
 
+import Header from "@/components/layout/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast";
 import { styles } from "@/constants";
@@ -83,7 +85,7 @@ export default function Checkout() {
   }, [isClient]);
 
   // Save form data to localStorage when it changes
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (isClient) {
       try {
         localStorage.setItem("checkout-form-data", JSON.stringify(formData));
@@ -369,7 +371,6 @@ export default function Checkout() {
           </defs>
         </svg>
       </div>
-
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="sr-only">{translations.checkout.title}</h1>
 
@@ -396,7 +397,7 @@ export default function Checkout() {
                   </span>
                 </label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="mobileNumber"
                     name="mobileNumber"
                     type="tel"
@@ -404,11 +405,7 @@ export default function Checkout() {
                     required
                     value={formData.mobileNumber}
                     onChange={handleInputChange}
-                    className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
-                      formErrors.mobileNumber
-                        ? "outline-red-300 focus:outline-red-600"
-                        : "outline-gray-300 focus:outline-rose-600"
-                    }`}
+                    className={formErrors.mobileNumber ? "data-invalid" : ""}
                   />
                   {formErrors.mobileNumber && (
                     <p className="mt-1 text-sm text-red-600">
@@ -437,7 +434,7 @@ export default function Checkout() {
                     </span>
                   </label>
                   <div className="mt-2">
-                    <input
+                    <Input
                       id="firstName"
                       name="firstName"
                       type="text"
@@ -445,11 +442,7 @@ export default function Checkout() {
                       required
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
-                        formErrors.firstName
-                          ? "outline-red-300 focus:outline-red-600"
-                          : "outline-gray-300 focus:outline-rose-600"
-                      }`}
+                      className={formErrors.firstName ? "data-invalid" : ""}
                     />
                     {formErrors.firstName && (
                       <p className="mt-1 text-sm text-red-600">
@@ -470,7 +463,7 @@ export default function Checkout() {
                     </span>
                   </label>
                   <div className="mt-2">
-                    <input
+                    <Input
                       id="lastName"
                       name="lastName"
                       type="text"
@@ -478,11 +471,7 @@ export default function Checkout() {
                       required
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
-                        formErrors.lastName
-                          ? "outline-red-300 focus:outline-red-600"
-                          : "outline-gray-300 focus:outline-rose-600"
-                      }`}
+                      className={formErrors.lastName ? "data-invalid" : ""}
                     />
                     {formErrors.lastName && (
                       <p className="mt-1 text-sm text-red-600">
@@ -503,7 +492,7 @@ export default function Checkout() {
                     </span>
                   </label>
                   <div className="mt-2">
-                    <input
+                    <Input
                       id="address"
                       name="address"
                       type="text"
@@ -511,11 +500,7 @@ export default function Checkout() {
                       required
                       value={formData.address}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
-                        formErrors.address
-                          ? "outline-red-300 focus:outline-red-600"
-                          : "outline-gray-300 focus:outline-rose-600"
-                      }`}
+                      className={formErrors.address ? "data-invalid" : ""}
                     />
                     {formErrors.address && (
                       <p className="mt-1 text-sm text-red-600">
@@ -536,7 +521,7 @@ export default function Checkout() {
                     </span>
                   </label>
                   <div className="mt-2">
-                    <input
+                    <Input
                       id="city"
                       name="city"
                       type="text"
@@ -544,11 +529,7 @@ export default function Checkout() {
                       required
                       value={formData.city}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
-                        formErrors.city
-                          ? "outline-red-300 focus:outline-red-600"
-                          : "outline-gray-300 focus:outline-rose-600"
-                      }`}
+                      className={formErrors.city ? "data-invalid" : ""}
                     />
                     {formErrors.city && (
                       <p className="mt-1 text-sm text-red-600">
@@ -566,14 +547,13 @@ export default function Checkout() {
                     {translations.checkout.form.secondaryMobileNumber}
                   </label>
                   <div className="mt-2">
-                    <input
+                    <Input
                       id="secondaryMobileNumber"
                       name="secondaryMobileNumber"
                       type="tel"
                       autoComplete="tel"
                       value={formData.secondaryMobileNumber}
                       onChange={handleInputChange}
-                      className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-rose-600 sm:text-sm/6"
                     />
                   </div>
                 </div>
@@ -587,7 +567,7 @@ export default function Checkout() {
               {translations.checkout.orderSummary}
             </h2>
 
-            <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-xs">
+            <div className="mt-4 border border-gray-200 bg-white shadow-xs">
               <h3 className="sr-only">Items in your cart</h3>
               <ul role="list" className="divide-y divide-gray-200">
                 {cartItems.map((item) => (
@@ -630,7 +610,7 @@ export default function Checkout() {
 
                         <div className="ltr:ml-4 rtl:mr-4 flow-root shrink-0">
                           <Button
-                            color="dark/white"
+                            plain
                             type="button"
                             onClick={() => removeFromCart(item.id)}
                             aria-label={`${
@@ -679,7 +659,7 @@ export default function Checkout() {
                   )}
                 >
                   {isSubmitting && <Spinner color="white" />}
-                  <span className="sr-only">
+                  <span>
                     {isSubmitting
                       ? translations?.checkout?.form?.processing ||
                         "Processing..."
