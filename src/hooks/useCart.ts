@@ -1,33 +1,38 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useLocalStorage } from "./useLocalStorage";
+import { useEffect, useState } from "react";
 import { useCartStore, CartItem } from "@/lib/cart-store";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
 export { type CartItem } from "@/lib/cart-store";
 
 export function useCart() {
-  const [storedItems, setStoredItems] = useLocalStorage<CartItem[]>("cart-items", []);
   const store = useCartStore();
-  const isInitialized = useRef(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Sync local storage with store on mount (only once)
-  useEffect(() => {
-    if (!isInitialized.current && storedItems.length > 0) {
-      store.setItems(storedItems);
-      isInitialized.current = true;
-    }
-  }, [storedItems, store]);
+  useIsomorphicLayoutEffect(() => {
+    // Only run on client
+    if (typeof window === "undefined") return;
 
-  // Sync store changes to local storage
-  useEffect(() => {
-    if (isInitialized.current) {
-      setStoredItems(store.items);
+    // Check if already hydrated
+    if (useCartStore.persist.hasHydrated()) {
+      setIsHydrated(true);
+      return;
     }
-  }, [store.items, setStoredItems]);
+
+    // Wait for hydration to complete
+    const unsubFinishHydration = useCartStore.persist.onFinishHydration(() => {
+      setIsHydrated(true);
+    });
+
+    return () => {
+      unsubFinishHydration();
+    };
+  }, []);
 
   return {
     ...store,
+    isHydrated,
     // Provide both naming conventions for compatibility
     removeFromCart: store.removeItem,
   };

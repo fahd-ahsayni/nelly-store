@@ -194,20 +194,25 @@ export default function Checkout() {
         return;
       }
 
-      // Success - clear cart and form data
+      // Success - show success message first
       toast.success(translations.checkout.success.orderPlaced);
-      clearCart();
 
-      // Clear form data from localStorage
+      // Clear form data from localStorage only on success
       if (isClient) {
         localStorage.removeItem("checkout-form-data");
       }
 
-      // Redirect to success page
-      router.push(`/${locale}/order-success?orderId=${data.id}`);
+      // Clear cart only after successful order placement
+      clearCart();
+
+      // Small delay to let user see the success message before redirect
+      setTimeout(() => {
+        router.push(`/${locale}/order-success?orderId=${data.id}`);
+      }, 1500);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error(translations.checkout.success.error);
+      // Don't clear cart on error - let user retry
     } finally {
       setIsSubmitting(false);
     }
@@ -571,7 +576,10 @@ export default function Checkout() {
                 <button
                   type="submit"
                   disabled={isSubmitting || cartItems.length === 0}
-                  className={cn(styles.primaryButton)}
+                  className={cn(
+                    styles.primaryButton,
+                    "w-full disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
+                  )}
                 >
                   {isSubmitting
                     ? translations.checkout.form.processing

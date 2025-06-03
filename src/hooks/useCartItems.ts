@@ -1,6 +1,8 @@
 "use client";
 
 import { useCartStore } from "@/lib/cart-store";
+import { useCart } from "./useCart";
+import { useEffect, useState } from "react";
 
 export interface CartItemFormatted {
   id: string;
@@ -16,10 +18,21 @@ export interface CartItemFormatted {
 
 export function useCartItems(): CartItemFormatted[] {
   const items = useCartStore((state) => state.items);
+  const { isHydrated } = useCart();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Return empty array if not mounted or not hydrated yet to prevent hydration mismatch
+  if (!mounted || !isHydrated) {
+    return [];
+  }
   
   return items.map(item => ({
     id: item.id,
-    productId: item.id, // Using the same ID as productId
+    productId: item.id,
     name: item.name,
     price: item.price,
     quantity: item.quantity,
@@ -31,7 +44,38 @@ export function useCartItems(): CartItemFormatted[] {
 }
 
 export function useCartTotal(): number {
-  return useCartStore((state) => state.getSubtotal());
+  const getSubtotal = useCartStore((state) => state.getSubtotal);
+  const { isHydrated } = useCart();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Return 0 if not mounted or not hydrated yet
+  if (!mounted || !isHydrated) {
+    return 0;
+  }
+  
+  return getSubtotal();
+}
+
+// Hook for cart count that prevents hydration mismatch
+export function useCartCount(): number {
+  const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const { isHydrated } = useCart();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Return 0 if not mounted or not hydrated yet
+  if (!mounted || !isHydrated) {
+    return 0;
+  }
+  
+  return getTotalItems();
 }
 
 // Re-export the cart store for convenience

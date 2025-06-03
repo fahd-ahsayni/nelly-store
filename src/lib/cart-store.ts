@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface CartItem {
   id: string;
@@ -69,6 +69,17 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: "cart-storage",
+      storage: createJSONStorage(() => {
+        // Ensure localStorage is only accessed on client
+        if (typeof window === "undefined") {
+          return {
+            getItem: () => null,
+            setItem: () => {},
+            removeItem: () => {},
+          };
+        }
+        return localStorage;
+      }),
       skipHydration: true,
     }
   )

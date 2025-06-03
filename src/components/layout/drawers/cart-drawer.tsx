@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/lib/cart-store";
+import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
@@ -16,6 +17,7 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { Badge } from "@/components/ui/badge";
 import { styles } from "@/constants";
 import { useRouter, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface CartDrawerProps {
   open: boolean;
@@ -32,11 +34,46 @@ export default function CartDrawer({
   const params = useParams();
   const locale = params.locale as string;
 
+  const { isHydrated } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (!isHydrated) {
+      useCartStore.persist.rehydrate();
+    }
+  }, [isHydrated]);
+
   const items = useCartStore((state) => state.items);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
   const getTotalItems = useCartStore((state) => state.getTotalItems);
   const getSubtotal = useCartStore((state) => state.getSubtotal);
+
+  // Show loading state until mounted and hydrated
+  if (!mounted || !isHydrated) {
+    return (
+      <Dialog open={open} onClose={onClose} className="relative z-40">
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-closed:opacity-0"
+        />
+        <div className="fixed inset-0 z-40 flex">
+          <DialogPanel
+            transition
+            className={cn(
+              "relative flex w-full max-w-lg flex-col bg-gray-50 shadow-xl transition duration-300 ease-in-out h-full",
+              "ltr:ml-auto ltr:data-closed:translate-x-full rtl:mr-auto rtl:data-closed:-translate-x-full"
+            )}
+          >
+            <div className="flex items-center justify-center flex-1">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
+            </div>
+          </DialogPanel>
+        </div>
+      </Dialog>
+    );
+  }
 
   const totalItems = getTotalItems();
   const subtotal = getSubtotal();
@@ -45,7 +82,7 @@ export default function CartDrawer({
   const total = subtotal + shipping + tax;
 
   const handleCheckout = () => {
-    onClose(); // Close the drawer first
+    onClose();
     router.push(`/${locale}/checkout`);
   };
 
