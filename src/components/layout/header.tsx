@@ -13,6 +13,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Heading } from "../ui/heading";
 import LanguageSwitcher from "./language-switcher";
+import WishlistDrawer from "./drawers/wishlist-drawer";
+import CartDrawer from "./drawers/cart-drawer";
 
 interface HeaderProps {
   translations: any;
@@ -21,6 +23,8 @@ interface HeaderProps {
 
 export default function Header({ translations, locale }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const [wishlistOpen, setWishlistOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const t = useTranslations(translations);
 
   return (
@@ -81,6 +85,22 @@ export default function Header({ translations, locale }: HeaderProps) {
         </div>
       </Dialog>
 
+      {/* Wishlist drawer */}
+      <WishlistDrawer
+        open={wishlistOpen}
+        onClose={() => setWishlistOpen(false)}
+        title={t("navigation.favorites")}
+        closeButtonLabel={t("navigation.closeMenu")}
+      />
+
+      {/* Cart drawer */}
+      <CartDrawer
+        open={cartOpen}
+        onClose={() => setCartOpen(false)}
+        title="Shopping Cart"
+        closeButtonLabel={t("navigation.closeMenu")}
+      />
+
       <header className="relative bg-white">
         <nav aria-label="Top" className="px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
@@ -118,15 +138,15 @@ export default function Header({ translations, locale }: HeaderProps) {
               </div>
 
               {/* Logo */}
-              <div className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")} dir="ltr">
+              <div className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")}>
                 <Link href="#" className="flex items-center gap-x-2">
-                  <span className="sr-only">Your Company</span>
+                  <span className="sr-only">Nelly Collection</span>
                   <img
                     alt=""
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=rose&shade=600"
                     className="h-8 w-auto"
                   />
-                  <Heading className="font-serif italic">Nelly Collection</Heading>
+                  <Heading className="ltr:font-serif ltr:italic rtl:font-bold">{translations.navigation.logo}</Heading>
                 </Link>
               </div>
 
@@ -137,13 +157,13 @@ export default function Header({ translations, locale }: HeaderProps) {
 
                 {/* Favorites */}
                 <div className="flex ltr:lg:ml-6 rtl:mr-6">
-                  <Link
-                    href="#"
+                  <button
+                    onClick={() => setWishlistOpen(true)}
                     className="p-2 text-gray-700 hover:text-gray-800"
                   >
                     <span className="sr-only">{t("navigation.favorites")}</span>
                     <HeartIcon aria-hidden="true" className="size-6" />
-                  </Link>
+                  </button>
                 </div>
 
                 {/* Cart */}
@@ -152,7 +172,10 @@ export default function Header({ translations, locale }: HeaderProps) {
                   // ltr: margin left, rtl: margin right
                   "ltr:ml-4 lg:ltr:ml-6 rtl:mr-4 lg:rtl:mr-6"
                 )}>
-                  <Link href="#" className="group -m-2 flex items-center p-2">
+                  <button 
+                    onClick={() => setCartOpen(true)}
+                    className="group -m-2 flex items-center p-2"
+                  >
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-gray-700 group-hover:text-gray-800"
@@ -166,7 +189,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                       0
                     </span>
                     <span className="sr-only">{t("navigation.items")}</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

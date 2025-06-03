@@ -3,6 +3,7 @@
     "text": "Grande nouvelle ! Nous sommes ravis d'annoncer un nouveau site web."
   },
   "navigation": {
+    "logo": "Nelly Collections",
     "home": "Accueil",
     "store": "Boutique",
     "favorites": "Favoris",
@@ -17,6 +18,7 @@
     "tile-part2": "style",
     "tile-part3": "avec des sélections de",
     "tile-part4": "Collections Nelly",
+    "spiningText": "précommande • précommande • précommande • ",
     "button": "Acheter maintenant"
   },
   "productsList": {
@@ -39,6 +41,20 @@
     "collection2": "Collection Hijab",
     "collection3": "Collection Burkini",
     "collection4": "Collection Abaya"
+  },
+  "callToAction": {
+    "title-part1": "Mode modeste",
+    "title-part2": "conçue pour",
+    "title-part3": "la confiance et la grâce.",
+    "button": "Découvrez notre nouvelle collection"
+  },
+  "coverSection": {
+    "title": "La collection Nelly allie modestie, style et confort.",
+    "subtitle": "Nous concevons des pièces modernes et élégantes qui vous permettent d'exprimer vos valeurs avec confiance — des vêtements qui tombent parfaitement et qui sont agréables à porter au quotidien."
+  },
+  "testimonials": {
+    "title-part1": "Ce que disent",
+    "title-part2": "nos clients"
   },
   "seo": {
     "title": "Application Next.js Multilingue",

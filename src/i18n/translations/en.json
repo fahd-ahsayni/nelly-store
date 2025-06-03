@@ -3,6 +3,7 @@
     "text": "Big news! We're excited to announce a new website."
   },
   "navigation": {
+    "logo": "Nelly Collections",
     "home": "Home",
     "store": "Store",
     "favorites": "Favorites",
@@ -17,6 +18,7 @@
     "tile-part2": "style",
     "tile-part3": "with selections from",
     "tile-part4": "Nelly Collections",
+    "spiningText": "pre-order • pre-order • pre-order • ",
     "button": "Shop now"
   },
   "productsList": {
@@ -40,7 +42,20 @@
     "collection3": "Burkini Collection",
     "collection4": "Abaya Collection"
   },
-
+  "callToAction": {
+    "title-part1": "Modest fashion",
+    "title-part2": "designed for",
+    "title-part3": "confidence and grace.",
+    "button": "Discover our new Collection"
+  },
+  "coverSection": {
+    "title": "The Nelly Collection Brings Together Modesty, Style, and Comfort.",
+    "subtitle": "We design modern, elegant pieces that let you express your values with confidence—clothing that fits beautifully and feels just right for everyday life."
+  },
+  "testimonials": {
+    "title-part1": "What Our",
+    "title-part2": "Customers Say"
+  },
   "seo": {
     "title": "Multilingual Next.js App",
     "description": "A Next.js application with internationalization support"

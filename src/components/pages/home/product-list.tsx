@@ -5,6 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { Subheading } from "@/components/ui/heading";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import Autoplay from "embla-carousel-autoplay";
@@ -97,7 +98,7 @@ export default function ProductList({
                 className="basis-1/2 md:basis-1/3 lg:basis-1/5"
               >
                 <div className="group relative">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <Image
                       width={300}
                       height={400}
@@ -108,12 +109,12 @@ export default function ProductList({
                   </div>
                   <div className="mt-4 flex justify-between">
                     <div>
-                      <h3 className="text-sm text-gray-700">
+                      <Subheading className="text-gray-800 text-lg">
                         <Link href={`/${locale}/product/${product.id}`}>
                           <span className="absolute inset-0" />
                           {product.name}
                         </Link>
-                      </h3>
+                      </Subheading>
                       <p className="text-sm text-gray-500">
                         {product.collections.name}
                       </p>

@@ -94,7 +94,7 @@ export default function ImageCarousel({
 
       {/* Bottom navigation dots */}
       <div
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-zinc-800 px-4 py-2 rounded"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-gray-800 px-4 py-2 rounded"
         onMouseEnter={() => {
           isHoveringNav.current = true;
         }}
@@ -107,7 +107,7 @@ export default function ImageCarousel({
           className="text-rose-200 hover:text-rose-50 transition-colors"
           aria-label="Previous slide"
         >
-          <ChevronLeftIcon className="h-5 w-5" />
+          <ChevronLeftIcon className="h-5 w-5 rtl:-scale-x-100" />
         </button>
 
         {images.map((_, index) => (
@@ -130,7 +130,7 @@ export default function ImageCarousel({
           className="text-rose-200 hover:text-rose-50 transition-colors"
           aria-label="Next slide"
         >
-          <ChevronRightIcon className="h-5 w-5" />
+          <ChevronRightIcon className="h-5 w-5 rtl:-scale-x-100" />
         </button>
       </div>
     </div>
