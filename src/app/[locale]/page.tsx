@@ -32,7 +32,7 @@ export default async function Home({
     <StoreProvider>
       <main>
         <Banner text={translations.banner.text} />
-        <nav className="w-full sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
+        <nav className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
           <Header translations={translations} locale={locale} />
         </nav>
         <section className="flex h-screen flex-col items-center w-full">
