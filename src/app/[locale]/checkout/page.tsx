@@ -1,5 +1,8 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast";
 import { styles } from "@/constants";
 import { useCartItems, useCartStore, useCartTotal } from "@/hooks/useCartItems";
@@ -10,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useIsomorphicLayoutEffect } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState, useRef } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 interface FormData {
   mobileNumber: string;
@@ -251,12 +254,24 @@ export default function Checkout() {
   if (cartItems.length === 0 && !isSubmitting) {
     return (
       <div className="relative isolate min-h-screen">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        >
+          <div
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:left-[calc(50%+30rem)] sm:w-288.75"
+          />
+        </div>
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
-            <h2 className="text-2xl font-medium text-zinc-900 mb-4">
+            <h2 className="text-2xl font-medium text-gray-900 mb-4">
               {translations.checkout.cartEmpty.title}
             </h2>
-            <p className="text-zinc-600 mb-6">
+            <p className="text-gray-600 mb-6">
               {translations.checkout.cartEmpty.description}
             </p>
             <button
@@ -274,7 +289,19 @@ export default function Checkout() {
   // Show redirecting state
   if (isRedirecting) {
     return (
-      <div className="relative isolate min-h-screen">
+      <div className="relative isolate min-h-screen flex items-center justify-center">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        >
+          <div
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:left-[calc(50%+30rem)] sm:w-288.75"
+          />
+        </div>
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center space-y-6">
             <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100">
@@ -302,7 +329,7 @@ export default function Checkout() {
               </p>
             </div>
             <div className="flex items-center justify-center space-x-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-rose-600"></div>
+              <Spinner color="rose" size={6} />
               <span className="text-sm text-gray-500">
                 {translations.checkout.pleaseWait || "Please wait..."}
               </span>
@@ -316,7 +343,7 @@ export default function Checkout() {
   return (
     <div className="relative isolate">
       {/* Background decoration */}
-      <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+      <div className="absolute inset-x-0 bottom-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:bottom-[-20rem]">
         <svg
           className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%)] sm:h-[42.375rem]"
           viewBox="0 0 1155 678"
@@ -354,14 +381,14 @@ export default function Checkout() {
           <div>
             {/* Contact Information */}
             <div>
-              <h2 className="text-lg font-medium text-zinc-900">
+              <h2 className="text-lg font-medium text-gray-900">
                 {translations.checkout.contactInformation}
               </h2>
 
               <div className="mt-4">
                 <label
                   htmlFor="mobileNumber"
-                  className="block text-sm/6 font-medium text-zinc-700"
+                  className="block text-sm/6 font-medium text-gray-700"
                 >
                   {translations.checkout.form.mobileNumber}{" "}
                   <span className="text-red-500">
@@ -377,10 +404,10 @@ export default function Checkout() {
                     required
                     value={formData.mobileNumber}
                     onChange={handleInputChange}
-                    className={`block w-full rounded-md bg-white px-3 py-2 text-base text-zinc-900 outline-1 -outline-offset-1 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
+                    className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
                       formErrors.mobileNumber
                         ? "outline-red-300 focus:outline-red-600"
-                        : "outline-zinc-300 focus:outline-rose-600"
+                        : "outline-gray-300 focus:outline-rose-600"
                     }`}
                   />
                   {formErrors.mobileNumber && (
@@ -393,8 +420,8 @@ export default function Checkout() {
             </div>
 
             {/* Shipping Information */}
-            <div className="mt-10 border-t border-zinc-200 pt-10">
-              <h2 className="text-lg font-medium text-zinc-900">
+            <div className="mt-10 border-t border-gray-200 pt-10">
+              <h2 className="text-lg font-medium text-gray-900">
                 {translations.checkout.shippingInformation}
               </h2>
 
@@ -402,7 +429,7 @@ export default function Checkout() {
                 <div>
                   <label
                     htmlFor="firstName"
-                    className="block text-sm/6 font-medium text-zinc-700"
+                    className="block text-sm/6 font-medium text-gray-700"
                   >
                     {translations.checkout.form.firstName}{" "}
                     <span className="text-red-500">
@@ -418,10 +445,10 @@ export default function Checkout() {
                       required
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-zinc-900 outline-1 -outline-offset-1 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
+                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
                         formErrors.firstName
                           ? "outline-red-300 focus:outline-red-600"
-                          : "outline-zinc-300 focus:outline-rose-600"
+                          : "outline-gray-300 focus:outline-rose-600"
                       }`}
                     />
                     {formErrors.firstName && (
@@ -435,7 +462,7 @@ export default function Checkout() {
                 <div>
                   <label
                     htmlFor="lastName"
-                    className="block text-sm/6 font-medium text-zinc-700"
+                    className="block text-sm/6 font-medium text-gray-700"
                   >
                     {translations.checkout.form.lastName}{" "}
                     <span className="text-red-500">
@@ -451,10 +478,10 @@ export default function Checkout() {
                       required
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-zinc-900 outline-1 -outline-offset-1 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
+                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
                         formErrors.lastName
                           ? "outline-red-300 focus:outline-red-600"
-                          : "outline-zinc-300 focus:outline-rose-600"
+                          : "outline-gray-300 focus:outline-rose-600"
                       }`}
                     />
                     {formErrors.lastName && (
@@ -468,7 +495,7 @@ export default function Checkout() {
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="address"
-                    className="block text-sm/6 font-medium text-zinc-700"
+                    className="block text-sm/6 font-medium text-gray-700"
                   >
                     {translations.checkout.form.address}{" "}
                     <span className="text-red-500">
@@ -484,10 +511,10 @@ export default function Checkout() {
                       required
                       value={formData.address}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-zinc-900 outline-1 -outline-offset-1 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
+                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
                         formErrors.address
                           ? "outline-red-300 focus:outline-red-600"
-                          : "outline-zinc-300 focus:outline-rose-600"
+                          : "outline-gray-300 focus:outline-rose-600"
                       }`}
                     />
                     {formErrors.address && (
@@ -501,7 +528,7 @@ export default function Checkout() {
                 <div>
                   <label
                     htmlFor="city"
-                    className="block text-sm/6 font-medium text-zinc-700"
+                    className="block text-sm/6 font-medium text-gray-700"
                   >
                     {translations.checkout.form.city}{" "}
                     <span className="text-red-500">
@@ -517,10 +544,10 @@ export default function Checkout() {
                       required
                       value={formData.city}
                       onChange={handleInputChange}
-                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-zinc-900 outline-1 -outline-offset-1 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
+                      className={`block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
                         formErrors.city
                           ? "outline-red-300 focus:outline-red-600"
-                          : "outline-zinc-300 focus:outline-rose-600"
+                          : "outline-gray-300 focus:outline-rose-600"
                       }`}
                     />
                     {formErrors.city && (
@@ -534,7 +561,7 @@ export default function Checkout() {
                 <div className="sm:col-span-1">
                   <label
                     htmlFor="secondaryMobileNumber"
-                    className="block text-sm/6 font-medium text-zinc-700"
+                    className="block text-sm/6 font-medium text-gray-700"
                   >
                     {translations.checkout.form.secondaryMobileNumber}
                   </label>
@@ -546,7 +573,7 @@ export default function Checkout() {
                       autoComplete="tel"
                       value={formData.secondaryMobileNumber}
                       onChange={handleInputChange}
-                      className="block w-full rounded-md bg-white px-3 py-2 text-base text-zinc-900 outline-1 -outline-offset-1 outline-zinc-300 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 focus:outline-rose-600 sm:text-sm/6"
+                      className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-rose-600 sm:text-sm/6"
                     />
                   </div>
                 </div>
@@ -556,13 +583,13 @@ export default function Checkout() {
 
           {/* Order summary */}
           <div className="mt-10 lg:mt-0">
-            <h2 className="text-lg font-medium text-zinc-900">
+            <h2 className="text-lg font-medium text-gray-900">
               {translations.checkout.orderSummary}
             </h2>
 
-            <div className="mt-4 rounded-lg border border-zinc-200 bg-white shadow-xs">
+            <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-xs">
               <h3 className="sr-only">Items in your cart</h3>
-              <ul role="list" className="divide-y divide-zinc-200">
+              <ul role="list" className="divide-y divide-gray-200">
                 {cartItems.map((item) => (
                   <li key={item.id} className="flex px-4 py-6 sm:px-6">
                     <div className="shrink-0">
@@ -573,81 +600,92 @@ export default function Checkout() {
                       />
                     </div>
 
-                    <div className="ml-6 flex flex-1 flex-col">
+                    <div className="ltr:ml-6 rtl:mr-6 flex flex-1 flex-col">
                       <div className="flex">
                         <div className="min-w-0 flex-1">
                           <h4 className="text-sm">
-                            <span className="font-medium text-zinc-700 hover:text-zinc-800">
+                            <span className="font-medium text-gray-700 hover:text-gray-800">
                               {item.name}
                             </span>
                           </h4>
-                          <p className="mt-1 text-sm text-zinc-500 flex items-center gap-2">
-                            <span
-                              className="inline-block h-4 w-4 rounded-full border border-gray-300"
-                              style={{ backgroundColor: item.colorHex }}
-                            />
-                            {item.color}
-                          </p>
-                          <p className="mt-1 text-sm text-zinc-500">
-                            {translations?.checkout?.item?.size || "Size"}: {item.size}
-                          </p>
-                          <p className="mt-1 text-sm text-zinc-500">
-                            {translations?.checkout?.item?.quantity || "Quantity"}:{" "}
-                            {item.quantity}
+                          <div className="flex gap-x-4 items-center">
+                            <Badge>
+                              {translations?.checkout?.item?.size || "Size"}:{" "}
+                              {item.size}
+                            </Badge>
+                            <Badge>
+                              <span
+                                className="inline-block h-4 w-4 rounded-full border border-gray-300"
+                                style={{ backgroundColor: item.colorHex }}
+                              />
+                              {item.color}
+                            </Badge>
+                          </div>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {translations?.checkout?.item?.quantity ||
+                              "Quantity"}
+                            : {item.quantity}
                           </p>
                         </div>
 
-                        <div className="ml-4 flow-root shrink-0">
-                          <button
+                        <div className="ltr:ml-4 rtl:mr-4 flow-root shrink-0">
+                          <Button
+                            color="dark/white"
                             type="button"
                             onClick={() => removeFromCart(item.id)}
-                            className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-zinc-400 hover:text-zinc-500"
-                            aria-label={`${translations?.checkout?.item?.remove || "Remove"} ${item.name}`}
+                            aria-label={`${
+                              translations?.checkout?.item?.remove || "Remove"
+                            } ${item.name}`}
                           >
                             <span className="sr-only">
                               {translations?.checkout?.item?.remove || "Remove"}
                             </span>
                             <TrashIcon aria-hidden="true" className="size-5" />
-                          </button>
+                          </Button>
                         </div>
                       </div>
 
-                      <div className="flex flex-1 items-end justify-between pt-2">
-                        <p className="mt-1 text-sm font-medium text-zinc-900">
-                          {(item.price * item.quantity).toFixed(2)} Dhs
+                      <div className="flex flex-1 ltr:items-end rtl:items-start justify-between pt-2">
+                        <p className="mt-1 text-sm font-medium text-gray-900">
+                          {(item.price * item.quantity).toFixed(2)}
+                          {translations.currency.mad}
                         </p>
                       </div>
                     </div>
                   </li>
                 ))}
               </ul>
-              <dl className="space-y-6 border-t border-zinc-200 px-4 py-6 sm:px-6">
+              <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex items-center justify-between">
                   <dt className="text-base font-medium">
                     {translations?.checkout?.item?.total || "Total"}
                   </dt>
-                  <dd className="text-base font-medium text-zinc-900">
-                    {subtotal.toFixed(2)} Dhs
+                  <dd className="text-base font-medium text-gray-900">
+                    {subtotal.toFixed(2)} {translations.currency.mad}
                   </dd>
                 </div>
               </dl>
 
-              <div className="border-t border-zinc-200 px-4 py-6 sm:px-6">
+              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <button
                   type="submit"
-                  disabled={isSubmitting || cartItems.length === 0 || isRedirecting}
+                  disabled={
+                    isSubmitting || cartItems.length === 0 || isRedirecting
+                  }
                   className={cn(
                     styles.primaryButton,
                     "w-full disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50",
                     "flex items-center justify-center gap-2"
                   )}
                 >
-                  {isSubmitting && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  )}
-                  {isSubmitting
-                    ? (translations?.checkout?.form?.processing || "Processing...")
-                    : (translations?.checkout?.form?.confirmOrder || "Confirm order")}
+                  {isSubmitting && <Spinner color="white" />}
+                  <span className="sr-only">
+                    {isSubmitting
+                      ? translations?.checkout?.form?.processing ||
+                        "Processing..."
+                      : translations?.checkout?.form?.confirmOrder ||
+                        "Confirm order"}
+                  </span>
                 </button>
               </div>
             </div>

@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { getTranslations } from "@/i18n/utils";
-import type { Locale } from "@/i18n/config";
-import { supabase } from "@/lib/supabase";
-import { CheckCircleIcon, PhoneIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
-import { cn } from "@/lib/utils";
-import { styles } from "@/constants";
 import Spinner from "@/components/ui/spinner";
+import { styles } from "@/constants";
+import type { Locale } from "@/i18n/config";
+import { getTranslations } from "@/i18n/utils";
+import { supabase } from "@/lib/supabase";
+import { cn } from "@/lib/utils";
+import {
+    CheckCircleIcon
+} from "@heroicons/react/24/solid";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
 interface OrderData {
   id: string;
@@ -45,11 +46,9 @@ export default function OrderSuccess() {
 
   // Load translations with caching
   useEffect(() => {
-    translationsPromise
-      .then(setTranslations)
-      .catch((error) => {
-        console.error("Failed to load translations:", error);
-      });
+    translationsPromise.then(setTranslations).catch((error) => {
+      console.error("Failed to load translations:", error);
+    });
   }, [translationsPromise]);
 
   // Fetch order data with caching
@@ -96,26 +95,32 @@ export default function OrderSuccess() {
   }, [orderId]);
 
   // Memoize status functions
-  const getStatusColor = useMemo(() => (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "text-green-600 bg-green-100";
-      case "processing":
-        return "text-blue-600 bg-blue-100";
-      case "shipped":
-        return "text-purple-600 bg-purple-100";
-      case "delivered":
-        return "text-green-600 bg-green-100";
-      case "cancelled":
-        return "text-red-600 bg-red-100";
-      default:
-        return "text-yellow-600 bg-yellow-100";
-    }
-  }, []);
+  const getStatusColor = useMemo(
+    () => (status: string) => {
+      switch (status) {
+        case "confirmed":
+          return "text-green-600 bg-green-100";
+        case "processing":
+          return "text-blue-600 bg-blue-100";
+        case "shipped":
+          return "text-purple-600 bg-purple-100";
+        case "delivered":
+          return "text-green-600 bg-green-100";
+        case "cancelled":
+          return "text-red-600 bg-red-100";
+        default:
+          return "text-yellow-600 bg-yellow-100";
+      }
+    },
+    []
+  );
 
-  const getStatusText = useMemo(() => (status: string) => {
-    return translations?.orderSuccess?.[status] || status;
-  }, [translations]);
+  const getStatusText = useMemo(
+    () => (status: string) => {
+      return translations?.orderSuccess?.[status] || status;
+    },
+    [translations]
+  );
 
   // Loading state
   if (loading || !translations) {
@@ -167,7 +172,8 @@ export default function OrderSuccess() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">
-                  {translations.orderSuccess.orderNumber}: #{orderData.id.slice(-8)}
+                  {translations.orderSuccess.orderNumber}: #
+                  {orderData.id}
                 </h2>
                 <p className="text-sm text-gray-500">
                   {new Date(orderData.created_at).toLocaleDateString(locale, {
@@ -198,11 +204,15 @@ export default function OrderSuccess() {
               </h3>
               <div className="space-y-2">
                 <p className="text-sm">
-                  <span className="font-medium">{translations.orderSuccess.name}:</span>{" "}
+                  <span className="font-medium">
+                    {translations.orderSuccess.name}:
+                  </span>{" "}
                   {orderData.customer_first_name} {orderData.customer_last_name}
                 </p>
                 <p className="text-sm">
-                  <span className="font-medium">{translations.orderSuccess.phone}:</span>{" "}
+                  <span className="font-medium">
+                    {translations.orderSuccess.phone}:
+                  </span>{" "}
                   {orderData.customer_mobile}
                 </p>
                 {orderData.customer_secondary_mobile && (
@@ -223,11 +233,15 @@ export default function OrderSuccess() {
               </h3>
               <div className="space-y-2">
                 <p className="text-sm">
-                  <span className="font-medium">{translations.orderSuccess.address}:</span>{" "}
+                  <span className="font-medium">
+                    {translations.orderSuccess.address}:
+                  </span>{" "}
                   {orderData.customer_address}
                 </p>
                 <p className="text-sm">
-                  <span className="font-medium">{translations.orderSuccess.city}:</span>{" "}
+                  <span className="font-medium">
+                    {translations.orderSuccess.city}:
+                  </span>{" "}
                   {orderData.customer_city}
                 </p>
               </div>
@@ -245,7 +259,10 @@ export default function OrderSuccess() {
           <div className="p-6">
             <div className="space-y-4">
               {orderData.items.map((item: any, index: number) => (
-                <div key={index} className="flex items-center space-x-4 py-4 border-b border-gray-100 last:border-b-0">
+                <div
+                  key={index}
+                  className="flex space-x-4 py-4 border-b border-gray-100 last:border-b-0"
+                >
                   <img
                     src={item.image || "/placeholder.svg"}
                     alt={item.product_name}
@@ -267,17 +284,17 @@ export default function OrderSuccess() {
                       )}
                       {item.size && (
                         <span className="text-xs text-gray-500">
-                          Size: {item.size}
+                          {translations.productQuickview.size}: {item.size}
                         </span>
                       )}
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-gray-900">
-                      {item.quantity} × {item.price.toFixed(2)} Dhs
+                    <p className="font-medium text-gray-900">
+                      {item.quantity} × {item.price.toFixed(2)} {translations.currency.mad}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {(item.quantity * item.price).toFixed(2)} Dhs
+                      {(item.quantity * item.price).toFixed(2)} {translations.currency.mad}
                     </p>
                   </div>
                 </div>
@@ -289,7 +306,7 @@ export default function OrderSuccess() {
                   {translations.orderSuccess.total}
                 </span>
                 <span className="text-lg font-bold text-gray-900">
-                  {orderData.total_amount.toFixed(2)} Dhs
+                  {orderData.total_amount.toFixed(2)} {translations.currency.mad}
                 </span>
               </div>
             </div>
@@ -319,57 +336,6 @@ export default function OrderSuccess() {
           </div>
         </div>
 
-        {/* Support Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">
-              {translations.orderSuccess.support.title}
-            </h2>
-          </div>
-          <div className="p-6">
-            <div className="grid sm:grid-cols-3 gap-4">
-              <a
-                href="tel:+212123456789"
-                className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <PhoneIcon className="h-5 w-5 text-rose-600" />
-                <div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {translations.orderSuccess.support.phone}
-                  </p>
-                  <p className="text-xs text-gray-500">+212 123 456 789</p>
-                </div>
-              </a>
-              <a
-                href="https://wa.me/212123456789"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <ChatBubbleLeftRightIcon className="h-5 w-5 text-green-600" />
-                <div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {translations.orderSuccess.support.whatsapp}
-                  </p>
-                  <p className="text-xs text-gray-500">WhatsApp</p>
-                </div>
-              </a>
-              <a
-                href="mailto:support@nellycollection.store"
-                className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <EnvelopeIcon className="h-5 w-5 text-blue-600" />
-                <div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {translations.orderSuccess.support.email}
-                  </p>
-                  <p className="text-xs text-gray-500">Email</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
@@ -377,12 +343,6 @@ export default function OrderSuccess() {
             className={cn(styles.primaryButton)}
           >
             {translations.orderSuccess.actions.continueShopping}
-          </button>
-          <button
-            onClick={() => router.push(`/${locale}/contact`)}
-            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            {translations.orderSuccess.actions.contactSupport}
           </button>
         </div>
       </div>
