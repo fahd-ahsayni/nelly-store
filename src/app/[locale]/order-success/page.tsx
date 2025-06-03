@@ -10,7 +10,7 @@ import {
     CheckCircleIcon
 } from "@heroicons/react/24/solid";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 
 interface OrderData {
   id: string;
@@ -29,7 +29,7 @@ interface OrderData {
 // Cache for order data to prevent refetching
 const orderCache = new Map<string, OrderData>();
 
-export default function OrderSuccess() {
+function OrderSuccessContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -347,5 +347,19 @@ export default function OrderSuccess() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function OrderSuccess() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <OrderSuccessContent />
+    </Suspense>
   );
 }
