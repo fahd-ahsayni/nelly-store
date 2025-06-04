@@ -1,12 +1,12 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { XMarkIcon, FunnelIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
+import { cn } from "@/lib/utils";
 import type { Color } from "@/types/database";
-import { useState, useEffect } from "react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 
 interface FilterDrawerProps {
   open: boolean;
@@ -16,10 +16,7 @@ interface FilterDrawerProps {
   availableSizes: string[];
   selectedColors: string[];
   selectedSizes: string[];
-  onFiltersChange: (filters: {
-    colors: string[];
-    sizes: string[];
-  }) => void;
+  onFiltersChange: (filters: { colors: string[]; sizes: string[] }) => void;
 }
 
 export default function FilterDrawer({
@@ -32,8 +29,10 @@ export default function FilterDrawer({
   selectedSizes,
   onFiltersChange,
 }: FilterDrawerProps) {
-  const [tempSelectedColors, setTempSelectedColors] = useState<string[]>(selectedColors);
-  const [tempSelectedSizes, setTempSelectedSizes] = useState<string[]>(selectedSizes);
+  const [tempSelectedColors, setTempSelectedColors] =
+    useState<string[]>(selectedColors);
+  const [tempSelectedSizes, setTempSelectedSizes] =
+    useState<string[]>(selectedSizes);
 
   useEffect(() => {
     setTempSelectedColors(selectedColors);
@@ -41,18 +40,16 @@ export default function FilterDrawer({
   }, [selectedColors, selectedSizes, open]);
 
   const handleColorToggle = (colorId: string) => {
-    setTempSelectedColors(prev =>
+    setTempSelectedColors((prev) =>
       prev.includes(colorId)
-        ? prev.filter(id => id !== colorId)
+        ? prev.filter((id) => id !== colorId)
         : [...prev, colorId]
     );
   };
 
   const handleSizeToggle = (size: string) => {
-    setTempSelectedSizes(prev =>
-      prev.includes(size)
-        ? prev.filter(s => s !== size)
-        : [...prev, size]
+    setTempSelectedSizes((prev) =>
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
     );
   };
 
@@ -80,7 +77,7 @@ export default function FilterDrawer({
         <DialogPanel
           transition
           className={cn(
-            "relative flex w-full max-w-md flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out",
+            "relative flex w-full max-w-md flex-col bg-gray-50 shadow-xl transition duration-300 ease-in-out",
             "ltr:ml-auto ltr:data-closed:translate-x-full rtl:mr-auto rtl:data-closed:-translate-x-full"
           )}
         >
@@ -94,27 +91,29 @@ export default function FilterDrawer({
               className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
             >
               <span className="absolute -inset-0.5" />
-              <span className="sr-only">{translations.navigation.closeMenu}</span>
+              <span className="sr-only">
+                {translations.navigation.closeMenu}
+              </span>
               <XMarkIcon aria-hidden="true" className="size-6" />
             </button>
           </div>
 
-          <div className="flex-1 px-4 space-y-6">
+          <div className="flex-1 overflow-y-auto px-4 space-y-6 mt-8 pb-20">
             {/* Colors Filter */}
             {colors.length > 0 && (
               <div>
                 <h3 className="text-sm font-medium text-gray-900 mb-3">
                   {translations.shop?.filters?.colors || "Colors"}
                 </h3>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="flex items-center flex-wrap gap-3">
                   {colors.map((color) => (
                     <button
                       key={color.id}
                       onClick={() => handleColorToggle(color.id)}
                       className={cn(
-                        "relative w-12 h-12 rounded-full border-2 transition-all",
+                        "relative w-11 h-11 rounded-full border-2 transition-all",
                         tempSelectedColors.includes(color.id)
-                          ? "border-gray-900 ring-2 ring-gray-900 ring-offset-2"
+                          ? "border-rose-600 ring-2 ring-rose-600 ring-offset-2"
                           : "border-gray-300 hover:border-gray-400"
                       )}
                       style={{ backgroundColor: color.hex }}
@@ -143,9 +142,9 @@ export default function FilterDrawer({
                       key={size}
                       onClick={() => handleSizeToggle(size)}
                       className={cn(
-                        "px-3 py-2 text-sm font-medium rounded-md border transition-colors",
+                        "px-3 py-4 font-medium border transition-colors",
                         tempSelectedSizes.includes(size)
-                          ? "bg-gray-900 text-white border-gray-900"
+                          ? "bg-rose-600 text-white border-rose-600"
                           : "bg-white text-gray-900 border-gray-300 hover:bg-gray-50"
                       )}
                     >
@@ -157,19 +156,19 @@ export default function FilterDrawer({
             )}
           </div>
 
-          {/* Actions */}
-          <div className="px-4 pt-4 space-y-3">
+          {/* Actions - Sticky Bottom */}
+          <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-4 gap-3 flex rtl:flex-row-reverse items-center">
             <Button
               onClick={handleClearAll}
               outline
-              className="w-full"
+              className="w-full h-12 flex items-center justify-center"
             >
               {translations.shop?.filters?.clearAll || "Clear All"}
             </Button>
             <Button
               onClick={handleApplyFilters}
               color="rose"
-              className="w-full"
+              className="w-full h-12 flex items-center justify-center"
             >
               {translations.shop?.filters?.apply || "Apply Filters"}
             </Button>

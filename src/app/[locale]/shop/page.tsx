@@ -3,7 +3,7 @@ import Header from "@/components/layout/header";
 import ShopContent from "@/components/pages/shop/shop-content";
 import { Button } from "@/components/ui/button";
 import { Input, InputGroup } from "@/components/ui/input";
-import { MagnifyingGlassIcon, FunnelIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { getCollections, getProductsFull, getColors } from "@/lib/supabase-server";
