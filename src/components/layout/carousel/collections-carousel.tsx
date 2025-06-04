@@ -60,8 +60,8 @@ export default function CollectionsCarousel({
               }`}
               onClick={() => onCollectionSelect(null)}
             >
-              <div className="aspect-[4/3] overflow-hidden bg-rose-600 flex items-center justify-center">
-                <div className="text-white text-center">
+              <div className="aspect-[4/3] overflow-hidden bg-gray-900 flex items-center justify-center">
+                <div className="text-rose-200 text-center">
                   <div className="text-2xl font-bold">All Collections</div>
                 </div>
               </div>
@@ -99,8 +99,8 @@ export default function CollectionsCarousel({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="left-0 -translate-x-4 bg-white shadow-lg hover:bg-gray-50" />
-      <CarouselNext className="right-0 translate-x-4 bg-white shadow-lg hover:bg-gray-50" />
+      <CarouselPrevious className="left-2 -translate-x-4 bg-rose-600 text-white shadow-sm hover:bg-rose-500 p-2 size-10" />
+      <CarouselNext className="right-2 translate-x-4 bg-rose-600 text-white shadow-sm hover:bg-rose-500 p-2 size-10" />
     </Carousel>
   );
 }

@@ -156,11 +156,11 @@ export default function ShopContent({
           className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:left-[calc(50%+30rem)] sm:w-288.75"
         />
       </div>
-      <div className="px-4 sm:px-6 lg:px-8 pt-10">
+      <div className="px-4 sm:px-6 lg:px-8 pt-8">
         {/* Collections Carousel Section */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-between mb-8">
+        <div className="mb-4">
+          <div className="text-center mb-3">
+            <div className="flex items-center justify-between">
               <div>
                 <Heading className="ltr:font-serif">
                   {translations.shop?.shopByCollection || "Shop by Collection"}
