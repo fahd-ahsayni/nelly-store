@@ -5,11 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
   BoltIcon,
   ChatBubbleLeftRightIcon,
@@ -281,13 +277,7 @@ export default function ProductQuickview({
                                 )}
                                 style={{ backgroundColor: color.hex }}
                                 title={color.name}
-                              >
-                                {selectedColor?.id === color.id && (
-                                  <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-2 h-2 bg-white rounded-full" />
-                                  </div>
-                                )}
-                              </button>
+                              ></button>
                             ))}
                           </div>
                         </div>
@@ -300,7 +290,7 @@ export default function ProductQuickview({
                             {translations.productQuickview.size}
                             <span className="text-red-500 ml-1">*</span>
                           </h3>
-                          <div className="grid grid-cols-3 gap-2">
+                          <div className="grid grid-cols-4 gap-2">
                             {sizes.map((size) => (
                               <button
                                 key={size.id}
