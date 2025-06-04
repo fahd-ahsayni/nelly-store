@@ -22,72 +22,74 @@ export default function ShopContent({
   translations,
   locale,
 }: ShopContentProps) {
-  const [selectedCollectionId, setSelectedCollectionId] = useState<string | null>(
-    null
-  );
+  const [selectedCollectionId, setSelectedCollectionId] = useState<
+    string | null
+  >(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
 
   // Get available sizes from all products
-  const availableSizes = useMemo(
-    () => {
-      const allSizes = products.flatMap((product) => product.sizes || []);
-      return [...new Set(allSizes)].sort();
-    },
-    [products]
-  );
+  const availableSizes = useMemo(() => {
+    const allSizes = products.flatMap((product) => product.sizes || []);
+    return [...new Set(allSizes)].sort();
+  }, [products]);
 
   // Filter products based on search, collection, colors, and sizes
-  const filteredProducts = useMemo(
-    () => {
-      let filtered = products.filter((product) => product.instock);
+  const filteredProducts = useMemo(() => {
+    let filtered = products.filter((product) => product.instock);
 
-      // Search filter
-      if (searchTerm.trim()) {
-        const term = searchTerm.toLowerCase();
-        filtered = filtered.filter(
-          (product) =>
-            product.name.toLowerCase().includes(term) ||
-            product.description?.toLowerCase().includes(term) ||
-            product.collections.name.toLowerCase().includes(term)
-        );
-      }
+    // Search filter
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (product) =>
+          product.name.toLowerCase().includes(term) ||
+          product.description?.toLowerCase().includes(term) ||
+          product.collections.name.toLowerCase().includes(term)
+      );
+    }
 
-      // Collection filter
-      if (selectedCollectionId) {
-        filtered = filtered.filter(
-          (product) => product.collection_id === selectedCollectionId
-        );
-      }
+    // Collection filter
+    if (selectedCollectionId) {
+      filtered = filtered.filter(
+        (product) => product.collection_id === selectedCollectionId
+      );
+    }
 
-      // Color filter
-      if (selectedColors.length > 0) {
-        filtered = filtered.filter((product) =>
-          product.product_colors.some((pc) => selectedColors.includes(pc.color_id))
-        );
-      }
+    // Color filter
+    if (selectedColors.length > 0) {
+      filtered = filtered.filter((product) =>
+        product.product_colors.some((pc) =>
+          selectedColors.includes(pc.color_id)
+        )
+      );
+    }
 
-      // Size filter
-      if (selectedSizes.length > 0) {
-        filtered = filtered.filter((product) =>
-          selectedSizes.some((size) => product.sizes?.includes(size))
-        );
-      }
+    // Size filter
+    if (selectedSizes.length > 0) {
+      filtered = filtered.filter((product) =>
+        selectedSizes.some((size) => product.sizes?.includes(size))
+      );
+    }
 
-      return filtered;
-    },
-    [products, searchTerm, selectedCollectionId, selectedColors, selectedSizes]
-  );
+    return filtered;
+  }, [
+    products,
+    searchTerm,
+    selectedCollectionId,
+    selectedColors,
+    selectedSizes,
+  ]);
 
   // Handle search input changes
   useEffect(() => {
     const searchInput = document.querySelector(
-      '[data-search-input]'
+      "[data-search-input]"
     ) as HTMLInputElement;
-    const searchButton = document.querySelector('[data-search-button]');
-    const filterButton = document.querySelector('[data-filter-button]');
+    const searchButton = document.querySelector("[data-search-button]");
+    const filterButton = document.querySelector("[data-filter-button]");
 
     const handleSearchInput = (e: Event) => {
       setSearchTerm((e.target as HTMLInputElement).value);
@@ -137,7 +139,10 @@ export default function ShopContent({
     setSelectedCollectionId(collectionId);
   };
 
-  const handleFiltersChange = (filters: { colors: string[]; sizes: string[] }) => {
+  const handleFiltersChange = (filters: {
+    colors: string[];
+    sizes: string[];
+  }) => {
     setSelectedColors(filters.colors);
     setSelectedSizes(filters.sizes);
   };
@@ -183,9 +188,7 @@ export default function ShopContent({
           <div className="flex items-center justify-between mb-8">
             <div>
               <Heading className="ltr:font-serif">
-                {searchTerm
-                  ? `Search results for "${searchTerm}"`
-                  : translations.shop?.exploreWhatsNew || "Explore What's New"}
+                {translations.shop?.exploreWhatsNew || "Explore What's New"}
               </Heading>
               <p className="text-sm text-gray-600 mt-1">
                 {filteredProducts.length} products found

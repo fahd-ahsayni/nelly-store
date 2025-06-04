@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -27,12 +28,34 @@ export default function CollectionsCarousel({
   onCollectionSelect,
   selectedCollectionId,
 }: CollectionsCarouselProps) {
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const [api, setApi] = useState<any>();
+
   // Filter collections that have at least one product
   const collectionsWithProducts = collections.filter((collection) =>
     products.some(
       (product) => product.collection_id === collection.id && product.instock
     )
   );
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const updateScrollButtons = () => {
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
+    };
+
+    updateScrollButtons();
+    api.on("scroll", updateScrollButtons);
+
+    return () => {
+      api.off("scroll", updateScrollButtons);
+    };
+  }, [api]);
 
   if (collectionsWithProducts.length === 0) {
     return (
@@ -49,6 +72,7 @@ export default function CollectionsCarousel({
       }}
       className="w-full"
       dir="ltr"
+      setApi={setApi}
     >
       <CarouselContent className="p-4">
         {/* All Collections Option */}
@@ -99,8 +123,12 @@ export default function CollectionsCarousel({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="left-2 -translate-x-4 bg-rose-600 text-white shadow-sm hover:bg-rose-500 p-2 size-10" />
-      <CarouselNext className="right-2 translate-x-4 bg-rose-600 text-white shadow-sm hover:bg-rose-500 p-2 size-10" />
+      {canScrollPrev && (
+        <CarouselPrevious className="left-2 -translate-x-4 bg-rose-600 text-white shadow-sm hover:bg-rose-500 p-2 size-10" />
+      )}
+      {canScrollNext && (
+        <CarouselNext className="right-2 translate-x-4 bg-rose-600 text-white shadow-sm hover:bg-rose-500 p-2 size-10" />
+      )}
     </Carousel>
   );
 }
