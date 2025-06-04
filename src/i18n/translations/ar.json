@@ -121,6 +121,7 @@
     "shipping": "الشحن",
     "tax": "الضريبة",
     "free": "مجاني",
+    "addToBag": "أضف للسلة",
     "proceedToCheckout": "متابعة الدفع"
   },
   "checkout": {

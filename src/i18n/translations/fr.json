@@ -121,6 +121,7 @@
     "shipping": "Livraison",
     "tax": "Taxe",
     "free": "Gratuit",
+    "addToBag": "Ajouter au panier",
     "proceedToCheckout": "Procéder au paiement"
   },
   "checkout": {

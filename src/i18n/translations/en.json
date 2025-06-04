@@ -76,6 +76,7 @@
     "shipping": "Shipping",
     "tax": "Tax",
     "free": "Free",
+    "addToBag": "Add to Cart",
     "proceedToCheckout": "Proceed to Checkout"
   },
   "productQuickview": {
