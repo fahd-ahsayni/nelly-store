@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/toast";
-import { styles } from "@/constants";
 import { useCartItems, useCartStore, useCartTotal } from "@/hooks/useCartItems";
 import type { Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
@@ -232,7 +231,7 @@ export default function Checkout() {
         // Clear cart just before redirect
         clearCart();
         router.push(`/${locale}/order-success?orderId=${data.id}`);
-      }, 2000);
+      }, 500);
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error(translations.checkout.success.error);
@@ -348,7 +347,7 @@ export default function Checkout() {
       {/* Header */}
       <Banner text={translations.banner.text} />
       <Header translations={translations} locale={locale} />
-      
+
       {/* Background decoration */}
       <div className="absolute inset-x-0 bottom-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:bottom-[-20rem]">
         <svg
@@ -594,11 +593,11 @@ export default function Checkout() {
                             </span>
                           </h4>
                           <div className="flex gap-x-4 items-center">
-                            <Badge>
+                            <Badge className="!rounded-none !bg-gray-100 !text-gray-700">
                               {translations?.checkout?.item?.size || "Size"}:{" "}
                               {item.size}
                             </Badge>
-                            <Badge>
+                            <Badge className="!rounded-none !bg-gray-100 !text-gray-700">
                               <span
                                 className="inline-block h-4 w-4 rounded-full border border-gray-300"
                                 style={{ backgroundColor: item.colorHex }}
@@ -652,14 +651,14 @@ export default function Checkout() {
               </dl>
 
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <button
+                <Button
+                  color="rose"
                   type="submit"
                   disabled={
                     isSubmitting || cartItems.length === 0 || isRedirecting
                   }
                   className={cn(
-                    styles.primaryButton,
-                    "w-full disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50",
+                    "w-full h-12 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50",
                     "flex items-center justify-center gap-2"
                   )}
                 >
@@ -671,7 +670,7 @@ export default function Checkout() {
                       : translations?.checkout?.form?.confirmOrder ||
                         "Confirm order"}
                   </span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>

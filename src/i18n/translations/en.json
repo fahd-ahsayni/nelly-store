@@ -43,7 +43,8 @@
     "collection1": "Foular Collection",
     "collection2": "Hijab Collection",
     "collection3": "Burkini Collection",
-    "collection4": "Abaya Collection"
+    "collection4": "Abaya Collection",
+    "allCollections": "All Collections"
   },
   "callToAction": {
     "title-part1": "Modest fashion",
@@ -131,7 +132,7 @@
       "lastName": "Last name",
       "address": "Address",
       "city": "City",
-      "secondaryMobileNumber": "Secondary Mobile Number",
+      "secondaryMobileNumber": "Secondary Mobile",
       "required": "*",
       "processing": "Processing...",
       "confirmOrder": "Confirm order"

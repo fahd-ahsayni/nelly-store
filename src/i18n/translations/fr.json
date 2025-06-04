@@ -43,7 +43,8 @@
     "collection1": "Collection Foulard",
     "collection2": "Collection Hijab",
     "collection3": "Collection Burkini",
-    "collection4": "Collection Abaya"
+    "collection4": "Collection Abaya",
+    "allCollections": "Toutes les Collections"
   },
   "callToAction": {
     "title-part1": "Mode modeste",
@@ -126,12 +127,12 @@
       "continueShopping": "Continuer les achats"
     },
     "form": {
-      "mobileNumber": "Numéro de téléphone portable",
+      "mobileNumber": "Numéro de téléphone",
       "firstName": "Prénom",
       "lastName": "Nom de famille",
       "address": "Adresse",
       "city": "Ville",
-      "secondaryMobileNumber": "Numéro de téléphone portable secondaire",
+      "secondaryMobileNumber": "Téléphone secondaire",
       "required": "*",
       "processing": "En cours...",
       "confirmOrder": "Confirmer la commande"

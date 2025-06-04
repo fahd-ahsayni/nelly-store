@@ -14,9 +14,10 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { useIsomorphicLayoutEffect } from "framer-motion";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Heading } from "../../ui/heading";
 
 interface CartDrawerProps {
@@ -36,8 +37,9 @@ export default function CartDrawer({
 
   const { isHydrated } = useCart();
   const [mounted, setMounted] = useState(false);
+  const [isNavigatingToCheckout, setIsNavigatingToCheckout] = useState(false);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setMounted(true);
     if (!isHydrated) {
       useCartStore.persist.rehydrate();
@@ -81,9 +83,14 @@ export default function CartDrawer({
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
+    setIsNavigatingToCheckout(true);
     onClose();
-    router.push(`/${locale}/checkout`);
+    try {
+      await router.push(`/${locale}/checkout`);
+    } finally {
+      setIsNavigatingToCheckout(false);
+    }
   };
 
   return (
@@ -161,12 +168,12 @@ export default function CartDrawer({
                             </h3>
                             <div className="flex flex-wrap gap-2 mt-1">
                               {item.size && (
-                                <Badge className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                <Badge className="text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
                                   {translations.cart.size}: {item.size}
                                 </Badge>
                               )}
                               {item.color && (
-                                <Badge className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                <Badge className="flex items-center gap-1 text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
                                   <span>{translations.cart.color}:</span>
                                   <div className="flex items-center gap-1">
                                     {item.colorHex && (
@@ -242,16 +249,26 @@ export default function CartDrawer({
                 </div>
 
                 <div className="space-y-3">
-                  <button
+                  <Button
+                    color="rose"
                     onClick={handleCheckout}
-                    disabled={items.length === 0}
+                    disabled={items.length === 0 || isNavigatingToCheckout}
                     className={cn(
                       styles.primaryButton,
-                      "w-full disabled:bg-gray-300 disabled:cursor-not-allowed"
+                      "w-full h-12 flex items-center justify-center gap-2 transition-opacity",
+                      (items.length === 0 || isNavigatingToCheckout) &&
+                        "opacity-50 cursor-not-allowed"
                     )}
                   >
-                    {translations.cart.proceedToCheckout}
-                  </button>
+                    {isNavigatingToCheckout && (
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    )}
+                    <span>
+                      {isNavigatingToCheckout
+                        ? translations.cart.loading || "Loading..."
+                        : translations.cart.proceedToCheckout}
+                    </span>
+                  </Button>
                 </div>
               </div>
             </>
