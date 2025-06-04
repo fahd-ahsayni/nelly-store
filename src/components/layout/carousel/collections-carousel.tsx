@@ -1,11 +1,11 @@
 "use client";
 
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import type { Collection } from "@/types/database";
 import Image from "next/image";
@@ -41,7 +41,7 @@ export default function CollectionsCarousel({
       className="w-full"
       dir="ltr"
     >
-      <CarouselContent>
+      <CarouselContent className="p-4">
         {/* All Collections Option */}
         {onCollectionSelect && (
           <CarouselItem className="basis-1/3 lg:basis-1/6">

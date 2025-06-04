@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { styles } from "@/constants";
+import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
@@ -12,11 +12,8 @@ import {
   Radio,
   RadioGroup,
 } from "@headlessui/react";
-import { StarIcon } from "@heroicons/react/20/solid";
-import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -110,7 +107,7 @@ export default function ProductQuickview({
             transition
             className="flex w-full transform text-left text-base transition data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in md:my-8 md:max-w-2xl md:px-4 data-closed:md:translate-y-0 data-closed:md:scale-95 lg:max-w-4xl"
           >
-            <div className="relative z-50 flex w-full items-center overflow-hidden bg-rose-50 px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+            <div className="relative z-50 flex w-full items-center overflow-hidden bg-gray-50 px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
               <button
                 type="button"
                 onClick={onClose}
@@ -174,16 +171,15 @@ export default function ProductQuickview({
                         </p>
                         <Badge
                           color="yellow"
-                          className="border border-yellow-500"
+                          className="border border-yellow-400"
                         >
-                          {product.rating}{" "}
-                          {translations.productQuickview.reviews}
+                          {product.rating}
                         </Badge>
                       </div>
                     </div>
                   </section>
 
-                  <section aria-labelledby="options-heading" className="mt-10">
+                  <section aria-labelledby="options-heading" className="mt-6">
                     <h3 id="options-heading" className="sr-only">
                       {translations.productQuickview.productOptions}
                     </h3>
@@ -191,16 +187,16 @@ export default function ProductQuickview({
                     <form onSubmit={handleAddToBag}>
                       {/* Error message */}
                       {error && (
-                        <div className="ltr:border-l-4 rtl:border-r-4 border-red-600 bg-red-100 p-4 mb-4">
+                        <div className="ltr:border-l-4 rtl:border-r-4 border-yellow-600 bg-yellow-50 p-4 mb-4">
                           <div className="flex">
                             <div className="flex-shrink-0">
                               <ExclamationTriangleIcon
-                                className="h-5 w-5 text-red-600"
+                                className="h-5 w-5 text-yellow-600"
                                 aria-hidden="true"
                               />
                             </div>
                             <div className="ltr:ml-3 rtl:mr-3">
-                              <p className="text-sm text-red-700">{error}</p>
+                              <p className="text-sm text-yellow-700">{error}</p>
                             </div>
                           </div>
                         </div>
@@ -246,7 +242,7 @@ export default function ProductQuickview({
                       {sizes.length > 0 && (
                         <fieldset
                           aria-label={translations.productQuickview.chooseSize}
-                          className="mt-10"
+                          className="mt-6"
                         >
                           <div className="flex items-center justify-between">
                             <div className="text-sm font-medium text-gray-900">
@@ -284,12 +280,15 @@ export default function ProductQuickview({
                       )}
 
                       <div>
-                        <button
+                        <Button
+                          color="rose"
                           type="submit"
-                          className={cn(styles.primaryButton, "mt-8")}
+                          className={cn(
+                            "mt-8 w-full !h-12 flexi items-center justify-center"
+                          )}
                         >
                           {translations.productQuickview.addToBag}
-                        </button>
+                        </Button>
                       </div>
                     </form>
                   </section>
