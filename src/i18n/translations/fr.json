@@ -81,7 +81,17 @@
   },
   "shop": {
     "shopByCollection": "Acheter par Collection",
-    "exploreWhatsNew": "Découvrez les Nouveautés"
+    "exploreWhatsNew": "Découvrez les Nouveautés",
+    "search": "Rechercher",
+    "searchPlaceholder": "Rechercher des produits...",
+    "filter": "Filtre",
+    "filters": {
+      "title": "Filtres",
+      "colors": "Couleurs",
+      "sizes": "Tailles",
+      "clearAll": "Effacer tout",
+      "apply": "Appliquer les filtres"
+    }
   },
   "seo": {
     "title": "Collection Nelly - Boutique de Mode",

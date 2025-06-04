@@ -85,7 +85,17 @@
   },
   "shop": {
     "shopByCollection": "تسوق حسب المجموعة",
-    "exploreWhatsNew": "اكتشف الجديد"
+    "exploreWhatsNew": "اكتشف الجديد",
+    "search": "بحث",
+    "searchPlaceholder": "البحث عن المنتجات...",
+    "filter": "تصفية",
+    "filters": {
+      "title": "المرشحات",
+      "colors": "الألوان",
+      "sizes": "الأحجام",
+      "clearAll": "مسح الكل",
+      "apply": "تطبيق المرشحات"
+    }
   },
   "cart": {
     "title": "سلة التسوق",

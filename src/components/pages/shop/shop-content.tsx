@@ -2,13 +2,15 @@
 
 import CollectionsCarousel from "@/components/layout/carousel/collections-carousel";
 import ProductGrid from "@/components/layout/grid/product-grid";
+import FilterDrawer from "@/components/layout/drawers/filter-drawer";
 import { Heading } from "@/components/ui/heading";
-import type { Collection, ProductFull } from "@/types/database";
-import { useState } from "react";
+import type { Collection, ProductFull, Color } from "@/types/database";
+import { useState, useEffect, useMemo } from "react";
 
 interface ShopContentProps {
   collections: Collection[];
   products: ProductFull[];
+  colors: Color[];
   translations: any;
   locale: string;
 }
@@ -16,23 +18,129 @@ interface ShopContentProps {
 export default function ShopContent({
   collections,
   products,
+  colors,
   translations,
   locale,
 }: ShopContentProps) {
-  const [selectedCollectionId, setSelectedCollectionId] = useState<
-    string | null
-  >(null);
+  const [selectedCollectionId, setSelectedCollectionId] = useState<string | null>(
+    null
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
 
-  // Filter in-stock products
-  const inStockProducts = products.filter((product) => product.instock);
+  // Get available sizes from all products
+  const availableSizes = useMemo(
+    () => {
+      const allSizes = products.flatMap((product) => product.sizes || []);
+      return [...new Set(allSizes)].sort();
+    },
+    [products]
+  );
+
+  // Filter products based on search, collection, colors, and sizes
+  const filteredProducts = useMemo(
+    () => {
+      let filtered = products.filter((product) => product.instock);
+
+      // Search filter
+      if (searchTerm.trim()) {
+        const term = searchTerm.toLowerCase();
+        filtered = filtered.filter(
+          (product) =>
+            product.name.toLowerCase().includes(term) ||
+            product.description?.toLowerCase().includes(term) ||
+            product.collections.name.toLowerCase().includes(term)
+        );
+      }
+
+      // Collection filter
+      if (selectedCollectionId) {
+        filtered = filtered.filter(
+          (product) => product.collection_id === selectedCollectionId
+        );
+      }
+
+      // Color filter
+      if (selectedColors.length > 0) {
+        filtered = filtered.filter((product) =>
+          product.product_colors.some((pc) => selectedColors.includes(pc.color_id))
+        );
+      }
+
+      // Size filter
+      if (selectedSizes.length > 0) {
+        filtered = filtered.filter((product) =>
+          selectedSizes.some((size) => product.sizes?.includes(size))
+        );
+      }
+
+      return filtered;
+    },
+    [products, searchTerm, selectedCollectionId, selectedColors, selectedSizes]
+  );
+
+  // Handle search input changes
+  useEffect(() => {
+    const searchInput = document.querySelector(
+      '[data-search-input]'
+    ) as HTMLInputElement;
+    const searchButton = document.querySelector('[data-search-button]');
+    const filterButton = document.querySelector('[data-filter-button]');
+
+    const handleSearchInput = (e: Event) => {
+      setSearchTerm((e.target as HTMLInputElement).value);
+    };
+
+    const handleSearchClick = () => {
+      if (searchInput) {
+        setSearchTerm(searchInput.value);
+      }
+    };
+
+    const handleFilterClick = () => {
+      setIsFilterDrawerOpen(true);
+    };
+
+    if (searchInput) {
+      searchInput.addEventListener("input", handleSearchInput);
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          handleSearchClick();
+        }
+      });
+    }
+
+    if (searchButton) {
+      searchButton.addEventListener("click", handleSearchClick);
+    }
+
+    if (filterButton) {
+      filterButton.addEventListener("click", handleFilterClick);
+    }
+
+    return () => {
+      if (searchInput) {
+        searchInput.removeEventListener("input", handleSearchInput);
+      }
+      if (searchButton) {
+        searchButton.removeEventListener("click", handleSearchClick);
+      }
+      if (filterButton) {
+        filterButton.removeEventListener("click", handleFilterClick);
+      }
+    };
+  }, []);
 
   const handleCollectionSelect = (collectionId: string | null) => {
     setSelectedCollectionId(collectionId);
   };
 
-  const selectedCollection = selectedCollectionId
-    ? collections.find((c) => c.id === selectedCollectionId)
-    : null;
+  const handleFiltersChange = (filters: { colors: string[]; sizes: string[] }) => {
+    setSelectedColors(filters.colors);
+    setSelectedSizes(filters.sizes);
+  };
 
   return (
     <div className="relative isolate">
@@ -62,6 +170,7 @@ export default function ShopContent({
           </div>
           <CollectionsCarousel
             collections={collections}
+            products={products}
             translations={translations}
             locale={locale}
             onCollectionSelect={handleCollectionSelect}
@@ -74,13 +183,18 @@ export default function ShopContent({
           <div className="flex items-center justify-between mb-8">
             <div>
               <Heading className="ltr:font-serif">
-                {translations.shop?.exploreWhatsNew || "Explore What's New"}
+                {searchTerm
+                  ? `Search results for "${searchTerm}"`
+                  : translations.shop?.exploreWhatsNew || "Explore What's New"}
               </Heading>
+              <p className="text-sm text-gray-600 mt-1">
+                {filteredProducts.length} products found
+              </p>
             </div>
           </div>
 
           <ProductGrid
-            products={inStockProducts}
+            products={filteredProducts}
             translations={translations}
             locale={locale}
             collections={collections}
@@ -88,6 +202,18 @@ export default function ShopContent({
           />
         </div>
       </div>
+
+      {/* Filter Drawer */}
+      <FilterDrawer
+        open={isFilterDrawerOpen}
+        onClose={() => setIsFilterDrawerOpen(false)}
+        translations={translations}
+        colors={colors}
+        availableSizes={availableSizes}
+        selectedColors={selectedColors}
+        selectedSizes={selectedSizes}
+        onFiltersChange={handleFiltersChange}
+      />
     </div>
   );
 }

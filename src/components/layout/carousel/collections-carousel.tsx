@@ -7,11 +7,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import type { Collection } from "@/types/database";
+import type { Collection, ProductFull } from "@/types/database";
 import Image from "next/image";
 
 interface CollectionsCarouselProps {
   collections: Collection[];
+  products?: ProductFull[];
   translations: any;
   locale: string;
   onCollectionSelect?: (collectionId: string | null) => void;
@@ -20,12 +21,20 @@ interface CollectionsCarouselProps {
 
 export default function CollectionsCarousel({
   collections,
+  products = [],
   translations,
   locale,
   onCollectionSelect,
   selectedCollectionId,
 }: CollectionsCarouselProps) {
-  if (collections.length === 0) {
+  // Filter collections that have at least one product
+  const collectionsWithProducts = collections.filter((collection) =>
+    products.some(
+      (product) => product.collection_id === collection.id && product.instock
+    )
+  );
+
+  if (collectionsWithProducts.length === 0) {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500">No collections available</p>
@@ -60,7 +69,7 @@ export default function CollectionsCarousel({
           </CarouselItem>
         )}
 
-        {collections.map((collection) => (
+        {collectionsWithProducts.map((collection) => (
           <CarouselItem key={collection.id} className="basis-1/3 lg:basis-1/6">
             <div
               className={`group relative cursor-pointer ${

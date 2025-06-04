@@ -99,7 +99,17 @@
   },
   "shop": {
     "shopByCollection": "Shop by Collection",
-    "exploreWhatsNew": "Explore What's New"
+    "exploreWhatsNew": "Explore What's New",
+    "search": "Search",
+    "searchPlaceholder": "Search products...",
+    "filter": "Filter",
+    "filters": {
+      "title": "Filters",
+      "colors": "Colors",
+      "sizes": "Sizes",
+      "clearAll": "Clear All",
+      "apply": "Apply Filters"
+    }
   },
   "seo": {
     "title": "Nelly Collection - Fashion Store",
