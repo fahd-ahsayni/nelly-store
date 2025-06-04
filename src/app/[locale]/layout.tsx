@@ -1,8 +1,8 @@
 import { ToastProvider } from "@/components/ui/toast";
+import { LenisWrapper } from "@/components/lenis-wrapper";
 import { locales, type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { cn } from "@/lib/utils";
-import { ReactLenis } from "lenis/react";
 import { Metadata } from "next";
 import { Inter, Tajawal } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -57,9 +57,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={isRTL ? "rtl" : "ltr"}>
       <body className={cn(fontClass, "bg-background")}>
+        <LenisWrapper />
         {children}
         <ToastProvider />
-        <ReactLenis root />
       </body>
     </html>
   );

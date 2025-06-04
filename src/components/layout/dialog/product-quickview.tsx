@@ -9,16 +9,15 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  Radio,
-  RadioGroup,
 } from "@headlessui/react";
 import {
   BoltIcon,
   ChatBubbleLeftRightIcon,
+  ExclamationTriangleIcon,
   TruckIcon,
-  XMarkIcon
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ExclamationTriangleIcon, StarIcon } from "@heroicons/react/24/solid";
+import { StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -187,53 +186,46 @@ export default function ProductQuickview({
                     {/* Benefits Section */}
                     <div className="mt-6 space-y-3">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <div className="group flex items-center gap-3 rounded-lg bg-green-50 border border-green-300 p-3 transition-all duration-200">
+                        <div className="group flex items-center gap-3 bg-green-50 border border-green-300 p-3 transition-all duration-200">
                           <div className="flex-shrink-0">
                             <TruckIcon className="h-5 w-5 text-green-600 group-hover:scale-110 transition-transform duration-200" />
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-sm font-medium text-green-900">
-                              {
-                                translations.productQuickview?.freeShipping ||
-                                "Free Shipping"
-                              }
+                              {translations.productQuickview?.freeShipping ||
+                                "Free Shipping"}
                             </p>
                             <p className="text-xs text-green-700">
-                              {
-                                translations.productQuickview?.freeShippingDesc ||
-                                "On orders over 500 MAD"
-                              }
+                              {translations.productQuickview
+                                ?.freeShippingDesc || "On orders over 500 MAD"}
                             </p>
                           </div>
                         </div>
 
-                        <div className="group flex items-center gap-3 rounded-lg bg-sky-50 p-3 transition-all duration-200 border border-sky-300">
+                        <div className="group flex items-center gap-3 bg-sky-50 p-3 transition-all duration-200 border border-sky-300">
                           <div className="flex-shrink-0">
                             <BoltIcon className="h-5 w-5 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-sm font-medium text-blue-900">
-                              {
-                                translations.productQuickview?.fastDelivery ||
-                                "Fast Delivery"
-                              }
+                              {translations.productQuickview?.fastDelivery ||
+                                "Fast Delivery"}
                             </p>
                             <p className="text-xs text-blue-700">
-                              {
-                                translations.productQuickview?.fastDeliveryDesc ||
-                                "2-5 working days"
-                              }
+                              {translations.productQuickview
+                                ?.fastDeliveryDesc || "2-5 working days"}
                             </p>
                           </div>
                         </div>
 
-                        <div className="group flex items-center gap-3 rounded-lg bg-pink-50 p-3 transition-all duration-200 border border-pink-300">
+                        <div className="group flex items-center gap-3 bg-pink-50 p-3 transition-all duration-200 border border-pink-300">
                           <div className="flex-shrink-0">
                             <ChatBubbleLeftRightIcon className="h-5 w-5 text-pink-600 group-hover:scale-110 transition-transform duration-200" />
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-sm font-medium text-pink-900">
-                              {translations.productQuickview?.support || "24/7 Support"}
+                              {translations.productQuickview?.support ||
+                                "24/7 Support"}
                             </p>
                             <p className="text-xs text-pink-700">
                               {translations.productQuickview?.supportDesc ||
@@ -270,79 +262,65 @@ export default function ProductQuickview({
 
                       {/* Colors - Only show if colors exist */}
                       {colors.length > 0 && (
-                        <fieldset
-                          aria-label={translations.productQuickview.chooseColor}
-                        >
-                          <legend className="text-sm font-medium text-gray-900">
+                        <div>
+                          <h3 className="text-sm font-medium text-gray-900 mb-3">
                             {translations.productQuickview.color}
                             <span className="text-red-500 ml-1">*</span>
-                          </legend>
-
-                          <RadioGroup
-                            value={selectedColor}
-                            onChange={setSelectedColor}
-                            className="mt-4 flex items-center gap-x-3"
-                          >
+                          </h3>
+                          <div className="flex items-center flex-wrap gap-3">
                             {colors.map((color) => (
-                              <Radio
+                              <button
                                 key={color.id}
-                                value={color}
-                                aria-label={color.name}
+                                type="button"
+                                onClick={() => setSelectedColor(color)}
                                 className={cn(
-                                  color.selectedClass,
-                                  "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-hidden data-checked:ring-2 data-focus:data-checked:ring-3 data-focus:data-checked:ring-offset-1"
+                                  "relative w-11 h-11 rounded-full border-2 transition-all",
+                                  selectedColor?.id === color.id
+                                    ? "border-rose-600 ring-2 ring-rose-600 ring-offset-2"
+                                    : "border-gray-300 hover:border-gray-400"
                                 )}
+                                style={{ backgroundColor: color.hex }}
+                                title={color.name}
                               >
-                                <span
-                                  aria-hidden="true"
-                                  style={{ backgroundColor: color.hex }}
-                                  className="size-8 rounded-full border border-black/10"
-                                />
-                              </Radio>
+                                {selectedColor?.id === color.id && (
+                                  <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-2 h-2 bg-white rounded-full" />
+                                  </div>
+                                )}
+                              </button>
                             ))}
-                          </RadioGroup>
-                        </fieldset>
+                          </div>
+                        </div>
                       )}
 
                       {/* Sizes - Only show if sizes exist */}
                       {sizes.length > 0 && (
-                        <fieldset
-                          aria-label={translations.productQuickview.chooseSize}
-                          className="mt-6"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="text-sm font-medium text-gray-900">
-                              {translations.productQuickview.size}
-                              <span className="text-red-500 ml-1">*</span>
-                            </div>
-                          </div>
-
-                          <RadioGroup
-                            value={selectedSize}
-                            onChange={setSelectedSize}
-                            className="mt-4 grid grid-cols-4 gap-4"
-                          >
+                        <div className="mt-6">
+                          <h3 className="text-sm font-medium text-gray-900 mb-3">
+                            {translations.productQuickview.size}
+                            <span className="text-red-500 ml-1">*</span>
+                          </h3>
+                          <div className="grid grid-cols-3 gap-2">
                             {sizes.map((size) => (
-                              <Radio
+                              <button
                                 key={size.id}
-                                value={size}
+                                type="button"
+                                onClick={() => setSelectedSize(size)}
                                 disabled={!size.inStock}
                                 className={cn(
-                                  size.inStock
-                                    ? "cursor-pointer bg-white text-gray-900 shadow-xs"
-                                    : "cursor-not-allowed bg-gray-50 text-gray-200",
-                                  "group relative flex items-center justify-center border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-hidden data-focus:ring-2 data-focus:ring-rose-500 sm:flex-1"
+                                  "px-3 py-4 font-medium border transition-colors",
+                                  selectedSize?.id === size.id
+                                    ? "bg-rose-600 text-white border-rose-600"
+                                    : size.inStock
+                                    ? "bg-white text-gray-900 border-gray-300 hover:bg-gray-50"
+                                    : "bg-gray-50 text-gray-200 border-gray-200 cursor-not-allowed"
                                 )}
                               >
-                                <span>{size.name}</span>
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute -inset-px border-2 border-transparent group-data-checked:border-rose-500 group-data-focus:border"
-                                />
-                              </Radio>
+                                {size.name}
+                              </button>
                             ))}
-                          </RadioGroup>
-                        </fieldset>
+                          </div>
+                        </div>
                       )}
 
                       <div>

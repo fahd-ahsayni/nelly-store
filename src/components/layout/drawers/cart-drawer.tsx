@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scrollarea";
 import { styles } from "@/constants";
 import { useCart } from "@/hooks/useCart";
 import { useCartStore } from "@/lib/cart-store";
@@ -103,6 +104,7 @@ export default function CartDrawer({
       <div className="fixed inset-0 z-40 flex">
         <DialogPanel
           transition
+          data-lenis-prevent
           className={cn(
             "relative flex w-full max-w-lg flex-col bg-gray-50 shadow-xl transition duration-300 ease-in-out h-full",
             "ltr:ml-auto ltr:data-closed:translate-x-full rtl:mr-auto rtl:data-closed:-translate-x-full"
@@ -147,98 +149,100 @@ export default function CartDrawer({
             </div>
           ) : (
             <>
-              <div className="flex-1 overflow-y-auto space-y-4 px-6">
-                {items.map((item) => (
-                  <div key={item.id} className="group">
-                    <div className="flex gap-4 p-4 bg-white border border-gray-100 transition-all duration-200">
-                      <div className="relative w-20 h-20 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
-                          fill
-                          className="object-cover h-full"
-                        />
-                      </div>
-
-                      <div className="flex-1 min-w-0 space-y-2">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="min-w-0 flex-1">
-                            <h3 className="font-medium text-gray-900 truncate text-sm">
-                              {item.name}
-                            </h3>
-                            <div className="flex flex-wrap gap-2 mt-1">
-                              {item.size && (
-                                <Badge className="text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
-                                  {translations.cart.size}: {item.size}
-                                </Badge>
-                              )}
-                              {item.color && (
-                                <Badge className="flex items-center gap-1 text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
-                                  <span>{translations.cart.color}:</span>
-                                  <div className="flex items-center gap-1">
-                                    {item.colorHex && (
-                                      <div
-                                        className="w-3 h-3 rounded-full border border-gray-300"
-                                        style={{
-                                          backgroundColor: item.colorHex,
-                                        }}
-                                      />
-                                    )}
-                                  </div>
-                                </Badge>
-                              )}
-                            </div>
-                          </div>
-                          <Button
-                            plain
-                            onClick={() => removeItem(item.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0 text-gray-400 hover:text-red-500"
-                          >
-                            <TrashIcon className="w-4 h-4" />
-                          </Button>
+              <ScrollArea className="flex-1 px-6 h-0" data-lenis-prevent>
+                <div className="space-y-4 pb-20">
+                  {items.map((item) => (
+                    <div key={item.id} className="group">
+                      <div className="flex gap-4 p-4 bg-white border border-gray-100 transition-all duration-200">
+                        <div className="relative w-20 h-20 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+                          <Image
+                            src={item.image || "/placeholder.svg"}
+                            alt={item.name}
+                            fill
+                            className="object-cover h-full"
+                          />
                         </div>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="min-w-0 flex-1">
+                              <h3 className="font-medium text-gray-900 truncate text-sm">
+                                {item.name}
+                              </h3>
+                              <div className="flex flex-wrap gap-2 mt-1">
+                                {item.size && (
+                                  <Badge className="text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
+                                    {translations.cart.size}: {item.size}
+                                  </Badge>
+                                )}
+                                {item.color && (
+                                  <Badge className="flex items-center gap-1 text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
+                                    <span>{translations.cart.color}:</span>
+                                    <div className="flex items-center gap-1">
+                                      {item.colorHex && (
+                                        <div
+                                          className="w-3 h-3 rounded-full border border-gray-300"
+                                          style={{
+                                            backgroundColor: item.colorHex,
+                                          }}
+                                        />
+                                      )}
+                                    </div>
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
                             <Button
                               plain
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
-                              }
+                              onClick={() => removeItem(item.id)}
+                              className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0 text-gray-400 hover:text-red-500"
                             >
-                              <MinusIcon className="w-3 h-3" />
-                            </Button>
-                            <span className="w-8 text-center text-sm font-medium">
-                              {item.quantity}
-                            </span>
-                            <Button
-                              plain
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
-                              }
-                            >
-                              <PlusIcon className="w-3 h-3" />
+                              <TrashIcon className="w-4 h-4" />
                             </Button>
                           </div>
-                          <div className="text-right">
-                            <div className="font-semibold text-gray-900">
-                              {(item.price * item.quantity).toFixed(2)}{" "}
-                              {translations.currency.mad}
+
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Button
+                                plain
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
+                              >
+                                <MinusIcon className="w-3 h-3" />
+                              </Button>
+                              <span className="w-8 text-center text-sm font-medium">
+                                {item.quantity}
+                              </span>
+                              <Button
+                                plain
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
+                              >
+                                <PlusIcon className="w-3 h-3" />
+                              </Button>
                             </div>
-                            {item.quantity > 1 && (
-                              <div className="text-xs mt-1 text-gray-500">
-                                {item.price.toFixed(2)}{" "}
-                                {translations.currency.mad}{" "}
-                                {translations.cart.each}
+                            <div className="text-right">
+                              <div className="font-semibold text-gray-900">
+                                {(item.price * item.quantity).toFixed(2)}{" "}
+                                {translations.currency.mad}
                               </div>
-                            )}
+                              {item.quantity > 1 && (
+                                <div className="text-xs mt-1 text-gray-500">
+                                  {item.price.toFixed(2)}{" "}
+                                  {translations.currency.mad}{" "}
+                                  {translations.cart.each}
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </ScrollArea>
 
               <div className="border-t border-gray-200 pt-6 space-y-4 bg-white px-6 pb-6">
                 <div className="flex justify-between text-base font-semibold">
