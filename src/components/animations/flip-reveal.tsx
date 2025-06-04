@@ -32,7 +32,10 @@ export const FlipReveal = ({
 
   const isShow = (key: string | null) => {
     if (!key) return false;
-    return keys.includes("all") || keys.includes(key);
+    // If "all" is in keys, show everything
+    if (keys.includes("all")) return true;
+    // Otherwise, show only if the key matches
+    return keys.includes(key);
   };
 
   useGSAP(
@@ -42,6 +45,10 @@ export const FlipReveal = ({
       const items = gsap.utils.toArray<HTMLDivElement>(
         wrapperRef.current.querySelectorAll("[data-flip]")
       );
+
+      // Only proceed if we have items
+      if (items.length === 0) return;
+
       const state = Flip.getState(items);
 
       items.forEach((item) => {

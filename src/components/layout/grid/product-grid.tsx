@@ -38,11 +38,8 @@ export default function ProductGrid({
     setSelectedProduct(null);
   };
 
-  // Create flip keys based on selected collection - fix the logic
-  const flipKeys =
-    !selectedCollectionId || selectedCollectionId === "all"
-      ? ["all"]
-      : [selectedCollectionId.toString()];
+  // Fix flip keys logic - when no collection is selected or "all" is selected, show all products
+  const flipKeys = !selectedCollectionId ? ["all"] : [selectedCollectionId];
 
   if (products.length === 0) {
     return (

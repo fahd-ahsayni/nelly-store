@@ -26,9 +26,9 @@ export default function LocalStoreSection({
           </div>
 
           {/* Store Information */}
-          <div className="lg:col-span-5 flex flex-col justify-center space-y-6 bg-rose-200 border border-gray-600 px-6">
+          <div className="lg:col-span-5 flex flex-col justify-center space-y-6 bg-rose-200 border border-gray-600 p-6">
             <div>
-              <h2 className="text-4xl md:text-5xl ltr:font-serif font-medium text-gray-800 mb-4">
+              <h2 className="text-4xl md:text-5xl ltr:font-serif font-medium rtl:font-semibold text-gray-800 mb-4">
                 {translations.localStore.title}{" "}
                 <span className="ltr:italic text-rose-600">
                   {translations.localStore.titleHighlight}

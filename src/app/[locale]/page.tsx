@@ -34,13 +34,16 @@ export default async function Home({
   return (
     <StoreProvider>
       <main>
-        <Banner text={translations.banner.text} />
-        <nav className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
-          <Header translations={translations} locale={locale} />
-        </nav>
-        <section className="flex h-screen flex-col items-center w-full lg:-mt-26">
+        <div className="absolute inset-0 z-30">
+          <Banner text={translations.banner.text} />
+          <nav className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
+            <Header translations={translations} locale={locale} />
+          </nav>
+        </div>
+        {/* Hero Section */}
+        <section className="flex min-h-screen flex-col items-center w-full">
           <div className="relative w-full flex-1 isolate z-10">
-            <div className="h-full overflow-hidden relative isolate flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
+            <div className="h-full overflow-hidden relative isolate">
               <div
                 aria-hidden="true"
                 className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -53,54 +56,116 @@ export default async function Home({
                   className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
                 />
               </div>
-              <div className="px-6 lg:col-span-5 lg:px-0 lg:h-full pb-6 lg:pb-0 flex-shrink-0 relative">
-                <div className="max-w-lg flex lg:h-full flex-col justify-center py-20">
-                  <h1
-                    className={cn(
-                      "tracking-tight text-gray-800",
-                      "ltr:font-serif ltr:text-5xl/12 ltr:sm:text-5xl/14 ltr:lg:text-6xl/18",
-                      "rtl:font-semibold rtl:text-4xl  rtl:lg:text-6xl text-balance rtl:lg:leading-18 rtl:leading-14"
-                    )}
+
+              {/* Mobile Layout */}
+              <div className="flex flex-col lg:hidden min-h-screen">
+                {/* Text Content - Mobile */}
+                <div className="px-6 py-8 order-1 flex-shrink-0">
+                  <div className="max-w-lg mx-auto text-center">
+                    <h1
+                      className={cn(
+                        "tracking-tight text-gray-800",
+                        "ltr:font-serif ltr:text-4xl/10 ltr:sm:text-5xl/12",
+                        "rtl:font-semibold rtl:text-3xl rtl:sm:text-4xl text-balance rtl:leading-10 rtl:sm:leading-12"
+                      )}
+                    >
+                      {translations.hero["tile-part1"]}{" "}
+                      <span className="text-rose-600 ltr:italic">
+                        {translations.hero["tile-part2"]}
+                      </span>{" "}
+                      {translations.hero["tile-part3"]}{" "}
+                      <span className="text-rose-600 ltr:italic">
+                        {translations.hero["tile-part4"]}
+                      </span>
+                      .
+                    </h1>
+                    <div className="mt-6 flex justify-center">
+                      <Link href={`/${locale}/shop`}>
+                        <InteractiveHoverButton>
+                          {translations.hero.button}
+                        </InteractiveHoverButton>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Image Content - Mobile */}
+                <div className="relative order-2 flex-1 min-h-[60vh] sm:min-h-[70vh] w-full">
+                  <Link
+                    href={`/${locale}/shop`}
+                    className="size-24 sm:size-32 rounded-full absolute -top-10 ltr:right-4 rtl:left-4 z-50"
                   >
-                    {translations.hero["tile-part1"]}{" "}
-                    <span className="text-rose-600 ltr:italic">
-                      {translations.hero["tile-part2"]}
-                    </span>{" "}
-                    {translations.hero["tile-part3"]}{" "}
-                    <span className="text-rose-600 ltr:italic">
-                      {translations.hero["tile-part4"]}
-                    </span>
-                    .
-                  </h1>
-                  <div className="mt-6 lg:mt-10 flex items-center gap-x-6">
-                    <Link href={`/${locale}/shop`}>
-                      <InteractiveHoverButton>
-                        {translations.hero.button}
-                      </InteractiveHoverButton>
-                    </Link>
+                    <div className="relative w-full h-full z-10 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
+                      <SpinningText
+                        radius={locale === "ar" ? 6 : 5}
+                        fontSize={0.7}
+                        className="font-semibold leading-none text-gray-700"
+                      >
+                        {`pre-order • pre-order • pre-order • `}
+                      </SpinningText>
+                      <ArrowUpRightIcon
+                        strokeWidth={1}
+                        className="absolute text-gray-700 size-6 sm:size-8"
+                      />
+                    </div>
+                  </Link>
+                  <div className="absolute inset-0 w-full h-full">
+                    <ImageCarousel images={carouselImages} />
                   </div>
                 </div>
               </div>
-              <div className="relative lg:col-span-7 lg:mt-0 lg:h-full ltr:lg:-mr-8 rtl:lg:-ml-8 flex-1 min-h-80 sm:min-h-96 lg:min-h-full">
-                <Link
-                  href={`/${locale}/shop`}
-                  className="size-32 rounded-full absolute -top-16 md:top-auto md:bottom-16 ltr:right-8 rtl:left-8 ltr:md:-left-16 rtl:md:-right-16 z-60"
-                >
-                  <div className="relative w-full h-full z-10 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
-                    <SpinningText
-                      radius={locale === "ar" ? 6 : 5}
-                      fontSize={0.9}
-                      className="font-semibold leading-none text-gray-700"
+
+              {/* Desktop Layout */}
+              <div className="hidden lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:min-h-screen">
+                <div className="lg:col-span-5 lg:px-0 lg:h-full flex-shrink-0 relative">
+                  <div className="max-w-lg flex lg:h-full flex-col justify-center py-20">
+                    <h1
+                      className={cn(
+                        "tracking-tight text-gray-800 mt-12",
+                        "ltr:font-serif ltr:text-6xl/18",
+                        "rtl:font-semibold rtl:text-6xl text-balance rtl:leading-18"
+                      )}
                     >
-                      {`pre-order • pre-order • pre-order • `}
-                    </SpinningText>
-                    <ArrowUpRightIcon
-                      strokeWidth={1}
-                      className="absolute text-gray-700 size-[40px]"
-                    />
+                      {translations.hero["tile-part1"]}{" "}
+                      <span className="text-rose-600 ltr:italic">
+                        {translations.hero["tile-part2"]}
+                      </span>{" "}
+                      {translations.hero["tile-part3"]}{" "}
+                      <span className="text-rose-600 ltr:italic">
+                        {translations.hero["tile-part4"]}
+                      </span>
+                      .
+                    </h1>
+                    <div className="mt-10 flex items-center gap-x-6">
+                      <Link href={`/${locale}/shop`}>
+                        <InteractiveHoverButton>
+                          {translations.hero.button}
+                        </InteractiveHoverButton>
+                      </Link>
+                    </div>
                   </div>
-                </Link>
-                <ImageCarousel images={carouselImages} />
+                </div>
+                <div className="relative lg:col-span-7 lg:mt-0 lg:h-full ltr:lg:-mr-8 rtl:lg:-ml-8 flex-1 lg:min-h-full">
+                  <Link
+                    href={`/${locale}/shop`}
+                    className="size-32 rounded-full absolute bottom-16 ltr:-left-16 rtl:-right-16 z-60"
+                  >
+                    <div className="relative w-full h-full z-10 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
+                      <SpinningText
+                        radius={locale === "ar" ? 6 : 5}
+                        fontSize={0.9}
+                        className="font-semibold leading-none text-gray-700"
+                      >
+                        {`pre-order • pre-order • pre-order • `}
+                      </SpinningText>
+                      <ArrowUpRightIcon
+                        strokeWidth={1}
+                        className="absolute text-gray-700 size-[40px]"
+                      />
+                    </div>
+                  </Link>
+                  <ImageCarousel images={carouselImages} />
+                </div>
               </div>
             </div>
           </div>
