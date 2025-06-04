@@ -40,7 +40,7 @@ export default function ProductCard({
       <img
         alt={product.name}
         src={product.imagesrc}
-        className="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+        className="aspect-[3/4] w-full bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
       />
 
       {isNew && (

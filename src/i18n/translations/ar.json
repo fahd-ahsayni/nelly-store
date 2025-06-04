@@ -82,7 +82,8 @@
     "mad": "درهم"
   },
   "product": {
-    "new": "جديد"
+    "new": "جديد",
+    "noProductsAvailable": "لا توجد منتجات متاحة"
   },
   "shop": {
     "shopByCollection": "تسوق حسب المجموعة",

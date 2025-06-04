@@ -19,6 +19,7 @@ import { Heading } from "../ui/heading";
 import CartDrawer from "./drawers/cart-drawer";
 import WishlistDrawer from "./drawers/wishlist-drawer";
 import LanguageSwitcher from "./language-switcher";
+import { Button } from "../ui/button";
 
 interface HeaderProps {
   translations: any;
@@ -113,7 +114,8 @@ export default function Header({ translations, locale }: HeaderProps) {
         <nav aria-label="Top" className="px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              <button
+              <Button
+                plain
                 type="button"
                 onClick={() => setOpen(true)}
                 className={cn(
@@ -125,7 +127,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">{t("navigation.menu")}</span>
                 <Bars3Icon aria-hidden="true" className="size-6" />
-              </button>
+              </Button>
 
               {/* Flyout menus */}
               <div className="hidden lg:inline-block h-full">
@@ -153,10 +155,13 @@ export default function Header({ translations, locale }: HeaderProps) {
               <div
                 className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")}
               >
-                <Link href={`/${locale}`} className="flex items-center gap-x-2">
+                <Link
+                  href={`/${locale}`}
+                  className="flex items-center lg:gap-x-2"
+                >
                   <span className="sr-only">Nelly Collection</span>
-                  <Image alt="" src={logo} className="h-14 w-auto" />
-                  <h2 className="ltr:font-serif text-3xl rtl:font-bold">
+                  <Image alt="" src={logo} className="lg:h-14 h-10 w-auto" />
+                  <h2 className="ltr:font-serif text-lg lg:text-3xl rtl:font-bold">
                     {translations.navigation.logo.one}{" "}
                     <span className="ltr:italic text-rose-600">
                       {translations.navigation.logo.two}
@@ -166,12 +171,12 @@ export default function Header({ translations, locale }: HeaderProps) {
               </div>
 
               <div className="flex items-center ltr:ml-auto rtl:mr-auto">
-                <div className="hidden ltr:lg:ml-8 rtl:mr-8 lg:flex">
+                <div className="hidden ltr:lg:ml-8 rtl:lg:mr-8 lg:flex">
                   <LanguageSwitcher translations={t} showText={true} />
                 </div>
 
                 {/* Favorites */}
-                <div className="flex ltr:lg:ml-6 rtl:mr-6">
+                <div className="flex ltr:lg:ml-6 rtl:lg:mr-6 ltr:ml-2 rtl:ml-2">
                   <button
                     onClick={() => setWishlistOpen(true)}
                     className="p-2 text-gray-700 hover:text-gray-800"
@@ -186,7 +191,7 @@ export default function Header({ translations, locale }: HeaderProps) {
                   className={cn(
                     "flow-root",
                     // ltr: margin left, rtl: margin right
-                    "ltr:ml-4 lg:ltr:ml-6 rtl:mr-4 lg:rtl:mr-6"
+                    "ltr:ml-2 ltr:lg:ml-6 rtl:mr-2 rtl:lg:mr-6"
                   )}
                 >
                   <button

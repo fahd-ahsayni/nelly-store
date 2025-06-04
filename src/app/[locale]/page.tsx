@@ -37,7 +37,7 @@ export default async function Home({
         <nav className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
           <Header translations={translations} locale={locale} />
         </nav>
-        <section className="flex h-screen flex-col items-center w-full">
+        <section className="flex h-screen flex-col items-center w-full -mt-10 lg:-mt-26">
           <div className="relative w-full flex-1 isolate z-10">
             <div className="h-full overflow-hidden relative isolate flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
               <div
@@ -57,8 +57,8 @@ export default async function Home({
                   <h1
                     className={cn(
                       "tracking-tight text-gray-800",
-                      "ltr:font-serif ltr:text-5xl/14 ltr:sm:text-5xl/14 ltr:lg:text-6xl/18",
-                      "rtl:font-semibold rtl:text-4xl rtl::text-4xl rtl:lg:text-6xl text-balance rtl:leading-18"
+                      "ltr:font-serif ltr:text-5xl/12 ltr:sm:text-5xl/14 ltr:lg:text-6xl/18",
+                      "rtl:font-semibold rtl:text-4xl  rtl:lg:text-6xl text-balance rtl:lg:leading-18 rtl:leading-14"
                     )}
                   >
                     {translations.hero["tile-part1"]}{" "}

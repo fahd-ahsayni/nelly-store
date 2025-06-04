@@ -96,7 +96,8 @@
     "mad": "MAD"
   },
   "product": {
-    "new": "New"
+    "new": "New",
+    "noProductsAvailable": "No products available"
   },
   "shop": {
     "shopByCollection": "Shop by Collection",

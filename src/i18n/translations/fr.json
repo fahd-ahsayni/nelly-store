@@ -78,7 +78,8 @@
     "mad": "MAD"
   },
   "product": {
-    "new": "Nouveau"
+    "new": "Nouveau",
+    "noProductsAvailable": "Aucun produit disponible"
   },
   "shop": {
     "shopByCollection": "Acheter par Collection",

@@ -56,7 +56,7 @@ export default function ProductList({
           className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:left-[calc(50%+30rem)] sm:w-288.75"
         />
       </div>
-      <div className="md:flex md:items-center md:justify-between">
+      <div className="md:flex md:items-center md:justify-between mb-4 lg:mb-0">
         <h2
           className={cn(
             "text-gray-800",
@@ -104,7 +104,7 @@ export default function ProductList({
             {featuredProducts.map((product) => (
               <CarouselItem
                 key={product.id}
-                className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                className="pl-2 md:pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
                 <ProductCard 
                   product={product} 

@@ -44,7 +44,7 @@ export default function ProductGrid({
   if (products.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">No products available</p>
+        <p className="text-gray-500">{translations.product.noProductsAvailable}</p>
       </div>
     );
   }
