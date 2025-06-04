@@ -76,7 +76,13 @@
     "size": "المقاس",
     "addToBag": "أضف للسلة",
     "selectColor": "يرجى اختيار لون",
-    "selectSize": "يرجى اختيار مقاس"
+    "selectSize": "يرجى اختيار مقاس",
+    "freeShipping": "شحن مجاني",
+    "freeShippingDesc": "في المغرب",
+    "fastDelivery": "توصيل سريع",
+    "fastDeliveryDesc": "2-5 أيام عمل",
+    "support": "دعم 24/7",
+    "supportDesc": "خدمة العملاء"
   },
   "currency": {
     "mad": "درهم"

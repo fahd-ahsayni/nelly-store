@@ -90,7 +90,13 @@
     "size": "Size",
     "addToBag": "Add to bag",
     "selectColor": "Please select a color",
-    "selectSize": "Please select a size"
+    "selectSize": "Please select a size",
+    "freeShipping": "Free Shipping",
+    "freeShippingDesc": "On orders over 500 MAD",
+    "fastDelivery": "Fast Delivery",
+    "fastDeliveryDesc": "2-5 working days",
+    "support": "24/7 Support",
+    "supportDesc": "Customer service"
   },
   "currency": {
     "mad": "MAD"

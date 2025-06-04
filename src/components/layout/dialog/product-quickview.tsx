@@ -12,7 +12,12 @@ import {
   Radio,
   RadioGroup,
 } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  BoltIcon,
+  ChatBubbleLeftRightIcon,
+  TruckIcon,
+  XMarkIcon
+} from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
@@ -173,8 +178,69 @@ export default function ProductQuickview({
                           color="yellow"
                           className="border border-yellow-400"
                         >
-                          {product.rating}
+                          {product.rating}{" "}
+                          {translations.productQuickview.reviews}
                         </Badge>
+                      </div>
+                    </div>
+
+                    {/* Benefits Section */}
+                    <div className="mt-6 space-y-3">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div className="group flex items-center gap-3 rounded-lg bg-green-50 border border-green-300 p-3 transition-all duration-200">
+                          <div className="flex-shrink-0">
+                            <TruckIcon className="h-5 w-5 text-green-600 group-hover:scale-110 transition-transform duration-200" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium text-green-900">
+                              {
+                                translations.productQuickview?.freeShipping ||
+                                "Free Shipping"
+                              }
+                            </p>
+                            <p className="text-xs text-green-700">
+                              {
+                                translations.productQuickview?.freeShippingDesc ||
+                                "On orders over 500 MAD"
+                              }
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="group flex items-center gap-3 rounded-lg bg-sky-50 p-3 transition-all duration-200 border border-sky-300">
+                          <div className="flex-shrink-0">
+                            <BoltIcon className="h-5 w-5 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium text-blue-900">
+                              {
+                                translations.productQuickview?.fastDelivery ||
+                                "Fast Delivery"
+                              }
+                            </p>
+                            <p className="text-xs text-blue-700">
+                              {
+                                translations.productQuickview?.fastDeliveryDesc ||
+                                "2-5 working days"
+                              }
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="group flex items-center gap-3 rounded-lg bg-pink-50 p-3 transition-all duration-200 border border-pink-300">
+                          <div className="flex-shrink-0">
+                            <ChatBubbleLeftRightIcon className="h-5 w-5 text-pink-600 group-hover:scale-110 transition-transform duration-200" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium text-pink-900">
+                              {translations.productQuickview?.support || "24/7 Support"}
+                            </p>
+                            <p className="text-xs text-pink-700">
+                              {translations.productQuickview?.supportDesc ||
+                                "Customer service"}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </section>
