@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/useCart";
+import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
@@ -13,7 +14,7 @@ import {
   TruckIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/solid";
+import { HeartIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -33,6 +34,7 @@ export default function ProductQuickview({
   locale,
 }: ProductQuickviewProps) {
   const { addItem } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const [error, setError] = useState<string>("");
 
   // Create default color and size options based on database structure
@@ -91,6 +93,30 @@ export default function ProductQuickview({
     // Optional: Close the quickview after adding to cart
     onClose();
   };
+
+  const handleWishlistToggle = () => {
+    if (!product) return;
+
+    const wishlistItem = {
+      id: `${product.id}-${selectedColor?.id || "no-color"}-${
+        selectedSize?.name || "no-size"
+      }`,
+      name: product.name,
+      price: product.price,
+      image: product.image_urls?.[0] || product.imagesrc,
+      color: selectedColor?.name,
+      colorHex: selectedColor?.hex,
+      size: selectedSize?.name,
+    };
+
+    toggleWishlist(wishlistItem);
+  };
+
+  const isItemInWishlist = product ? isInWishlist(
+    `${product.id}-${selectedColor?.id || "no-color"}-${
+      selectedSize?.name || "no-size"
+    }`
+  ) : false;
 
   if (!product) return null;
 
@@ -313,15 +339,29 @@ export default function ProductQuickview({
                         </div>
                       )}
 
-                      <div>
+                      <div className="flex items-center justify-between gap-x-2 mt-8">
                         <Button
                           color="rose"
                           type="submit"
                           className={cn(
-                            "mt-8 w-full !h-12 flexi items-center justify-center"
+                            "w-full !h-12 flexi items-center justify-center"
                           )}
                         >
                           {translations.productQuickview.addToBag}
+                        </Button>
+                        <Button 
+                          outline 
+                          type="button"
+                          onClick={handleWishlistToggle}
+                          className={cn(
+                            "!h-12 !w-12",
+                            isItemInWishlist && "!bg-rose-50 !border-rose-200 !text-rose-600"
+                          )}
+                        >
+                          <HeartIcon className={cn(
+                            "w-5 h-5",
+                            isItemInWishlist ? "fill-current" : "fill-none"
+                          )} />
                         </Button>
                       </div>
                     </form>
