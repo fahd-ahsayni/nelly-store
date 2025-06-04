@@ -167,8 +167,11 @@ export default function ShopContent({
           <div className="text-center mb-3">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-3xl font-medium rtl:font-semibold text-gray-800 ltr:font-serif ltr:italic">
-                  {translations.shop?.shopByCollection || "Shop by Collection"}
+                <h2 className="ltr:md:text-5xl rtl:md:text-4xl ltr:text-4xl rtl:text-3xl text-gray-800 ltr:font-serif rtl:font-semibold font-medium">
+                  {translations.collections["title-part1"]}{" "}
+                  <span className="ltr:italic text-rose-600">
+                    {translations.collections["title-part2"]}
+                  </span>
                 </h2>
               </div>
             </div>
@@ -187,8 +190,11 @@ export default function ShopContent({
         <div>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-medium rtl:font-semibold text-gray-800 ltr:font-serif ltr:italic">
-                {translations.shop?.exploreWhatsNew || "Explore What's New"}
+              <h2 className="ltr:md:text-5xl rtl:md:text-4xl ltr:text-4xl rtl:text-3xl text-gray-800 ltr:font-serif rtl:font-semibold font-medium">
+                {translations.productsList["title-part1"]}{" "}
+                <span className="ltr:italic text-rose-600">
+                  {translations.productsList["title-part2"]}
+                </span>
               </h2>
               <p className="text-sm text-gray-600 mt-1">
                 {filteredProducts.length}{" "}

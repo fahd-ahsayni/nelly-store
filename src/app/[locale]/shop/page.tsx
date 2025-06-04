@@ -37,7 +37,7 @@ export default async function Shop({ params }: ShopPageProps) {
             <InputGroup className="flex-1 !bg-gray-50">
               <MagnifyingGlassIcon data-slot="icon" />
               <Input
-                className="flex-1 !w-72 lg:!w-96 h-full"
+                className="flex-1 !w-52 lg:!w-96 h-full"
                 placeholder={
                   translations.shop?.searchPlaceholder || "Search products..."
                 }

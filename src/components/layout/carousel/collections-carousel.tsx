@@ -109,9 +109,9 @@ export default function CollectionsCarousel({
         dir="ltr"
         setApi={setApi}
       >
-        <CarouselContent className="py-4 px-2 flex gap-4">
+        <CarouselContent className="py-4 px-2 flex gap-2 lg:gap-4">
           {onCollectionSelect && (
-            <CarouselItem className="basis-1/2 lg:basis-1/6">
+            <CarouselItem className="basis-2/5 lg:basis-1/6">
               <motion.div
                 data-collection-id="all"
                 className={`group relative cursor-pointer overflow-hidden transition-colors duration-200 shadow-xs border border-gray-300 ${
@@ -136,7 +136,7 @@ export default function CollectionsCarousel({
                   >
                     <div
                       className={cn(
-                        "text-2xl font-semibold text-gray-800 text-center px-2",
+                        "text-xl lg:text-2xl font-semibold text-gray-800 text-center px-2",
                         locale !== "ar" && " ltr:font-serif ltr:italic"
                       )}
                     >
@@ -152,7 +152,7 @@ export default function CollectionsCarousel({
           {collectionsWithProducts.map((collection, index) => (
             <CarouselItem
               key={collection.id}
-              className="basis-1/2 lg:basis-1/6"
+              className="basis-2/5 lg:basis-1/6"
             >
               <motion.div
                 data-collection-id={collection.id}
@@ -203,23 +203,23 @@ export default function CollectionsCarousel({
         </CarouselContent>
 
         {canScrollPrev && (
-          <div>
+          <div className="hidden md:block">
             <CarouselPrevious className="left-2 z-10 bg-white text-gray-700 border border-gray-200 rounded-full p-2 hover:bg-gray-50 transition-all duration-200" />
           </div>
         )}
 
         {canScrollNext && (
-          <div>
+          <div className="hidden md:block">
             <CarouselNext className="right-2 z-10 bg-white text-gray-700 border border-gray-200 rounded-full p-2 hover:bg-gray-50 transition-all duration-200" />
           </div>
         )}
       </Carousel>
 
       {canScrollPrev && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-background"></div>
+        <div className="pointer-events-none hidden md:block absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-background"></div>
       )}
       {canScrollNext && (
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-background"></div>
+        <div className="pointer-events-none hidden md:block absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-background"></div>
       )}
     </div>
   );
