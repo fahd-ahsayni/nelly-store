@@ -44,8 +44,8 @@ export default function ProductCard({
       />
 
       {isNew && (
-        <div className="absolute top-3 right-3">
-          <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-white text-gray-800 shadow-sm">
+        <div className="absolute top-3 rtl:right-3 ltr:left-3">
+          <span className="px-2.5 py-1 text-xs font-medium bg-rose-600 text-white shadow-sm">
             {translations?.new || "New"}
           </span>
         </div>

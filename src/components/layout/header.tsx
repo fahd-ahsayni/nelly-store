@@ -1,5 +1,7 @@
 "use client";
 
+import { logo } from "@/assets";
+import { useCart } from "@/hooks/useCart";
 import { useTranslations } from "@/i18n/utils";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
@@ -9,15 +11,14 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Heading } from "../ui/heading";
-import LanguageSwitcher from "./language-switcher";
-import WishlistDrawer from "./drawers/wishlist-drawer";
 import CartDrawer from "./drawers/cart-drawer";
-import { useCart } from "@/hooks/useCart";
-import { logo } from "@/assets";
-import Image from "next/image";
+import WishlistDrawer from "./drawers/wishlist-drawer";
+import LanguageSwitcher from "./language-switcher";
 
 interface HeaderProps {
   translations: any;
@@ -30,6 +31,11 @@ export default function Header({ translations, locale }: HeaderProps) {
   const [cartOpen, setCartOpen] = useState(false);
   const t = useTranslations(translations);
   const { getTotalItems } = useCart();
+  const pathname = usePathname();
+
+  const isCurrentPage = (href: string) => {
+    return pathname === href;
+  };
 
   return (
     // Set the document direction based on locale conditions
@@ -122,8 +128,8 @@ export default function Header({ translations, locale }: HeaderProps) {
               </button>
 
               {/* Flyout menus */}
-              <div className="hidden lg:inline-block">
-                <div className="flex h-full rtl:space-x-8 ltr:space-x-8">
+              <div className="hidden lg:inline-block h-full">
+                <div className="flex h-full rtl:space-x-6 ltr:space-x-6">
                   {[
                     { name: t("navigation.home"), href: `/${locale}` },
                     { name: t("navigation.store"), href: `/${locale}/shop` },
@@ -131,7 +137,11 @@ export default function Header({ translations, locale }: HeaderProps) {
                     <Link
                       key={page.name}
                       href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className={cn(
+                        "flex items-center px-2 text-sm font-medium text-gray-700 hover:text-gray-800",
+                        isCurrentPage(page.href) &&
+                          " border-b-2 border-rose-500 -mb-px font-semibold"
+                      )}
                     >
                       {page.name}
                     </Link>
@@ -140,15 +150,18 @@ export default function Header({ translations, locale }: HeaderProps) {
               </div>
 
               {/* Logo */}
-              <div className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")}>
-                <Link href="#" className="flex items-center gap-x-2">
+              <div
+                className={cn("flex", locale === "ar" ? "mr-auto" : "ml-auto")}
+              >
+                <Link href={`/${locale}`} className="flex items-center gap-x-2">
                   <span className="sr-only">Nelly Collection</span>
-                  <Image
-                    alt=""
-                    src={logo}
-                    className="h-14 w-auto"
-                  />
-                  <Heading className="ltr:font-serif ltr:italic rtl:font-bold">{translations.navigation.logo}</Heading>
+                  <Image alt="" src={logo} className="h-14 w-auto" />
+                  <h2 className="ltr:font-serif text-3xl rtl:font-bold">
+                    {translations.navigation.logo.one}{" "}
+                    <span className="ltr:italic text-rose-600">
+                      {translations.navigation.logo.two}
+                    </span>
+                  </h2>
                 </Link>
               </div>
 
@@ -169,12 +182,14 @@ export default function Header({ translations, locale }: HeaderProps) {
                 </div>
 
                 {/* Cart */}
-                <div className={cn(
-                  "flow-root",
-                  // ltr: margin left, rtl: margin right
-                  "ltr:ml-4 lg:ltr:ml-6 rtl:mr-4 lg:rtl:mr-6"
-                )}>
-                  <button 
+                <div
+                  className={cn(
+                    "flow-root",
+                    // ltr: margin left, rtl: margin right
+                    "ltr:ml-4 lg:ltr:ml-6 rtl:mr-4 lg:rtl:mr-6"
+                  )}
+                >
+                  <button
                     onClick={() => setCartOpen(true)}
                     className="group -m-2 flex items-center p-2"
                   >

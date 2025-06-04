@@ -1,4 +1,5 @@
 import SvgStar from "@/assets/svgs";
+import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
 import Banner from "@/components/layout/banner";
 import Header from "@/components/layout/header";
 import ImageCarousel from "@/components/layout/images-carousel";
@@ -18,6 +19,7 @@ import { getTranslations } from "@/i18n/utils";
 import { getProductsFull } from "@/lib/supabase-server";
 import { cn } from "@/lib/utils";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default async function Home({
   params,
@@ -70,17 +72,22 @@ export default async function Home({
                     .
                   </h1>
                   <div className="mt-6 lg:mt-10 flex items-center gap-x-6">
-                    <InteractiveHoverButton>
-                      {translations.hero.button}
-                    </InteractiveHoverButton>
+                    <Link href={`/${locale}/shop`}>
+                      <InteractiveHoverButton>
+                        {translations.hero.button}
+                      </InteractiveHoverButton>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className="relative lg:col-span-7 lg:mt-0 lg:h-full ltr:lg:-mr-8 rtl:lg:-ml-8 flex-1 min-h-80 sm:min-h-96 lg:min-h-full">
-                <div className="size-32 rounded-full absolute -top-16 md:top-auto md:bottom-16 ltr:right-8 rtl:left-8 ltr:md:-left-16 rtl:md:-right-16 z-60">
+                <Link
+                  href={`/${locale}/shop`}
+                  className="size-32 rounded-full absolute -top-16 md:top-auto md:bottom-16 ltr:right-8 rtl:left-8 ltr:md:-left-16 rtl:md:-right-16 z-60"
+                >
                   <div className="relative w-full h-full z-10 rounded-full bg-white/60 border border-white/30 backdrop-blur-lg shadow-2xl shadow-rose-300/50 flex items-center justify-center">
                     <SpinningText
-                      radius={5.5}
+                      radius={locale === "ar" ? 6 : 5}
                       fontSize={0.9}
                       className="font-semibold leading-none text-gray-700"
                     >
@@ -91,7 +98,7 @@ export default async function Home({
                       className="absolute text-gray-700 size-[40px]"
                     />
                   </div>
-                </div>
+                </Link>
                 <ImageCarousel images={carouselImages} />
               </div>
             </div>
@@ -117,8 +124,10 @@ export default async function Home({
         />
         <TrendProduct translations={translations} locale={locale} />
         <CollectionPerview translations={translations} locale={locale} />
-        <CallToAction translations={translations} locale={locale} />
-        <CoverSection translations={translations} />
+        <RevealOnScroll>
+          <CallToAction translations={translations} locale={locale} />
+        </RevealOnScroll>
+        <CoverSection translations={translations} locale={locale} />
         <TestimonialGrid translations={translations} locale={locale} />
       </main>
     </StoreProvider>

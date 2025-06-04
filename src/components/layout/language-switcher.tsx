@@ -50,7 +50,7 @@ export default function LanguageSwitcher({
           className="block h-auto w-5 shrink-0"
         />
         {showText && (
-          <span className="lrt:ml-2 rtl:mr-2 block text-sm font-medium">
+          <span className="ltr:ml-2 rtl:mr-2 block text-sm font-medium">
             {localeNames[currentLocale]}
           </span>
         )}

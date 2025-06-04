@@ -2,7 +2,7 @@
 
 import ProductCard from "@/components/layout/cards/product-card";
 import ProductQuickview from "@/components/layout/dialog/product-quickview";
-import { FlipReveal, FlipRevealItem } from "@/components/ui/flip-reveal";
+import { FlipReveal, FlipRevealItem } from "@/components/animations/flip-reveal";
 import type { Collection, ProductFull } from "@/types/database";
 import { useState } from "react";
 

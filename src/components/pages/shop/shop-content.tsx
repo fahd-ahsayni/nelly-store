@@ -2,6 +2,7 @@
 
 import CollectionsCarousel from "@/components/layout/carousel/collections-carousel";
 import ProductGrid from "@/components/layout/grid/product-grid";
+import { Heading } from "@/components/ui/heading";
 import type { Collection, ProductFull } from "@/types/database";
 import { useState } from "react";
 
@@ -53,9 +54,9 @@ export default function ShopContent({
           <div className="text-center mb-8">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+                <Heading className="ltr:font-serif">
                   {translations.shop?.shopByCollection || "Shop by Collection"}
-                </h2>
+                </Heading>
               </div>
             </div>
           </div>
@@ -72,9 +73,9 @@ export default function ShopContent({
         <div>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+              <Heading className="ltr:font-serif">
                 {translations.shop?.exploreWhatsNew || "Explore What's New"}
-              </h2>
+              </Heading>
             </div>
           </div>
 

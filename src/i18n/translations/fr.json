@@ -3,7 +3,10 @@
     "text": "Grande nouvelle ! Nous sommes ravis d'annoncer un nouveau site web."
   },
   "navigation": {
-    "logo": "Nelly Collections",
+    "logo": {
+      "one": "Nelly",
+      "two": "Collection"
+    },
     "home": "Accueil",
     "store": "Boutique",
     "favorites": "Favoris",

@@ -1,4 +1,5 @@
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
+import Link from "next/link";
 
 export default function TrendProduct({
   translations,
@@ -34,10 +35,12 @@ export default function TrendProduct({
               {translations.trendProduct.paragraph}
             </p>
           </div>
-          <SlideArrowButton
-            className="w-[200px] cursor-pointer"
-            text={translations.trendProduct.ctaButton}
-          />
+          <Link href={`/${locale}/shop`}>
+            <SlideArrowButton
+              className="w-[200px] cursor-pointer"
+              text={translations.trendProduct.ctaButton}
+            />
+          </Link>
         </div>
       </div>
     </div>

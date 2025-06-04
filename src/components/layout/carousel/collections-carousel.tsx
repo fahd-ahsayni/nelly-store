@@ -39,6 +39,7 @@ export default function CollectionsCarousel({
         align: "start",
       }}
       className="w-full"
+      dir="ltr"
     >
       <CarouselContent>
         {/* All Collections Option */}

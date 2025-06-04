@@ -3,7 +3,10 @@
     "text": "Big news! We're excited to announce a new website."
   },
   "navigation": {
-    "logo": "Nelly Collections",
+    "logo": {
+      "one": "Nelly",
+      "two": "Collection"
+    },
     "home": "Home",
     "store": "Store",
     "favorites": "Favorites",
