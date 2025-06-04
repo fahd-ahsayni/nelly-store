@@ -6,6 +6,7 @@ import ImageCarousel from "@/components/layout/images-carousel";
 import CallToAction from "@/components/pages/home/call-to-action";
 import CollectionPerview from "@/components/pages/home/collections-perview";
 import CoverSection from "@/components/pages/home/cover-section";
+import LocalStoreSection from "@/components/pages/home/local-store";
 import ProductList from "@/components/pages/home/product-list";
 import TestimonialGrid from "@/components/pages/home/testimonials";
 import TrendProduct from "@/components/pages/home/trend-product";
@@ -37,7 +38,7 @@ export default async function Home({
         <nav className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
           <Header translations={translations} locale={locale} />
         </nav>
-        <section className="flex h-screen flex-col items-center w-full -mt-10 lg:-mt-26">
+        <section className="flex h-screen flex-col items-center w-full lg:-mt-26">
           <div className="relative w-full flex-1 isolate z-10">
             <div className="h-full overflow-hidden relative isolate flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
               <div
@@ -129,6 +130,20 @@ export default async function Home({
         </RevealOnScroll>
         <CoverSection translations={translations} locale={locale} />
         <TestimonialGrid translations={translations} locale={locale} />
+        <VelocityScroll
+          dir="ltr"
+          numRows={1}
+          defaultVelocity={-3}
+          className="bg-gray-900 py-4 relative z-20"
+        >
+          <span className="inline-flex items-center gap-2 whitespace-nowrap">
+            <span className="text-rose-200 font-serif italic">
+              Nelly Collection
+            </span>
+            <SvgStar className="w-7 h-7 text-rose-200 ml-4" />
+          </span>
+        </VelocityScroll>
+        <LocalStoreSection translations={translations} locale={locale} />
       </main>
     </StoreProvider>
   );

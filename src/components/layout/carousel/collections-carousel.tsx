@@ -7,8 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import type { Collection, ProductFull } from "@/types/database";
-import { AnimatePresence, motion, useIsomorphicLayoutEffect } from "framer-motion";
+import { motion, useIsomorphicLayoutEffect } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -35,20 +36,16 @@ export default function CollectionsCarousel({
   const carouselRef = useRef<HTMLDivElement>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  // Check for reduced motion preference
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
-    
-    const handleChange = (e: MediaQueryListEvent) => {
+    const handleChange = (e: MediaQueryListEvent) =>
       setPrefersReducedMotion(e.matches);
-    };
-    
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  // Filter collections that have at least one product
+  // Only show collections that have at least one in-stock product.
   const collectionsWithProducts = collections.filter((collection) =>
     products.some(
       (product) => product.collection_id === collection.id && product.instock
@@ -56,9 +53,7 @@ export default function CollectionsCarousel({
   );
 
   useIsomorphicLayoutEffect(() => {
-    if (!api) {
-      return;
-    }
+    if (!api) return;
 
     const updateScrollButtons = () => {
       setCanScrollPrev(api.canScrollPrev());
@@ -67,54 +62,35 @@ export default function CollectionsCarousel({
 
     updateScrollButtons();
     api.on("scroll", updateScrollButtons);
-
-    return () => {
-      api.off("scroll", updateScrollButtons);
-    };
+    return () => api.off("scroll", updateScrollButtons);
   }, [api]);
 
   const handleCollectionSelect = (collectionId: string | null) => {
     if (collectionId === selectedCollectionId) return;
-
     onCollectionSelect?.(collectionId);
   };
 
-  // Animation variants
+  // Minimalistic animation variants
   const cardVariants = {
-    idle: { 
-      scale: 1, 
-      rotateY: 0,
-      transition: { duration: 0.2, ease: "easeOut" } 
-    },
-    hover: { 
+    idle: { scale: 1, transition: { duration: 0.2, ease: "easeOut" } },
+    hover: {
       scale: prefersReducedMotion ? 1 : 1.02,
-      transition: { duration: 0.2, ease: "easeOut" } 
+      transition: { duration: 0.2, ease: "easeOut" },
     },
-    tap: { 
-      scale: 0.98,
-      transition: { duration: 0.1, ease: "easeOut" } 
-    },
+    tap: { scale: 0.98, transition: { duration: 0.1, ease: "easeOut" } },
     selected: {
       scale: prefersReducedMotion ? 1 : 1.01,
-      transition: { duration: 0.3, ease: "easeOut" }
-    }
-  };
-
-  const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
   };
 
   const textVariants = {
     idle: { y: 0, scale: 1 },
-    selected: { 
-      y: prefersReducedMotion ? 0 : -1, 
+    selected: {
+      y: prefersReducedMotion ? 0 : -1,
       scale: prefersReducedMotion ? 1 : 1.05,
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
+      transition: { duration: 0.2, ease: "easeOut" },
+    },
   };
 
   if (collectionsWithProducts.length === 0) {
@@ -128,23 +104,20 @@ export default function CollectionsCarousel({
   return (
     <div ref={carouselRef} className="relative">
       <Carousel
-        opts={{
-          align: "start",
-        }}
+        opts={{ align: "start" }}
         className="w-full"
         dir="ltr"
         setApi={setApi}
       >
-        <CarouselContent className="p-4">
-          {/* All Collections Option */}
+        <CarouselContent className="py-4 px-2 flex gap-4">
           {onCollectionSelect && (
-            <CarouselItem className="basis-1/3 lg:basis-1/6">
+            <CarouselItem className="basis-1/2 lg:basis-1/6">
               <motion.div
                 data-collection-id="all"
-                className={`group relative cursor-pointer overflow-hidden rounded-xl transition-colors duration-200 ${
-                  selectedCollectionId === null 
-                    ? "ring-2 ring-rose-500 ring-offset-2" 
-                    : "hover:ring-1 hover:ring-rose-300"
+                className={`group relative cursor-pointer overflow-hidden transition-colors duration-200 shadow-xs border border-gray-300 ${
+                  selectedCollectionId === null
+                    ? "ring-4 ring-offset-2 ring-rose-500"
+                    : "border-gray-200 hover:border-rose-300"
                 }`}
                 onClick={() => handleCollectionSelect(null)}
                 variants={cardVariants}
@@ -153,34 +126,24 @@ export default function CollectionsCarousel({
                 whileHover="hover"
                 whileTap="tap"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative">
+                <div className="aspect-[4/3] flex items-center justify-center bg-white">
                   <motion.div
-                    className="text-rose-100 text-center z-10"
+                    className="text-gray-700 text-center"
                     variants={textVariants}
-                    animate={selectedCollectionId === null ? "selected" : "idle"}
+                    animate={
+                      selectedCollectionId === null ? "selected" : "idle"
+                    }
                   >
-                    <div className="text-lg font-semibold px-4">
-                      {translations?.collections?.allCollections || "All Collections"}
+                    <div
+                      className={cn(
+                        "text-2xl font-semibold text-gray-800 text-center px-2",
+                        locale !== "ar" && " ltr:font-serif ltr:italic"
+                      )}
+                    >
+                      {translations?.collections?.allCollections ||
+                        "All Collections"}
                     </div>
                   </motion.div>
-
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-rose-400 via-transparent to-transparent"></div>
-                  </div>
-
-                  {/* Selection indicator */}
-                  <AnimatePresence>
-                    {selectedCollectionId === null && (
-                      <motion.div
-                        className="absolute inset-0 bg-rose-500/10 backdrop-blur-[1px]"
-                        variants={overlayVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                      />
-                    )}
-                  </AnimatePresence>
                 </div>
               </motion.div>
             </CarouselItem>
@@ -189,67 +152,48 @@ export default function CollectionsCarousel({
           {collectionsWithProducts.map((collection, index) => (
             <CarouselItem
               key={collection.id}
-              className="basis-1/3 lg:basis-1/6"
+              className="basis-1/2 lg:basis-1/6"
             >
               <motion.div
                 data-collection-id={collection.id}
-                className={`group relative cursor-pointer overflow-hidden rounded-xl transition-colors duration-200 ${
+                className={`group relative cursor-pointer overflow-hidden transition-colors duration-200 shadow-xs border border-gray-300 ${
                   selectedCollectionId === collection.id
-                    ? "ring-2 ring-rose-500 ring-offset-2"
-                    : "hover:ring-1 hover:ring-rose-300"
+                    ? "ring-4 ring-offset-2 ring-rose-500"
+                    : "border-gray-200 hover:border-rose-300"
                 }`}
                 onClick={() => handleCollectionSelect(collection.id)}
                 variants={cardVariants}
                 initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 12 }}
-                animate={{ 
-                  opacity: 1, 
+                animate={{
+                  opacity: 1,
                   y: 0,
-                  ...(selectedCollectionId === collection.id ? cardVariants.selected : cardVariants.idle)
+                  ...(selectedCollectionId === collection.id
+                    ? cardVariants.selected
+                    : cardVariants.idle),
                 }}
                 whileHover="hover"
                 whileTap="tap"
                 transition={{
                   delay: Math.min(index * 0.05, 0.3),
                   duration: 0.4,
-                  ease: "easeOut"
+                  ease: "easeOut",
                 }}
               >
-                <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
+                <div className="aspect-[4/3] relative overflow-hidden bg-gray-50">
                   <Image
                     src={collection.imagesrc}
                     alt={collection.name}
                     width={400}
                     height={400}
-                    className="h-full w-full object-cover object-center transition-all duration-300 group-hover:scale-105"
+                    className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 brightness-90`}
                     loading="lazy"
                   />
-
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  
-                  {/* Selection overlay */}
-                  <AnimatePresence>
-                    {selectedCollectionId === collection.id && (
-                      <motion.div
-                        className="absolute inset-0 bg-rose-500/15 backdrop-blur-[1px]"
-                        variants={overlayVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                      />
-                    )}
-                  </AnimatePresence>
-
-                  {/* Text overlay */}
+                  {/* Removed the overlay to prevent the white bg on selection */}
                   {onCollectionSelect && (
-                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-                      <motion.h3
-                        className="text-sm font-semibold text-center"
-                        variants={textVariants}
-                        animate={selectedCollectionId === collection.id ? "selected" : "idle"}
-                      >
+                    <div className="absolute inset-0 flex items-center justify-center p-2">
+                      <h3 className="text-2xl font-semibold text-white text-center">
                         {collection.name}
-                      </motion.h3>
+                      </h3>
                     </div>
                   )}
                 </div>
@@ -258,33 +202,25 @@ export default function CollectionsCarousel({
           ))}
         </CarouselContent>
 
-        {/* Navigation buttons with improved styling */}
-        <AnimatePresence>
-          {canScrollPrev && (
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <CarouselPrevious className="left-2 bg-white/90 text-gray-700 shadow-lg hover:bg-white hover:shadow-xl border-0 backdrop-blur-sm transition-all duration-200" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        
-        <AnimatePresence>
-          {canScrollNext && (
-            <motion.div
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <CarouselNext className="right-2 bg-white/90 text-gray-700 shadow-lg hover:bg-white hover:shadow-xl border-0 backdrop-blur-sm transition-all duration-200" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {canScrollPrev && (
+          <div>
+            <CarouselPrevious className="left-2 z-10 bg-white text-gray-700 border border-gray-200 rounded-full p-2 hover:bg-gray-50 transition-all duration-200" />
+          </div>
+        )}
+
+        {canScrollNext && (
+          <div>
+            <CarouselNext className="right-2 z-10 bg-white text-gray-700 border border-gray-200 rounded-full p-2 hover:bg-gray-50 transition-all duration-200" />
+          </div>
+        )}
       </Carousel>
+
+      {canScrollPrev && (
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-background"></div>
+      )}
+      {canScrollNext && (
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-background"></div>
+      )}
     </div>
   );
 }

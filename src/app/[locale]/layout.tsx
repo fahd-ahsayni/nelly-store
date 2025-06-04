@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { Inter, Tajawal } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
+import Footer from "@/components/layout/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 const tajawal = Tajawal({
@@ -56,10 +57,11 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={isRTL ? "rtl" : "ltr"}>
-      <body className={cn(fontClass, "bg-background")}>
+      <body className={cn(fontClass, "bg-background overflow-x-hidden")}>
         <LenisWrapper />
         {children}
         <ToastProvider />
+        <Footer translations={translations} locale={locale} />
       </body>
     </html>
   );

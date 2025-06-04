@@ -33,6 +33,7 @@ const colors = {
   rose: 'bg-rose-400/15 text-rose-700 group-data-hover:bg-rose-400/25 dark:bg-rose-400/10 dark:text-rose-400 dark:group-data-hover:bg-rose-400/20',
   gray: 'bg-gray-600/10 text-gray-700 group-data-hover:bg-gray-600/20 dark:bg-white/5 dark:text-gray-400 dark:group-data-hover:bg-white/10',
   zinc: 'bg-zinc-600/10 text-zinc-700 group-data-hover:bg-zinc-600/20 dark:bg-white/5 dark:text-zinc-400 dark:group-data-hover:bg-white/10',
+  white: 'bg-white text-gray-900 group-data-hover:bg-gray-50 dark:bg-gray-800 dark:text-white dark:group-data-hover:bg-gray-700',
 }
 
 type BadgeProps = { color?: keyof typeof colors }

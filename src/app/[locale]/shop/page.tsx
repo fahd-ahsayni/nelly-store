@@ -10,7 +10,7 @@ import {
   getColors,
   getProductsFull,
 } from "@/lib/supabase-server";
-import { FunnelIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { FunnelIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 interface ShopPageProps {
   params: Promise<{ locale: Locale }>;
@@ -46,11 +46,11 @@ export default async function Shop({ params }: ShopPageProps) {
             </InputGroup>
           </div>
           <Button
-            outline
+            color="rose"
             data-filter-button
             className="ml-2 sm:ml-4 flex-shrink-0"
           >
-            <FunnelIcon className="w-4 h-4 mr-1 sm:mr-2" />
+            <FunnelIcon className="w-4 h-4 mr-1 sm:mr-2 stroke-2" />
             <span className="hidden sm:inline">
               {translations.shop?.filter || "Filter"}
             </span>

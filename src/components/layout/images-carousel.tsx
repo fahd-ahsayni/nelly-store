@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Image, { StaticImageData } from "next/image";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
+import Image, { StaticImageData } from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 interface CarouselImage {
   src: string | StaticImageData;
@@ -71,8 +71,8 @@ export default function ImageCarousel({
                 <Image
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
-                  fill
                   priority={true}
+                  fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
                   className="object-cover"
                   loading="eager"

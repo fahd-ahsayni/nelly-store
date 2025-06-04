@@ -63,7 +63,7 @@
   "productQuickview": {
     "close": "Fermer",
     "productInformation": "Informations sur le produit",
-    "reviews": "avis",
+    "reviews": "Évaluations",
     "outOfStars": "sur 5 étoiles",
     "productOptions": "Options du produit",
     "chooseColor": "Choisir une couleur",
@@ -71,13 +71,13 @@
     "chooseSize": "Choisir une taille",
     "size": "Taille",
     "addToBag": "Ajouter au panier",
-    "selectColor": "Veuillez sélectionner une couleur",
-    "selectSize": "Veuillez sélectionner une taille",
+    "selectColor": "Veuillez choisir une couleur",
+    "selectSize": "Veuillez choisir une taille",
     "freeShipping": "Livraison gratuite",
-    "freeShippingDesc": "Sur commandes de plus de 500 MAD",
+    "freeShippingDesc": "au Maroc",
     "fastDelivery": "Livraison rapide",
-    "fastDeliveryDesc": "2-5 jours ouvrables",
-    "support": "Support 24/7",
+    "fastDeliveryDesc": "2 à 5 jours",
+    "support": "Assistance 24h/24 et 7j/7",
     "supportDesc": "Service client"
   },
   "currency": {
@@ -99,7 +99,8 @@
       "sizes": "Tailles",
       "clearAll": "Effacer tout",
       "apply": "Appliquer les filtres"
-    }
+    },
+    "productsFound": "produits trouvés"
   },
   "seo": {
     "title": "Collection Nelly - Boutique de Mode",
@@ -205,5 +206,20 @@
       "whatsapp": "WhatsApp nous",
       "email": "Envoyez-nous un email"
     }
+  },
+  "footer": {
+    "logoText": "nellycollection.com",
+    "copyright": "© solutions imfa",
+    "timeLabel": "Heure",
+    "contactEmail": "nelly@contact.com"
+  },
+  "localStore": {
+    "title": "Notre",
+    "titleHighlight": "Destination Locale",
+    "description": "Découvrez des trésors artisanaux et des produits locaux qui racontent une histoire. Des articles artisanaux aux trouvailles uniques, nous sélectionnons la plus belle collection pour notre communauté.",
+    "address": "123 Rue Principale, Centre-ville",
+    "hours": "Lun-Sam: 9h-19h",
+    "phone": "(555) 123-4567",
+    "visitButton": "Visitez-nous Aujourd'hui"
   }
 }

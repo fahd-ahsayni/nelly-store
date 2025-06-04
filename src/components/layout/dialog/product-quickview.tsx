@@ -11,6 +11,7 @@ import {
   BoltIcon,
   ChatBubbleLeftRightIcon,
   ExclamationTriangleIcon,
+  HeartIcon as HeartOutlineIcon,
   TruckIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -112,11 +113,13 @@ export default function ProductQuickview({
     toggleWishlist(wishlistItem);
   };
 
-  const isItemInWishlist = product ? isInWishlist(
-    `${product.id}-${selectedColor?.id || "no-color"}-${
-      selectedSize?.name || "no-size"
-    }`
-  ) : false;
+  const isItemInWishlist = product
+    ? isInWishlist(
+        `${product.id}-${selectedColor?.id || "no-color"}-${
+          selectedSize?.name || "no-size"
+        }`
+      )
+    : false;
 
   if (!product) return null;
 
@@ -146,15 +149,27 @@ export default function ProductQuickview({
               </button>
 
               <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
-                <Image
-                  alt={product.imagealt}
-                  src={product.image_urls?.[0] || product.imagesrc}
-                  width={300}
-                  height={450}
-                  priority
-                  className="aspect-2/3 w-full bg-gray-100 object-cover sm:col-span-4 lg:col-span-5"
-                />
-                <div className="sm:col-span-8 lg:col-span-7 text-start">
+                <div className="h-full w-full overflow-hidden sm:col-span-12 lg:col-span-5 relative">
+                  {/* Floating Rating Badge */}
+                  <Badge
+                    color="white"
+                    className="absolute top-4 ltr:right-4 rtl:left-4 z-10"
+                  >
+                    <StarIcon className="w-4 h-4 text-yellow-400" />
+                    <span className="text-sm font-medium text-gray-800">
+                      4.8
+                    </span>
+                  </Badge>
+                  <Image
+                    alt={product.imagealt}
+                    src={product.image_urls?.[0] || product.imagesrc}
+                    width={300}
+                    height={450}
+                    priority
+                    className="h-full w-full bg-gray-100 object-cover sm:col-span-4 lg:col-span-5"
+                  />
+                </div>
+                <div className="sm:col-span-12 lg:col-span-7 text-start">
                   <h2 className="text-2xl font-bold text-gray-900 ltr:sm:pr-12 rtl:sm:pl-12">
                     {product.name}
                   </h2>
@@ -170,40 +185,6 @@ export default function ProductQuickview({
                     <p className="text-2xl text-gray-900">
                       {product.price} {translations.currency.mad}
                     </p>
-
-                    {/* Reviews */}
-                    <div className="mt-6">
-                      <h4 className="sr-only">
-                        {translations.productQuickview.reviews}
-                      </h4>
-                      <div className="flex items-center gap-x-1">
-                        <div className="flex items-center">
-                          {[0, 1, 2, 3, 4].map((rating) => (
-                            <StarIcon
-                              key={rating}
-                              aria-hidden="true"
-                              className={cn(
-                                product.rating > rating
-                                  ? "text-yellow-400"
-                                  : "text-gray-200",
-                                "size-5 shrink-0"
-                              )}
-                            />
-                          ))}
-                        </div>
-                        <p className="sr-only">
-                          {product.rating}{" "}
-                          {translations.productQuickview.outOfStars}
-                        </p>
-                        <Badge
-                          color="yellow"
-                          className="border border-yellow-400"
-                        >
-                          {product.rating}{" "}
-                          {translations.productQuickview.reviews}
-                        </Badge>
-                      </div>
-                    </div>
 
                     {/* Benefits Section */}
                     <div className="mt-6 space-y-3">
@@ -339,30 +320,56 @@ export default function ProductQuickview({
                         </div>
                       )}
 
-                      <div className="flex items-center justify-between gap-x-2 mt-8">
+                      <div className="flex items-center justify-between gap-x-3 mt-8">
                         <Button
                           color="rose"
                           type="submit"
                           className={cn(
-                            "w-full !h-12 flexi items-center justify-center"
+                            "flex-1 !h-12 flex items-center justify-center font-semibold"
                           )}
                         >
                           {translations.productQuickview.addToBag}
                         </Button>
-                        <Button 
-                          outline 
-                          type="button"
-                          onClick={handleWishlistToggle}
-                          className={cn(
-                            "!h-12 !w-12",
-                            isItemInWishlist && "!bg-rose-50 !border-rose-200 !text-rose-600"
-                          )}
-                        >
-                          <HeartIcon className={cn(
-                            "w-5 h-5",
-                            isItemInWishlist ? "fill-current" : "fill-none"
-                          )} />
-                        </Button>
+
+                        <div className="relative">
+                          <Button
+                            outline
+                            type="button"
+                            onClick={handleWishlistToggle}
+                            className={cn(
+                              "!h-12 !w-12 !p-0 flex items-center justify-center",
+                              "transition-colors duration-200 ease-in-out bg-white",
+                              "border-2",
+                              isItemInWishlist
+                                ? "!border-rose-500 !text-rose-600"
+                                : ""
+                            )}
+                          >
+                            {/* Heart icon with animation */}
+                            {isItemInWishlist ? (
+                              <HeartIcon className="!size-6 !text-rose-500" />
+                            ) : (
+                              <HeartOutlineIcon className="!size-6" />
+                            )}
+                          </Button>
+
+                          {/* Tooltip */}
+                          <div
+                            className={cn(
+                              "absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2",
+                              "px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap",
+                              "opacity-0 pointer-events-none transition-opacity duration-200",
+                              "hover:opacity-100"
+                            )}
+                          >
+                            {isItemInWishlist
+                              ? translations.productQuickview
+                                  ?.removeFromWishlist || "Remove from wishlist"
+                              : translations.productQuickview?.addToWishlist ||
+                                "Add to wishlist"}
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
+                          </div>
+                        </div>
                       </div>
                     </form>
                   </section>

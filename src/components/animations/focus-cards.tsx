@@ -84,11 +84,7 @@ export function FocusCards({
           }
 
           return (
-            <Link
-              href={`/${locale}/shop`}
-              key={card.title}
-              className={className}
-            >
+            <div key={card.title} className={className}>
               <div
                 className="absolute inset-0 overflow-hidden"
                 onMouseEnter={() => setHovered(index)}
@@ -115,7 +111,7 @@ export function FocusCards({
                   </p>
                 </div>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>

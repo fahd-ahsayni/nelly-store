@@ -2,11 +2,15 @@ import { hero1Image, hero2Image } from "@/assets";
 
 export const carouselImages = [
   {
-    src: hero1Image, // Sunset over water
+    src: "https://ik.imagekit.io/r3dmzmb1w/2149288964.jpg?updatedAt=1749067294517", // Sunset over water
     alt: "Sunset over water with gentle waves",
   },
   {
-    src: hero2Image,
+    src: "https://ik.imagekit.io/r3dmzmb1w/2149288980.jpg?updatedAt=1749067507977",
+    alt: "Placeholder image 1",
+  },
+  {
+    src: "https://ik.imagekit.io/r3dmzmb1w/2149288896.jpg?updatedAt=1749067507371",
     alt: "Placeholder image 1",
   },
 ];

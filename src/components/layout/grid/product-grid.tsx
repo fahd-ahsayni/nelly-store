@@ -38,8 +38,11 @@ export default function ProductGrid({
     setSelectedProduct(null);
   };
 
-  // Create flip keys based on selected collection
-  const flipKeys = selectedCollectionId ? [selectedCollectionId] : ["all"];
+  // Create flip keys based on selected collection - fix the logic
+  const flipKeys =
+    !selectedCollectionId || selectedCollectionId === "all"
+      ? ["all"]
+      : [selectedCollectionId.toString()];
 
   if (products.length === 0) {
     return (
@@ -56,13 +59,12 @@ export default function ProductGrid({
         keys={flipKeys}
         showClass="block"
         hideClass="hidden"
-        className="grid gap-x-6 gap-y-10 grid-cols-2 lg:grid-cols-5 xl:gap-x-8"
-        dir="ltr"
+        className="grid gap-x-6 gap-y-10 grid-cols-2 lg:grid-cols-5 xl:gap-x-8 mb-24"
       >
         {products.map((product) => (
           <FlipRevealItem
             key={product.id}
-            flipKey={product.collection_id || "all"}
+            flipKey={product.collection_id?.toString() || "uncategorized"}
           >
             <ProductCard
               product={product}

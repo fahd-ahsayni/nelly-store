@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "img.freepik.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+        pathname: "/**",
+      },
       ...(process.env.NEXT_PUBLIC_SUPABASE_URL
         ? [
             {

@@ -151,7 +151,7 @@ export default function ShopContent({
     <div className="relative isolate">
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+        className="absolute inset-x-0 -bottom-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-bottom-80"
       >
         <div
           style={{
@@ -167,9 +167,9 @@ export default function ShopContent({
           <div className="text-center mb-3">
             <div className="flex items-center justify-between">
               <div>
-                <Heading className="ltr:font-serif">
+                <h2 className="text-3xl font-medium rtl:font-semibold text-gray-800 ltr:font-serif ltr:italic">
                   {translations.shop?.shopByCollection || "Shop by Collection"}
-                </Heading>
+                </h2>
               </div>
             </div>
           </div>
@@ -187,11 +187,12 @@ export default function ShopContent({
         <div>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <Heading className="ltr:font-serif">
+              <h2 className="text-3xl font-medium rtl:font-semibold text-gray-800 ltr:font-serif ltr:italic">
                 {translations.shop?.exploreWhatsNew || "Explore What's New"}
-              </Heading>
+              </h2>
               <p className="text-sm text-gray-600 mt-1">
-                {filteredProducts.length} products found
+                {filteredProducts.length}{" "}
+                {translations.shop?.productsFound || "products found"}
               </p>
             </div>
           </div>

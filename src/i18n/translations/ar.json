@@ -80,7 +80,7 @@
     "freeShipping": "شحن مجاني",
     "freeShippingDesc": "في المغرب",
     "fastDelivery": "توصيل سريع",
-    "fastDeliveryDesc": "2-5 أيام عمل",
+    "fastDeliveryDesc": "2-5 أيام",
     "support": "دعم 24/7",
     "supportDesc": "خدمة العملاء"
   },
@@ -103,7 +103,8 @@
       "sizes": "الأحجام",
       "clearAll": "مسح الكل",
       "apply": "تطبيق المرشحات"
-    }
+    },
+    "productsFound": "منتجات موجودة"
   },
   "cart": {
     "title": "سلة التسوق",
@@ -205,5 +206,20 @@
       "whatsapp": "راسلنا على واتساب",
       "email": "راسلنا بالإيميل"
     }
+  },
+  "footer": {
+    "logoText": "nellycollection.com",
+    "copyright": "© حلول imfa",
+    "timeLabel": "الوقت",
+    "contactEmail": "nelly@contact.com"
+  },
+  "localStore": {
+    "title": "وجهتنا",
+    "titleHighlight": "المحلية",
+    "description": "اكتشف الكنوز المصنوعة يدوياً والمنتجات المحلية التي تحكي قصة. من البضائع الحرفية إلى الاكتشافات الفريدة، نختار أجود المجموعات لمجتمعنا.",
+    "address": "123 الشارع الرئيسي، وسط المدينة",
+    "hours": "الإثنين-السبت: 9ص-7م",
+    "phone": "(555) 123-4567",
+    "visitButton": "زوروا اليوم"
   }
 }

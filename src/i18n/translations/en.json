@@ -81,10 +81,10 @@
   },
   "productQuickview": {
     "close": "Close",
-    "productInformation": "Product information",
-    "reviews": "reviews",
+    "productInformation": "Product Information",
+    "reviews": "Reviews",
     "outOfStars": "out of 5 stars",
-    "productOptions": "Product options",
+    "productOptions": "Product Options",
     "chooseColor": "Choose a color",
     "color": "Color",
     "chooseSize": "Choose a size",
@@ -93,9 +93,9 @@
     "selectColor": "Please select a color",
     "selectSize": "Please select a size",
     "freeShipping": "Free Shipping",
-    "freeShippingDesc": "On orders over 500 MAD",
+    "freeShippingDesc": "in Morocco",
     "fastDelivery": "Fast Delivery",
-    "fastDeliveryDesc": "2-5 working days",
+    "fastDeliveryDesc": "2-5 days",
     "support": "24/7 Support",
     "supportDesc": "Customer service"
   },
@@ -118,7 +118,8 @@
       "sizes": "Sizes",
       "clearAll": "Clear All",
       "apply": "Apply Filters"
-    }
+    },
+    "productsFound": "products found"
   },
   "seo": {
     "title": "Nelly Collection - Fashion Store",
@@ -205,5 +206,20 @@
       "whatsapp": "WhatsApp us",
       "email": "Email us"
     }
+  },
+  "footer": {
+    "logoText": "nellycollection.com",
+    "copyright": "© imfa solutions",
+    "timeLabel": "Time",
+    "contactEmail": "nelly@contact.com"
+  },
+  "localStore": {
+    "title": "Our Local",
+    "titleHighlight": "Destination",
+    "description": "Discover handcrafted treasures and locally sourced products that tell a story. From artisanal goods to unique finds, we curate the finest selection for our community.",
+    "address": "123 Main Street, Downtown",
+    "hours": "Mon-Sat: 9AM-7PM",
+    "phone": "(555) 123-4567",
+    "visitButton": "Visit Us Today"
   }
 }
