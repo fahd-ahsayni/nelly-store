@@ -10,7 +10,7 @@ export default function CallToAction({
   locale: string;
 }) {
   return (
-    <div className="isolate relative z-0 py-12 lg:py-24">
+    <div className="isolate relative -z-10 py-12 lg:py-24">
       <main>
         <div className=" px-6 lg:px-8">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">

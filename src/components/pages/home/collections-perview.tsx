@@ -1,5 +1,5 @@
 import { collection1, collection2, collection3, collection4 } from "@/assets";
-import Image from "next/image";
+import { FocusCards } from "@/components/animations/focus-cards";
 import Link from "next/link";
 
 export default function CollectionPerview({
@@ -9,8 +9,27 @@ export default function CollectionPerview({
   translations: any;
   locale: string;
 }) {
+  const cards = [
+    {
+      title: translations.collections.collection1,
+      src: collection1.src || collection1,
+    },
+    {
+      title: translations.collections.collection3,
+      src: collection3.src || collection3,
+    },
+    {
+      title: translations.collections.collection4,
+      src: collection4.src || collection4,
+    },
+    {
+      title: translations.collections.collection2,
+      src: collection2.src || collection2,
+    },
+  ];
+
   return (
-    <div className="pb-16 sm:py-24 relative isolate">
+    <div className="pb-16 sm:py-24 relative isolate z-30">
       <div className="absolute inset-x-0 -Z-10 transform-gpu overflow-hidden blur-3xl sm:-top-3/5">
         <svg
           className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
@@ -53,99 +72,16 @@ export default function CollectionPerview({
           >
             {translations.collections.link}
             {locale === "ar" ? (
-              <span aria-hidden="true" className="rtl:pr-1">&larr;</span>
+              <span aria-hidden="true" className="rtl:pr-1">
+                &larr;
+              </span>
             ) : (
               <span aria-hidden="true">&rarr;</span>
             )}
           </Link>
         </div>
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 lg:h-[700px]">
-          {/* Card 1 */}
-          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:row-span-2">
-            <div className="absolute inset-0 bg-white overflow-hidden">
-              <Image
-                src={collection1}
-                alt="Collection Foulard"
-                className="h-full w-full object-cover object-center brightness-75"
-                priority
-                quality={90}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                loading="eager"
-              />
-            </div>
-            <div className="absolute inset-0 flex flex-col justify-end">
-              <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-3xl font-semibold text-white text-center ltr:sm:text-left rtl:sm:text-right rtl:font-semibold">
-                  {translations.collections.collection1}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:col-start-2">
-            <div className="absolute inset-0 overflow-hidden">
-              <Image
-                src={collection3}
-                alt="Collection des Robes"
-                className="h-full w-full object-cover object-center brightness-75"
-                quality={90}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                loading="lazy"
-              />
-            </div>
-            <div className="absolute inset-0 flex flex-col justify-end">
-              <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-3xl font-semibold text-white text-center ltr:sm:text-left rtl:sm:text-right rtl:font-semibold">
-                  {translations.collections.collection3}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="relative h-[400px] sm:h-[450px] lg:h-auto lg:col-start-2 lg:row-start-2">
-            <div className="absolute inset-0 overflow-hidden">
-              <Image
-                src={collection4}
-                alt="Serum anti taches"
-                className="h-full w-full object-cover object-center brightness-75"
-                quality={90}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                loading="lazy"
-              />
-            </div>
-            <div className="relative flex h-full flex-col justify-end overflow-hidden">
-              <div className="absolute inset-0 flex flex-col justify-end">
-                <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                  <p className="mt-2 text-3xl font-semibold text-white text-center ltr:sm:text-left rtl:sm:text-right rtl:font-semibold">
-                    {translations.collections.collection4}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="relative overflow-hidden h-[400px] sm:h-[450px] lg:h-auto lg:col-start-3 lg:row-span-2">
-            <div className="absolute inset-0 overflow-hidden">
-              <Image
-                src={collection2}
-                alt="Collection Khimar"
-                className="h-full w-full object-cover object-center brightness-75"
-                quality={90}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                loading="lazy"
-              />
-            </div>
-            <div className="absolute inset-0 flex flex-col justify-end">
-              <div className="px-8 pb-8 sm:px-10 sm:pb-10">
-                <p className="mt-2 text-3xl font-semibold text-white text-center ltr:sm:text-left rtl:sm:text-right rtl:font-semibold">
-                  {translations.collections.collection2}
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="mt-8 sm:mt-12">
+          <FocusCards cards={cards} customLayout={true} locale={locale} />
         </div>
       </div>
     </div>
