@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
-import { useToast } from "@/components/ui/toast";
 import { useCartItems, useCartStore, useCartTotal } from "@/hooks/useCartItems";
 import type { Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
@@ -16,6 +15,7 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { useIsomorphicLayoutEffect } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 interface FormData {
   mobileNumber: string;
@@ -41,7 +41,6 @@ export default function Checkout() {
   const subtotal = useCartTotal();
   const { removeFromCart, clearCart } = useCartStore();
   const router = useRouter();
-  const { toast } = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);

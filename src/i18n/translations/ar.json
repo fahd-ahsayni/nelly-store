@@ -198,10 +198,12 @@
       "step3": "سيتم تحضير طلبك وشحنه",
       "step4": "تتبع حالة طلبك عبر الهاتف أو واتساب"
     },
+    "orderNotFound": "الطلب غير موجود",
     "actions": {
       "continueShopping": "متابعة التسوق",
       "viewOrders": "عرض طلباتي",
-      "contactSupport": "الاتصال بالدعم"
+      "contactSupport": "الاتصال بالدعم",
+      "goHome": "العودة للرئيسية"
     },
     "support": {
       "title": "تحتاج مساعدة؟",

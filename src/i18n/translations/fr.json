@@ -201,14 +201,16 @@
     "actions": {
       "continueShopping": "Continuer les Achats",
       "viewOrders": "Voir Mes Commandes",
-      "contactSupport": "Contacter le Support"
+      "contactSupport": "Contacter le Support",
+      "goHome": "Retour à l'Accueil"
     },
     "support": {
       "title": "Besoin d'Aide?",
       "phone": "Appelez-nous au",
       "whatsapp": "WhatsApp nous",
       "email": "Envoyez-nous un email"
-    }
+    },
+    "orderNotFound": "Commande Introuvable"
   },
   "footer": {
     "logoText": "nellycollection.com",

@@ -1,17 +1,18 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
-import { styles } from "@/constants";
 import type { Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 import {
-    CheckCircleIcon
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
 } from "@heroicons/react/24/solid";
 import { useIsomorphicLayoutEffect } from "framer-motion";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState, Suspense } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 interface OrderData {
   id: string;
@@ -70,22 +71,24 @@ function OrderSuccessContent() {
       }
 
       try {
-        const { data, error } = await supabase
+        const { data, error: supabaseError } = await supabase
           .from("reservations")
           .select("*")
           .eq("id", orderId)
           .single();
 
-        if (error) {
-          console.error("Error fetching order:", error);
+        if (supabaseError) {
+          setError(true);
+        } else if (!data) {
+          console.error("No order data found for ID:", orderId);
           setError(true);
         } else {
           // Cache the order data
           orderCache.set(orderId, data);
           setOrderData(data);
         }
-      } catch (error) {
-        console.error("Error fetching order:", error);
+      } catch (fetchError) {
+        console.error("Network error fetching order:", fetchError);
         setError(true);
       } finally {
         setLoading(false);
@@ -135,17 +138,28 @@ function OrderSuccessContent() {
   // Error state
   if (error || !orderData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center max-w-md mx-auto">
+          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
+            <ExclamationTriangleIcon className="h-8 w-8 text-red-600" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
             {translations?.orderSuccess?.orderNotFound || "Order not found"}
           </h1>
-          <button
+          <p className="text-gray-600 mb-8">
+            {locale === "ar"
+              ? "عذراً، لا يمكننا العثور على هذا الطلب. قد يكون الرابط غير صحيح أو أن الطلب لم يعد متوفراً."
+              : locale === "fr"
+              ? "Désolé, nous ne trouvons pas cette commande. Le lien peut être incorrect ou la commande n'est plus disponible."
+              : "Sorry, we couldn't find this order. The link might be incorrect or the order may no longer be available."}
+          </p>
+          <Button
+            color="rose"
             onClick={() => router.push(`/${locale}`)}
-            className={cn(styles.primaryButton)}
+            className="h-12 flex items-center justify-center w-full"
           >
             {translations?.orderSuccess?.actions?.goHome || "Go Home"}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -173,8 +187,7 @@ function OrderSuccessContent() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">
-                  {translations.orderSuccess.orderNumber}: #
-                  {orderData.id}
+                  {translations.orderSuccess.orderNumber}: #{orderData.id}
                 </h2>
                 <p className="text-sm text-gray-500">
                   {new Date(orderData.created_at).toLocaleDateString(locale, {
@@ -292,10 +305,12 @@ function OrderSuccessContent() {
                   </div>
                   <div className="text-right">
                     <p className="font-medium text-gray-900">
-                      {item.quantity} × {item.price.toFixed(2)} {translations.currency.mad}
+                      {item.quantity} × {item.price.toFixed(2)}{" "}
+                      {translations.currency.mad}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {(item.quantity * item.price).toFixed(2)} {translations.currency.mad}
+                      {(item.quantity * item.price).toFixed(2)}{" "}
+                      {translations.currency.mad}
                     </p>
                   </div>
                 </div>
@@ -307,7 +322,8 @@ function OrderSuccessContent() {
                   {translations.orderSuccess.total}
                 </span>
                 <span className="text-lg font-bold text-gray-900">
-                  {orderData.total_amount.toFixed(2)} {translations.currency.mad}
+                  {orderData.total_amount.toFixed(2)}{" "}
+                  {translations.currency.mad}
                 </span>
               </div>
             </div>
@@ -339,12 +355,13 @@ function OrderSuccessContent() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
+          <Button
+            color="rose"
             onClick={() => router.push(`/${locale}`)}
-            className={cn(styles.primaryButton)}
+            className="w-full h-12 flex items-center justify-center bg-rose-600 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
           >
             {translations.orderSuccess.actions.continueShopping}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
