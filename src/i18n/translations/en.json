@@ -215,11 +215,11 @@
   },
   "localStore": {
     "title": "Our Local",
-    "titleHighlight": "Destination",
-    "description": "Discover handcrafted treasures and locally sourced products that tell a story. From artisanal goods to unique finds, we curate the finest selection for our community.",
-    "address": "123 Main Street, Downtown",
-    "hours": "Mon-Sat: 9AM-7PM",
-    "phone": "(555) 123-4567",
+    "titleHighlight": "Boutique",
+    "description": "Discover our curated selections of hijabs and women's fashion collections. Each piece tells a story of local craftsmanship and high quality, designed especially for our community.",
+    "address": "123 Main Street, Downtown, Morocco",
+    "hours": "Mon - Sat: 9 AM - 7 PM",
+    "phone": "+212 555 123 456",
     "visitButton": "Visit Us Today"
   }
 }

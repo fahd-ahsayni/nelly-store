@@ -13,7 +13,7 @@
     "cart": "Panier",
     "menu": "Menu",
     "closeMenu": "Fermer le menu",
-    "items": "articles dans le panier, voir le sac",
+    "items": "{{count}} articles dans votre panier, voir le sac",
     "changeLanguage": "Changer la langue"
   },
   "hero": {
@@ -33,13 +33,13 @@
     "title-part1": "Découvrez Notre",
     "title-part2": "Nouveau Produit",
     "ctaButton": "Acheter Maintenant",
-    "title": "Sérum Anti-Taches Avancé 50% DE RÉDUCTION",
+    "title": "Sérum Anti-Taches Avancé 50% de réduction",
     "paragraph": "Découvrez la puissance de notre Sérum Anti-Taches Avancé, maintenant à 50% DE RÉDUCTION. Dites adieu aux taches sombres et bonjour à une peau radieuse. Offre limitée !"
   },
   "collections": {
     "title-part1": "Découvrez Notre",
     "title-part2": "Nouvelle Collection",
-    "link": "Voir tous les collections",
+    "link": "Voir toutes les collections",
     "collection1": "Collection Foulard",
     "collection2": "Collection Hijab",
     "collection3": "Collection Burkini",
@@ -214,12 +214,12 @@
     "contactEmail": "nelly@contact.com"
   },
   "localStore": {
-    "title": "Notre",
-    "titleHighlight": "Destination Locale",
-    "description": "Découvrez des trésors artisanaux et des produits locaux qui racontent une histoire. Des articles artisanaux aux trouvailles uniques, nous sélectionnons la plus belle collection pour notre communauté.",
-    "address": "123 Rue Principale, Centre-ville",
-    "hours": "Lun-Sam: 9h-19h",
-    "phone": "(555) 123-4567",
-    "visitButton": "Visitez-nous Aujourd'hui"
+    "title": "Notre Boutique",
+    "titleHighlight": "Locale",
+    "description": "Découvrez nos collections soigneusement sélectionnées de hijabs et de mode féminine. Chaque pièce raconte une histoire de créativité locale et de haute qualité, conçue spécialement pour notre communauté.",
+    "address": "123 Rue Principale, Centre-ville, Maroc",
+    "hours": "Lundi - Samedi : 9h00 - 19h00",
+    "phone": "+212 555 123 456",
+    "visitButton": "Visitez-Nous Aujourd'hui"
   }
 }
