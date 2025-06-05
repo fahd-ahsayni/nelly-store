@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { StaticImageData } from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 
 export const Card = React.memo(
@@ -11,11 +10,13 @@ export const Card = React.memo(
     index,
     hovered,
     setHovered,
+    translations,
   }: {
     card: any;
     index: number;
     hovered: number | null;
     setHovered: React.Dispatch<React.SetStateAction<number | null>>;
+    translations?: any;
   }) => (
     <div
       onMouseEnter={() => setHovered(index)}
@@ -40,7 +41,9 @@ export const Card = React.memo(
         )}
       >
         <div className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
-          {card.title}
+          {card.translationKey && translations
+            ? translations.collections[card.translationKey]
+            : card.title}
         </div>
       </div>
     </div>
@@ -52,16 +55,19 @@ Card.displayName = "Card";
 type Card = {
   title: string;
   src: string | StaticImageData;
+  translationKey?: string; // Add optional translation key
 };
 
 export function FocusCards({
   cards,
   customLayout = false,
   locale = "en",
+  translations, // Add translations prop
 }: {
   cards: Card[];
   customLayout?: boolean;
   locale?: string;
+  translations?: any; // Add translations type
 }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
@@ -107,7 +113,9 @@ export function FocusCards({
                       hovered === index ? "opacity-100" : "opacity-0"
                     )}
                   >
-                    {card.title}
+                    {card.translationKey && translations
+                      ? translations.collections[card.translationKey]
+                      : card.title}
                   </p>
                 </div>
               </div>
@@ -127,6 +135,7 @@ export function FocusCards({
           index={index}
           hovered={hovered}
           setHovered={setHovered}
+          translations={translations}
         />
       ))}
     </div>

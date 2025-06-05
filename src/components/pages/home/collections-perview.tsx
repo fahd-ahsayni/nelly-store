@@ -1,4 +1,4 @@
-import { collection1, collection2, collection3, collection4 } from "@/assets";
+import { COLLECTIONS_SECTION } from "@/constants";
 import { FocusCards } from "@/components/animations/focus-cards";
 import Link from "next/link";
 
@@ -9,24 +9,11 @@ export default function CollectionPerview({
   translations: any;
   locale: string;
 }) {
-  const cards = [
-    {
-      title: translations.collections.collection1,
-      src: collection1.src || collection1,
-    },
-    {
-      title: translations.collections.collection3,
-      src: collection3.src || collection3,
-    },
-    {
-      title: translations.collections.collection4,
-      src: collection4.src || collection4,
-    },
-    {
-      title: translations.collections.collection2,
-      src: collection2.src || collection2,
-    },
-  ];
+  const cards = COLLECTIONS_SECTION.map((collection) => ({
+    title: collection.name, // Fallback title
+    src: typeof collection.image === "string" ? collection.image : collection.image.src,
+    translationKey: collection.translationKey,
+  }));
 
   return (
     <div className="pb-16 sm:py-24 relative isolate z-30">
@@ -55,7 +42,12 @@ export default function CollectionPerview({
           </Link>
         </div>
         <div className="mt-8 sm:mt-12">
-          <FocusCards cards={cards} customLayout={true} locale={locale} />
+          <FocusCards
+            cards={cards}
+            customLayout={true}
+            locale={locale}
+            translations={translations}
+          />
         </div>
       </div>
     </div>

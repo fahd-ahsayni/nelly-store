@@ -3,7 +3,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scrollarea";
-import { styles } from "@/constants";
 import { useCart } from "@/hooks/useCart";
 import { useCartStore } from "@/lib/cart-store";
 import { cn } from "@/lib/utils";
@@ -261,7 +260,6 @@ export default function CartDrawer({
                     onClick={handleCheckout}
                     disabled={items.length === 0 || isNavigatingToCheckout}
                     className={cn(
-                      styles.primaryButton,
                       "w-full h-12 flex items-center justify-center gap-2 transition-opacity",
                       (items.length === 0 || isNavigatingToCheckout) &&
                         "opacity-50 cursor-not-allowed"

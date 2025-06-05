@@ -14,7 +14,7 @@ import StoreProvider from "@/components/providers/store-provider";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 import { SpinningText } from "@/components/ui/spinning-text";
-import { carouselImages } from "@/constants";
+import { CAROUSEL_IMAGES } from "@/constants";
 import { type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { getProductsFull } from "@/lib/supabase-server";
@@ -110,7 +110,7 @@ export default async function Home({
                     </div>
                   </Link>
                   <div className="absolute inset-0 w-full h-full">
-                    <ImageCarousel images={carouselImages} />
+                    <ImageCarousel images={CAROUSEL_IMAGES} />
                   </div>
                 </div>
               </div>
@@ -164,7 +164,7 @@ export default async function Home({
                       />
                     </div>
                   </Link>
-                  <ImageCarousel images={carouselImages} />
+                  <ImageCarousel images={CAROUSEL_IMAGES} />
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default async function Home({
         />
         <TrendProduct translations={translations} locale={locale} />
         <CollectionPerview translations={translations} locale={locale} />
-        <RevealOnScroll>
+        <RevealOnScroll effect="zoomIn">
           <CallToAction translations={translations} locale={locale} />
         </RevealOnScroll>
         <CoverSection translations={translations} locale={locale} />

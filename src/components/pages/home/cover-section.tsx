@@ -1,4 +1,5 @@
 import { SpinningText } from "@/components/ui/spinning-text";
+import { MEDIA_ASSETS } from "@/constants";
 import { ArrowDownRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
@@ -44,7 +45,7 @@ export default function CoverSection({
             autoPlay
             playsInline
           >
-            <source src="/video/video-one.mp4" type="video/mp4" />
+            <source src={MEDIA_ASSETS.VIDEO_COVER} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

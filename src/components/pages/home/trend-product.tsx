@@ -1,5 +1,5 @@
-import { TiltCard } from "@/components/animations/tilt-card";
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
+import { MEDIA_ASSETS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,7 +26,7 @@ export default function TrendProduct({
             <Image
               width={500}
               height={500}
-              src="https://ik.imagekit.io/r3dmzmb1w/2149288974%20(1).webp?updatedAt=1749066696108"
+              src={MEDIA_ASSETS.TREND_PRODUCT}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               alt="Anti-tache serum bottle"
             />

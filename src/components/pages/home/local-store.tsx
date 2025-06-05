@@ -1,4 +1,5 @@
 import SlideArrowButton from "@/components/ui/slide-arrow-button";
+import { MEDIA_ASSETS } from "@/constants";
 import { ClockIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
@@ -18,7 +19,7 @@ export default function LocalStoreSection({
           <div className="lg:col-span-7 relative group">
             <div className="relative h-[400px] lg:h-[500px] overflow-hidden bg-gray-100">
               <img
-                src="https://ik.imagekit.io/r3dmzmb1w/2151623460.jpg?updatedAt=1749069279348"
+                src={MEDIA_ASSETS.LOCAL_STORE}
                 alt="Local store interior"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
