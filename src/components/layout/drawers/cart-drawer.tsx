@@ -159,7 +159,10 @@ export default function CartDrawer({
                             src={item.image || "/placeholder.svg"}
                             alt={item.name}
                             fill
+                            sizes="(max-width: 640px) 80px, (min-width: 641px) 100px"
                             className="object-cover h-full"
+                            loading="lazy"
+                            decoding="async"
                           />
                         </div>
 

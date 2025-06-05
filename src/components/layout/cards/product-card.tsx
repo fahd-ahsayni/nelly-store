@@ -1,4 +1,5 @@
 import type { ProductFull } from "@/types/database";
+import Image from "next/image";
 
 export interface ProductCardProps {
   product: ProductFull;
@@ -37,7 +38,14 @@ export default function ProductCard({
 
   return (
     <div key={product.id} className="group relative">
-      <img
+      <Image
+        width={300}
+        height={400}
+        priority={isNew}
+        sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw, 33vw"
+        quality={80}
+        loading="eager"
+        decoding="async"
         alt={product.name}
         src={product.imagesrc}
         className="aspect-[3/4] w-full bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"

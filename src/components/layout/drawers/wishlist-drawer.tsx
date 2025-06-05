@@ -130,9 +130,9 @@ export default function WishlistDrawer({
     console.log("Found product:", product);
     
     if (product) {
+      onClose(); // Close the drawer first
       setQuickviewProduct(product);
       setIsQuickviewOpen(true);
-      console.log("Quickview should open now");
     } else {
       console.error("Product not found for item:", item);
       console.error("Available product IDs:", products.map(p => p.id));
