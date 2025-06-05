@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import ProductCard from "@/components/layout/cards/product-card";
+import ProductQuickview from "@/components/layout/dialog/product-quickview";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import ProductCard from "@/components/layout/cards/product-card";
 import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
-import ProductQuickview from "@/components/layout/dialog/product-quickview";
+import { useState } from "react";
 
 const AUTOPLAY_DELAY = 4000;
 
@@ -26,7 +26,9 @@ export default function ProductList({
   locale,
   initialProducts,
 }: ProductListProps) {
-  const [selectedProduct, setSelectedProduct] = useState<ProductFull | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductFull | null>(
+    null
+  );
   const [isQuickviewOpen, setIsQuickviewOpen] = useState(false);
 
   // Get featured products (top 10 highest rated, in stock products)
@@ -88,8 +90,6 @@ export default function ProductList({
           opts={{
             loop: true,
             align: "start",
-            skipSnaps: false,
-            dragFree: true,
           }}
           plugins={[
             Autoplay({
@@ -106,13 +106,13 @@ export default function ProductList({
                 key={product.id}
                 className="pl-2 md:pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
-                <ProductCard 
-                  product={product} 
-                  locale={locale} 
+                <ProductCard
+                  product={product}
+                  locale={locale}
                   onClick={() => handleProductClick(product)}
                   allProducts={initialProducts}
                   translations={{
-                    new: translations.product?.new || "New"
+                    new: translations.product?.new || "New",
                   }}
                 />
               </CarouselItem>

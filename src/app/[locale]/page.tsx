@@ -14,6 +14,7 @@ import StoreProvider from "@/components/providers/store-provider";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 import { SpinningText } from "@/components/ui/spinning-text";
+import HomePageClient from "@/components/pages/home/home-page-client";
 import { CAROUSEL_IMAGES } from "@/constants";
 import { type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
@@ -33,6 +34,7 @@ export default async function Home({
 
   return (
     <StoreProvider>
+      <HomePageClient translations={translations} />
       <main>
         <div className="lg:absolute inset-0 z-30">
           <Banner text={translations.banner.text} />

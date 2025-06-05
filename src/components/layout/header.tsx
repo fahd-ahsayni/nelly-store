@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Heading } from "../ui/heading";
 import CartDrawer from "./drawers/cart-drawer";
 import WishlistDrawer from "./drawers/wishlist-drawer";
+import FloatingCartButton from "./floating-cart-button";
 import LanguageSwitcher from "./language-switcher";
 import { Button } from "../ui/button";
 
@@ -109,7 +110,6 @@ export default function Header({ translations, locale }: HeaderProps) {
         onClose={() => setCartOpen(false)}
         translations={translations}
       />
-
       <header className="relative bg-white">
         <nav aria-label="Top" className="px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">

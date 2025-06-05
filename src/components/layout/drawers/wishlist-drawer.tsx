@@ -150,12 +150,12 @@ export default function WishlistDrawer({
             transition
             data-lenis-prevent
             className={cn(
-              "relative flex w-full max-w-lg flex-col bg-gray-50 shadow-xl transition duration-300 ease-in-out h-full",
+              "relative flex w-full max-w-sm sm:max-w-md md:max-w-lg flex-col bg-gray-50 shadow-xl transition duration-300 ease-in-out h-full",
               "ltr:ml-auto ltr:data-closed:translate-x-full rtl:mr-auto rtl:data-closed:-translate-x-full"
             )}
           >
-            <div className="flex items-center justify-between px-6 pt-6 pb-4">
-              <Heading className="text-xl font-semibold text-gray-900">
+            <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4">
+              <Heading className="text-lg sm:text-xl font-semibold text-gray-900">
                 {translations.navigation.favorites}{" "}
                 <Badge color="rose">
                   {totalItems}{" "}
@@ -190,19 +190,19 @@ export default function WishlistDrawer({
                 </div>
               </div>
             ) : (
-              <ScrollArea className="flex-1 px-6 h-0" data-lenis-prevent>
-                <div className="space-y-4 pb-20">
+              <ScrollArea className="flex-1 px-4 sm:px-6 h-0" data-lenis-prevent>
+                <div className="space-y-3 sm:space-y-4 pb-20">
                   {items
                     .filter(item => item && item.id && item.name) // Filter out invalid items
                     .map((item) => (
                     <div key={item.id} className="group">
-                      <div className="flex gap-4 p-4 bg-white border shadow-xs border-gray-200 transition-all duration-200">
-                        <div className="relative w-20 h-20 bg-gray-50 overflow-hidden flex-shrink-0">
+                      <div className="flex gap-3 sm:gap-4 p-3 sm:p-4 bg-white border shadow-xs border-gray-200 transition-all duration-200 rounded-md">
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 overflow-hidden flex-shrink-0 rounded-md">
                           <Image
                             src={item.image || "/placeholder.svg"}
                             alt={item.name || "Product"}
                             fill
-                            sizes="(max-width: 640px) 80px, (min-width: 641px) 100px, 120px"
+                            sizes="(max-width: 640px) 64px, (min-width: 641px) 80px"
                             quality={80}
                             loading="lazy"
                             decoding="async"
@@ -210,25 +210,25 @@ export default function WishlistDrawer({
                           />
                         </div>
 
-                        <div className="flex-1 min-w-0 space-y-2">
+                        <div className="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
                           <div className="flex items-start justify-between gap-2">
                             <div className="min-w-0 flex-1">
-                              <h3 className="font-medium text-gray-900 truncate line-clamp-1">
+                              <h3 className="font-medium text-gray-900 truncate line-clamp-1 text-sm leading-tight">
                                 {item.name}
                               </h3>
-                              <div className="flex flex-wrap gap-2 mt-1">
+                              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1">
                                 {item.size && (
-                                  <Badge className="text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
+                                  <Badge className="text-xs text-gray-500 !bg-gray-100 px-1.5 py-0.5 !rounded-sm">
                                     {translations.cart.size}: {item.size}
                                   </Badge>
                                 )}
                                 {item.color && (
-                                  <Badge className="flex items-center gap-1 text-xs text-gray-500 !bg-gray-100 px-2 py-1 !rounded-none">
+                                  <Badge className="flex items-center gap-1 text-xs text-gray-500 !bg-gray-100 px-1.5 py-0.5 !rounded-sm">
                                     <span>{translations.cart.color}:</span>
                                     <div className="flex items-center gap-1">
                                       {item.colorHex && (
                                         <div
-                                          className="w-3 h-3 rounded-full border border-gray-300"
+                                          className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-gray-300"
                                           style={{
                                             backgroundColor: item.colorHex,
                                           }}
@@ -242,20 +242,20 @@ export default function WishlistDrawer({
                             <Button
                               plain
                               onClick={() => removeFromWishlist(item.id)}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 p-0 text-gray-400 hover:text-red-500"
+                              className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity h-6 w-6 sm:h-8 sm:w-8 p-0 text-gray-400 hover:text-red-500"
                             >
-                              <TrashIcon className="w-4 h-4" />
+                              <TrashIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             </Button>
                           </div>
 
                           <div className="flex items-center justify-between">
-                            <div className="font-semibold text-gray-900">
+                            <div className="font-semibold text-gray-900 text-sm sm:text-base">
                               {typeof item.price === 'number' ? item.price.toFixed(2) : '0.00'} {translations.currency.mad}
                             </div>
                             <Button
                               color="rose"
                               onClick={() => handleOpenQuickview(item)}
-                              className="text-xs px-3 py-1.5 h-auto"
+                              className="text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 h-auto"
                             >
                               {translations.cart.addToBag}
                             </Button>
