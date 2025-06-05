@@ -16,7 +16,7 @@ export async function getTranslations(locale: Locale) {
   } catch (error) {
     console.error(`Failed to load translations for locale: ${locale}`, error);
     // Fallback to English
-    const fallback = await import('./translations/en.json');
+    const fallback = await import('./translations/ar.json');
     return fallback.default;
   }
 }

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://your-domain.com'; // Replace with your actual domain
+  const baseUrl = 'https://www.nellycollection.store'; // Replace with your actual domain
   
   // Generate URLs for each locale
   const urls = locales.flatMap(locale => [
