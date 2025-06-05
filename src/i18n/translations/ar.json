@@ -77,6 +77,9 @@
     "addToBag": "أضف للسلة",
     "selectColor": "يرجى اختيار لون",
     "selectSize": "يرجى اختيار مقاس",
+    "addedToBag": "تمت إضافة المنتج إلى السلة!",
+    "addedToWishlist": "تمت الإضافة إلى المفضلة",
+    "removeFromWishlist": "تمت الإزالة من المفضلة",
     "freeShipping": "شحن مجاني",
     "freeShippingDesc": "في المغرب",
     "fastDelivery": "توصيل سريع",
@@ -221,5 +224,9 @@
     "hours": "الاثنين - السبت: 9 صباحًا - 7 مساءً",
     "phone": "+212 555 123 456",
     "visitButton": "زورونا اليوم"
+  },
+  "errors": {
+    "invalidItem": "عنصر غير صالح في قائمة الرغبات.",
+    "productNotFound": "هذا المنتج لم يعد متوفرًا أو لا يمكن العثور عليه."
   }
 }

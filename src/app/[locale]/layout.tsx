@@ -1,4 +1,3 @@
-import { ToastProvider } from "@/components/ui/toast";
 import { LenisWrapper } from "@/components/lenis-wrapper";
 import { locales, type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
@@ -8,6 +7,8 @@ import { Inter, Tajawal } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Footer from "@/components/layout/footer";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 const tajawal = Tajawal({
@@ -60,7 +61,18 @@ export default async function LocaleLayout({
       <body className={cn(fontClass, "bg-background overflow-x-hidden")}>
         <LenisWrapper />
         {children}
-        <ToastProvider />
+        <ToastContainer
+          position={locale === "ar" ? "top-left" : "top-right"}
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={isRTL}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <Footer translations={translations} locale={locale} />
       </body>
     </html>

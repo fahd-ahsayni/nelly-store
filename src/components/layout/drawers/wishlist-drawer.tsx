@@ -18,6 +18,7 @@ import { Heading } from "../../ui/heading";
 import ProductQuickview from "../dialog/product-quickview";
 import { useStore } from "@/store/useStore";
 import type { ProductFull } from "@/types/database";
+import { toast } from 'react-toastify';
 
 interface WishlistDrawerProps {
   open: boolean;
@@ -89,12 +90,9 @@ export default function WishlistDrawer({
   const totalItems = getTotalItems();
 
   const handleOpenQuickview = (item: any) => {
-    console.log("Opening quickview for item:", item);
-    console.log("Available products:", products.length);
-    
     // Validate item first
     if (!item || !item.id || !item.name) {
-      console.error("Invalid wishlist item:", item);
+      toast.error(translations?.errors?.invalidItem);
       // Remove invalid item from wishlist
       if (item && item.id) {
         removeFromWishlist(item.id);
@@ -112,39 +110,29 @@ export default function WishlistDrawer({
     if (!product) {
       const baseProductId = item.id.split('-')[0];
       product = products.find(p => p.id === baseProductId);
-      console.log("Trying base product ID:", baseProductId);
     }
     
     // Method 3: Try matching by name as fallback
     if (!product) {
       product = products.find(p => p.name === item.name);
-      console.log("Trying name match for:", item.name);
     }
     
     // Method 4: Try matching by slug if it exists
     if (!product && item.slug) {
       product = products.find(p => p.slug === item.slug);
-      console.log("Trying slug match for:", item.slug);
     }
-    
-    console.log("Found product:", product);
     
     if (product) {
       onClose(); // Close the drawer first
       setQuickviewProduct(product);
       setIsQuickviewOpen(true);
     } else {
-      console.error("Product not found for item:", item);
-      console.error("Available product IDs:", products.map(p => p.id));
-      
-      // Show user-friendly message and remove invalid item
-      alert(translations?.errors?.productNotFound || "This product is no longer available");
+      toast.error(translations?.errors?.productNotFound);
       removeFromWishlist(item.id);
     }
   };
 
   const handleCloseQuickview = () => {
-    console.log("Closing quickview");
     setIsQuickviewOpen(false);
     setQuickviewProduct(null);
   };
@@ -214,6 +202,10 @@ export default function WishlistDrawer({
                             src={item.image || "/placeholder.svg"}
                             alt={item.name || "Product"}
                             fill
+                            sizes="(max-width: 640px) 80px, (min-width: 641px) 100px, 120px"
+                            quality={80}
+                            loading="lazy"
+                            decoding="async"
                             className="object-cover h-full"
                           />
                         </div>

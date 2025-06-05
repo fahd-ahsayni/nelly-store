@@ -18,6 +18,7 @@ import {
 import { HeartIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 interface ProductQuickviewProps {
   product: ProductFull | null;
@@ -36,7 +37,6 @@ export default function ProductQuickview({
 }: ProductQuickviewProps) {
   const { addItem } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
-  const [error, setError] = useState<string>("");
 
   // Create default color and size options based on database structure
   const colors =
@@ -61,7 +61,6 @@ export default function ProductQuickview({
 
   const handleAddToBag = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (!product) return;
 
@@ -70,12 +69,12 @@ export default function ProductQuickview({
     const hasSizes = sizes.length > 0;
 
     if (hasColors && !selectedColor) {
-      setError(translations.productQuickview.selectColor);
+      toast.error(translations.productQuickview.selectColor);
       return;
     }
 
     if (hasSizes && !selectedSize) {
-      setError(translations.productQuickview.selectSize);
+      toast.error(translations.productQuickview.selectSize);
       return;
     }
 
@@ -90,7 +89,7 @@ export default function ProductQuickview({
       colorHex: selectedColor?.hex,
       size: selectedSize?.name,
     });
-
+    toast.success(translations.productQuickview.addedToBag);
     // Optional: Close the quickview after adding to cart
     onClose();
   };
@@ -110,7 +109,13 @@ export default function ProductQuickview({
       size: selectedSize?.name,
     };
 
+    const currentlyInWishlist = isInWishlist(wishlistItem.id);
     toggleWishlist(wishlistItem);
+    if (currentlyInWishlist) {
+      toast.info(translations.productQuickview.removeFromWishlist);
+    } else {
+      toast.success(translations.productQuickview.addedToWishlist);
+    }
   };
 
   const isItemInWishlist = product
@@ -247,21 +252,7 @@ export default function ProductQuickview({
 
                     <form onSubmit={handleAddToBag}>
                       {/* Error message */}
-                      {error && (
-                        <div className="ltr:border-l-4 rtl:border-r-4 border-yellow-600 bg-yellow-50 p-4 mb-4">
-                          <div className="flex">
-                            <div className="flex-shrink-0">
-                              <ExclamationTriangleIcon
-                                className="h-5 w-5 text-yellow-600"
-                                aria-hidden="true"
-                              />
-                            </div>
-                            <div className="ltr:ml-3 rtl:mr-3">
-                              <p className="text-sm text-yellow-700">{error}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      {/* Removed error display, toast will handle it */}
 
                       {/* Colors - Only show if colors exist */}
                       {colors.length > 0 && (
