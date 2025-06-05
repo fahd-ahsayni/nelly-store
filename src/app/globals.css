@@ -14,3 +14,29 @@
   --color-rose-900: #772441;
   --color-rose-950: #420f20;
 }
+
+/* Minimalist Gradient Scrollbar */
+::-webkit-scrollbar {
+  width: 4px; /* Adjust width as needed */
+  height: 4px; /* For horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Light background for minimalist feel */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    var(--color-rose-200),
+    var(--color-rose-700)
+  ); /* Gradient */
+  border-radius: 10px;
+}
+
+/* For Firefox (partial support, thumb color only) */
+* {
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: var(--color-rose-400) var(--color-rose-50); /* thumb and track color */
+}

@@ -154,7 +154,7 @@ export default function CartDrawer({
                   {items.map((item) => (
                     <div key={item.id} className="group">
                       <div className="flex gap-4 p-4 bg-white border border-gray-100 transition-all duration-200">
-                        <div className="relative w-20 h-20 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="relative w-20 h-20 bg-gray-50 overflow-hidden flex-shrink-0">
                           <Image
                             src={item.image || "/placeholder.svg"}
                             alt={item.name}
