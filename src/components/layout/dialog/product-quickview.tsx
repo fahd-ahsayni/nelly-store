@@ -17,7 +17,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { HeartIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 
 interface ProductQuickviewProps {
@@ -49,7 +49,7 @@ export default function ProductQuickview({
 
   const sizes =
     product?.sizes?.map((size, index) => ({
-      id: `${product.id}-size-${index}`,
+      id: `${product?.id || 'default'}-size-${index}`,
       name: size,
       inStock: true,
     })) || [];
@@ -58,6 +58,35 @@ export default function ProductQuickview({
   const [selectedSize, setSelectedSize] = useState(
     sizes[2] || sizes[0] || null
   );
+
+  // Reset selections when product changes
+  useEffect(() => {
+    if (product) {
+      const newColors = product.product_colors?.map((pc) => ({
+        id: pc.colors.id,
+        name: pc.colors.name,
+        hex: pc.colors.hex,
+        selectedClass: pc.colors.selectedcolor,
+      })) || [];
+
+      const newSizes = product.sizes?.map((size, index) => ({
+        id: `${product.id}-size-${index}`,
+        name: size,
+        inStock: true,
+      })) || [];
+
+      setSelectedColor(newColors[0] || null);
+      setSelectedSize(newSizes[2] || newSizes[0] || null);
+    }
+  }, [product?.id]);
+
+  // Reset selections when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setSelectedColor(colors[0] || null);
+      setSelectedSize(sizes[2] || sizes[0] || null);
+    }
+  }, [open, colors, sizes]);
 
   const handleAddToBag = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +119,11 @@ export default function ProductQuickview({
       size: selectedSize?.name,
     });
     toast.success(translations.productQuickview.addedToBag);
+    
+    // Reset selections after adding to bag
+    setSelectedColor(colors[0] || null);
+    setSelectedSize(sizes[2] || sizes[0] || null);
+    
     // Optional: Close the quickview after adding to cart
     onClose();
   };
