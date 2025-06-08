@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   // Generate URLs for each locale
   const urls = locales.flatMap(locale => [
+    // Home pages
     {
       url: `${baseUrl}/${locale}`,
       lastModified: new Date(),
@@ -14,6 +15,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: {
         languages: Object.fromEntries(
           locales.map(l => [l, `${baseUrl}/${l}`])
+        )
+      }
+    },
+    // Store pages
+    {
+      url: `${baseUrl}/${locale}/store`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.9,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map(l => [l, `${baseUrl}/${l}/store`])
+        )
+      }
+    },
+    // Order success pages
+    {
+      url: `${baseUrl}/${locale}/order-success`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map(l => [l, `${baseUrl}/${l}/order-success`])
         )
       }
     },
@@ -33,4 +58,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]);
 
   return urls;
-} 
+}

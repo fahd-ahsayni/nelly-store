@@ -159,7 +159,7 @@
       "error": "An error occurred. Please try again."
     },
     "item": {
-      "quantity": "Qty",
+      "quantity": "Quantity",
       "size": "Size",
       "color": "Color",
       "total": "Total",
@@ -188,7 +188,7 @@
     "phone": "Phone",
     "address": "Boulevard Souhaib Arroumi, next to El Jazair Mosque, Sidi Bernoussi, Casablanca",
     "city": "City",
-    "quantity": "Qty",
+    "quantity": "Quantity",
     "price": "Price",
     "subtotal": "Subtotal",
     "nextSteps": {
@@ -230,5 +230,12 @@
   "errors": {
     "invalidItem": "Invalid item in wishlist.",
     "productNotFound": "This product is no longer available or could not be found."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "subtitle": "Sorry, we couldn't find the page you're looking for.",
+    "description": "The link might be broken or the page may have been moved to another location.",
+    "homeButton": "Go Home",
+    "shopButton": "Shop Now"
   }
 }

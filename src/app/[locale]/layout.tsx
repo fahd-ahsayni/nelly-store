@@ -5,10 +5,9 @@ import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { Inter, Tajawal } from "next/font/google";
 import { notFound } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../globals.css";
-import Footer from "@/components/layout/footer";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 const tajawal = Tajawal({
@@ -16,7 +15,7 @@ const tajawal = Tajawal({
   weight: ["200", "300", "400", "500", "700", "800", "900"],
 });
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateStaticParams() {
@@ -76,7 +75,6 @@ export default async function LocaleLayout({
           pauseOnHover
           theme="light"
         />
-        <Footer translations={translations} locale={locale} />
       </body>
     </html>
   );

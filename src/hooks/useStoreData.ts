@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useStore } from '@/store/useStore';
-import type { ProductFull } from '@/types/database';
+import type { Color, ProductColor, ProductFull } from '@/types/database';
 
 // Global flag to track if data has been fetched
 let hasInitialized = false;
@@ -10,11 +10,12 @@ export const useInitializeStore = () => {
   const fetchAllData = useStore((state) => state.fetchAllData);
   const loading = useStore((state) => state.loading);
   const errors = useStore((state) => state.errors);
+  const products = useStore((state) => state.products);
+  const collections = useStore((state) => state.collections);
   const hasDataRef = useRef(false);
 
   useEffect(() => {
-    const state = useStore.getState();
-    const hasData = state.products.length > 0 && state.collections.length > 0;
+    const hasData = products.length > 0 && collections.length > 0;
     
     // In production, always fetch fresh data on mount
     const shouldFetch = process.env.NODE_ENV === 'production' 
@@ -26,7 +27,7 @@ export const useInitializeStore = () => {
       hasDataRef.current = true;
       fetchAllData();
     }
-  }, [fetchAllData]);
+  }, [fetchAllData, products.length, collections.length]);
 
   // Add effect to periodically refresh data in production
   useEffect(() => {
@@ -48,20 +49,34 @@ export const useInitializeStore = () => {
   return { isLoading, hasErrors, errors };
 };
 
-// Memoized selectors for better performance
+// Simple product finder - avoiding complex selectors
 export const useProductBySlug = (slug: string): ProductFull | undefined => {
-  return useStore((state) => {
-    // Use a more efficient lookup
-    const products = state.getProductsFull();
-    return products.find(product => product.slug === slug);
-  });
-};
+  const products = useStore((state) => state.products);
+  const collections = useStore((state) => state.collections);
+  const productColors = useStore((state) => state.productColors);
+  const colors = useStore((state) => state.colors);
 
-export const useProductsByCollection = (collectionId: string): ProductFull[] => {
-  return useStore((state) => {
-    const products = state.getProductsFull();
-    return products.filter(product => product.collection_id === collectionId);
-  });
+  if (!slug || products.length === 0) return undefined;
+
+  const product = products.find(p => p.slug === slug);
+  if (!product) return undefined;
+
+  const collection = collections.find(c => c.id === product.collection_id);
+  if (!collection) return undefined;
+
+  const productColorsWithColors = productColors
+    .filter(pc => pc.product_id === product.id)
+    .map(pc => {
+      const color = colors.find(color => color.id === pc.color_id);
+      return color ? { ...pc, colors: color } : null;
+    })
+    .filter((pc): pc is ProductColor & { colors: Color } => pc !== null);
+
+  return {
+    ...product,
+    collections: collection,
+    product_colors: productColorsWithColors,
+  };
 };
 
 // Hook to get products with search and filter capabilities
@@ -73,49 +88,72 @@ export const useProductsFiltered = (filters?: {
   maxPrice?: number;
   type?: string;
 }): ProductFull[] => {
-  return useStore((state) => {
-    const products = state.getProductsFull();
-    
-    if (!filters) return products;
+  const products = useStore((state) => state.products);
+  const collections = useStore((state) => state.collections);
+  const productColors = useStore((state) => state.productColors);
+  const colors = useStore((state) => state.colors);
 
-    return products.filter((product) => {
-      // Search term filter
-      if (filters.searchTerm) {
-        const term = filters.searchTerm.toLowerCase();
-        const matchesSearch = 
-          product.name.toLowerCase().includes(term) ||
-          product.description?.toLowerCase().includes(term) ||
-          product.collections.name.toLowerCase().includes(term);
-        
-        if (!matchesSearch) return false;
-      }
+  if (products.length === 0) return [];
 
-      // Collection filter
-      if (filters.collectionId && product.collection_id !== filters.collectionId) {
-        return false;
-      }
+  // Build full products
+  const fullProducts = products.map(product => {
+    const collection = collections.find(c => c.id === product.collection_id);
+    if (!collection) return null;
 
-      // In stock filter
-      if (filters.inStockOnly && !product.instock) {
-        return false;
-      }
+    const productColorsWithColors = productColors
+      .filter(pc => pc.product_id === product.id)
+      .map(pc => {
+        const color = colors.find(color => color.id === pc.color_id);
+        return color ? { ...pc, colors: color } : null;
+      })
+      .filter((pc): pc is ProductColor & { colors: Color } => pc !== null);
 
-      // Price filters
-      if (filters.minPrice && product.price < filters.minPrice) {
-        return false;
-      }
+    return {
+      ...product,
+      collections: collection,
+      product_colors: productColorsWithColors,
+    };
+  }).filter((product): product is ProductFull => product !== null);
 
-      if (filters.maxPrice && product.price > filters.maxPrice) {
-        return false;
-      }
+  if (!filters) return fullProducts;
 
-      // Type filter
-      if (filters.type && product.type !== filters.type) {
-        return false;
-      }
+  return fullProducts.filter((product) => {
+    // Search term filter
+    if (filters.searchTerm) {
+      const term = filters.searchTerm.toLowerCase();
+      const matchesSearch = 
+        product.name.toLowerCase().includes(term) ||
+        product.description?.toLowerCase().includes(term) ||
+        product.collections.name.toLowerCase().includes(term);
+      
+      if (!matchesSearch) return false;
+    }
 
-      return true;
-    });
+    // Collection filter
+    if (filters.collectionId && product.collection_id !== filters.collectionId) {
+      return false;
+    }
+
+    // In stock filter
+    if (filters.inStockOnly && !product.instock) {
+      return false;
+    }
+
+    // Price filters
+    if (filters.minPrice && product.price < filters.minPrice) {
+      return false;
+    }
+
+    if (filters.maxPrice && product.price > filters.maxPrice) {
+      return false;
+    }
+
+    // Type filter
+    if (filters.type && product.type !== filters.type) {
+      return false;
+    }
+
+    return true;
   });
 };
 

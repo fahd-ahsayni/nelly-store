@@ -1,6 +1,7 @@
 "use client";
 
 import Banner from "@/components/layout/banner";
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -245,7 +246,7 @@ export default function Checkout() {
     return (
       <div className="relative isolate min-h-screen">
         <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
+          <Spinner color="rose" size={6} />
         </div>
       </div>
     );
@@ -275,12 +276,9 @@ export default function Checkout() {
             <p className="text-gray-600 mb-6">
               {translations.checkout.cartEmpty.description}
             </p>
-            <button
-              onClick={() => router.push(`/${locale}`)}
-              className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
-            >
+            <Button onClick={() => router.push(`/${locale}`)} color="rose">
               {translations.checkout.cartEmpty.continueShopping}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -586,23 +584,27 @@ export default function Checkout() {
                     <div className="ltr:ml-6 rtl:mr-6 flex flex-1 flex-col">
                       <div className="flex">
                         <div className="min-w-0 flex-1">
-                          <h4 className="text-sm">
+                          <h4 className="fonr-medium text-lg">
                             <span className="font-medium text-gray-700 hover:text-gray-800">
                               {item.name}
                             </span>
                           </h4>
                           <div className="flex gap-x-4 items-center">
-                            <Badge className="!rounded-none !bg-gray-100 !text-gray-700">
-                              {translations?.checkout?.item?.size || "Size"}:{" "}
-                              {item.size}
-                            </Badge>
-                            <Badge className="!rounded-none !bg-gray-100 !text-gray-700">
-                              <span
-                                className="inline-block h-4 w-4 rounded-full border border-gray-300"
-                                style={{ backgroundColor: item.colorHex }}
-                              />
-                              {item.color}
-                            </Badge>
+                            {item.size && (
+                              <Badge className="!rounded-none !bg-gray-100 !text-gray-700">
+                                {translations?.checkout?.item?.size || "Size"}:{" "}
+                                {item.size}
+                              </Badge>
+                            )}
+                            {item.color && (
+                              <Badge className="!rounded-none !bg-gray-100 !text-gray-700">
+                                <span
+                                  className="inline-block h-4 w-4 rounded-full border border-gray-300"
+                                  style={{ backgroundColor: item.colorHex }}
+                                />
+                                {item.color}
+                              </Badge>
+                            )}
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {translations?.checkout?.item?.quantity ||
@@ -675,6 +677,7 @@ export default function Checkout() {
           </div>
         </form>
       </div>
+      <Footer translations={translations} locale={locale} />
     </div>
   );
 }

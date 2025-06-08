@@ -1,16 +1,16 @@
-import { create } from 'zustand';
-import { devtools, subscribeWithSelector } from 'zustand/middleware';
-import { supabase } from '@/lib/supabase';
+import { supabase } from "@/lib/supabase";
 import type {
   Collection,
   Color,
   Product,
   ProductColor,
-  Reservation,
   ProductFull,
   ProductWithCollection,
-  ProductWithColors
-} from '@/types/database';
+  ProductWithColors,
+  Reservation,
+} from "@/types/database";
+import { create } from "zustand";
+import { devtools, subscribeWithSelector } from "zustand/middleware";
 
 interface StoreState {
   // Data
@@ -19,7 +19,7 @@ interface StoreState {
   products: Product[];
   productColors: ProductColor[];
   reservations: Reservation[];
-  
+
   // Loading states
   loading: {
     collections: boolean;
@@ -28,7 +28,7 @@ interface StoreState {
     productColors: boolean;
     reservations: boolean;
   };
-  
+
   // Error states
   errors: {
     collections: string | null;
@@ -37,7 +37,7 @@ interface StoreState {
     productColors: string | null;
     reservations: string | null;
   };
-  
+
   // Actions
   fetchCollections: () => Promise<void>;
   fetchColors: () => Promise<void>;
@@ -46,14 +46,14 @@ interface StoreState {
   fetchReservations: () => Promise<void>;
   fetchAllData: () => Promise<void>;
   forceRefreshAll: () => Promise<void>;
-  
+
   // Getters with relations
   getProductsWithCollections: () => ProductWithCollection[];
   getProductsWithColors: () => ProductWithColors[];
   getProductsFull: () => ProductFull[];
   getProductBySlug: (slug: string) => ProductFull | undefined;
   getProductsByCollection: (collectionId: string) => ProductFull[];
-  
+
   // Reset actions
   resetCollections: () => void;
   resetColors: () => void;
@@ -70,12 +70,12 @@ interface StoreState {
     productColors: number | null;
     reservations: number | null;
   };
-  
+
   // Cache duration (5 minutes)
   cacheDuration: number;
-  
+
   // Add cache checking methods
-  shouldRefetch: (type: keyof StoreState['lastFetched']) => boolean;
+  shouldRefetch: (type: keyof StoreState["lastFetched"]) => boolean;
 }
 
 const initialLoadingState = {
@@ -94,7 +94,8 @@ const initialErrorState = {
   reservations: null,
 };
 
-const CACHE_DURATION = process.env.NODE_ENV === 'production' ? 30 * 1000 : 5 * 60 * 1000; // 30 seconds in production, 5 minutes in dev
+const CACHE_DURATION =
+  process.env.NODE_ENV === "production" ? 30 * 1000 : 5 * 60 * 1000; // 30 seconds in production, 5 minutes in dev
 
 export const useStore = create<StoreState>()(
   devtools(
@@ -120,13 +121,13 @@ export const useStore = create<StoreState>()(
       shouldRefetch: (type) => {
         const { lastFetched, cacheDuration } = get();
         const lastFetchTime = lastFetched[type];
-        
+
         // Always refetch in production if no data or cache expired
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === "production") {
           if (!lastFetchTime) return true;
           return Date.now() - lastFetchTime > cacheDuration;
         }
-        
+
         if (!lastFetchTime) return true;
         return Date.now() - lastFetchTime > cacheDuration;
       },
@@ -134,9 +135,12 @@ export const useStore = create<StoreState>()(
       // Fetch Collections with production optimizations
       fetchCollections: async () => {
         const { shouldRefetch } = get();
-        
+
         // Force refetch in production or if cache invalid
-        if (!shouldRefetch('collections') && process.env.NODE_ENV !== 'production') {
+        if (
+          !shouldRefetch("collections") &&
+          process.env.NODE_ENV !== "production"
+        ) {
           return;
         }
 
@@ -146,14 +150,14 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, collections: null },
           }),
           false,
-          'fetchCollections/start'
+          "fetchCollections/start"
         );
 
         try {
           const { data, error } = await supabase
-            .from('collections')
-            .select('*')
-            .order('created_at', { ascending: false });
+            .from("collections")
+            .select("*")
+            .order("created_at", { ascending: false });
 
           if (error) throw error;
 
@@ -164,7 +168,7 @@ export const useStore = create<StoreState>()(
               lastFetched: { ...state.lastFetched, collections: Date.now() },
             }),
             false,
-            'fetchCollections/success'
+            "fetchCollections/success"
           );
         } catch (error) {
           set(
@@ -172,11 +176,12 @@ export const useStore = create<StoreState>()(
               loading: { ...state.loading, collections: false },
               errors: {
                 ...state.errors,
-                collections: error instanceof Error ? error.message : 'Unknown error',
+                collections:
+                  error instanceof Error ? error.message : "Unknown error",
               },
             }),
             false,
-            'fetchCollections/error'
+            "fetchCollections/error"
           );
         }
       },
@@ -184,8 +189,8 @@ export const useStore = create<StoreState>()(
       // Fetch Colors
       fetchColors: async () => {
         const { shouldRefetch } = get();
-        
-        if (!shouldRefetch('colors')) {
+
+        if (!shouldRefetch("colors")) {
           return; // Skip if cache is still valid
         }
 
@@ -195,14 +200,14 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, colors: null },
           }),
           false,
-          'fetchColors/start'
+          "fetchColors/start"
         );
 
         try {
           const { data, error } = await supabase
-            .from('colors')
-            .select('*')
-            .order('name', { ascending: true });
+            .from("colors")
+            .select("*")
+            .order("name", { ascending: true });
 
           if (error) throw error;
 
@@ -213,7 +218,7 @@ export const useStore = create<StoreState>()(
               lastFetched: { ...state.lastFetched, colors: Date.now() },
             }),
             false,
-            'fetchColors/success'
+            "fetchColors/success"
           );
         } catch (error) {
           set(
@@ -221,11 +226,12 @@ export const useStore = create<StoreState>()(
               loading: { ...state.loading, colors: false },
               errors: {
                 ...state.errors,
-                colors: error instanceof Error ? error.message : 'Unknown error',
+                colors:
+                  error instanceof Error ? error.message : "Unknown error",
               },
             }),
             false,
-            'fetchColors/error'
+            "fetchColors/error"
           );
         }
       },
@@ -233,8 +239,11 @@ export const useStore = create<StoreState>()(
       // Fetch Products
       fetchProducts: async () => {
         const { shouldRefetch } = get();
-        
-        if (!shouldRefetch('products') && process.env.NODE_ENV !== 'production') {
+
+        if (
+          !shouldRefetch("products") &&
+          process.env.NODE_ENV !== "production"
+        ) {
           return; // Skip if cache is still valid
         }
 
@@ -244,14 +253,14 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, products: null },
           }),
           false,
-          'fetchProducts/start'
+          "fetchProducts/start"
         );
 
         try {
           const { data, error } = await supabase
-            .from('products')
-            .select('*')
-            .order('createdat', { ascending: false });
+            .from("products")
+            .select("*")
+            .order("createdat", { ascending: false });
 
           if (error) throw error;
 
@@ -262,7 +271,7 @@ export const useStore = create<StoreState>()(
               lastFetched: { ...state.lastFetched, products: Date.now() },
             }),
             false,
-            'fetchProducts/success'
+            "fetchProducts/success"
           );
         } catch (error) {
           set(
@@ -270,11 +279,12 @@ export const useStore = create<StoreState>()(
               loading: { ...state.loading, products: false },
               errors: {
                 ...state.errors,
-                products: error instanceof Error ? error.message : 'Unknown error',
+                products:
+                  error instanceof Error ? error.message : "Unknown error",
               },
             }),
             false,
-            'fetchProducts/error'
+            "fetchProducts/error"
           );
         }
       },
@@ -282,8 +292,8 @@ export const useStore = create<StoreState>()(
       // Fetch Product Colors
       fetchProductColors: async () => {
         const { shouldRefetch } = get();
-        
-        if (!shouldRefetch('productColors')) {
+
+        if (!shouldRefetch("productColors")) {
           return; // Skip if cache is still valid
         }
 
@@ -293,14 +303,14 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, productColors: null },
           }),
           false,
-          'fetchProductColors/start'
+          "fetchProductColors/start"
         );
 
         try {
           const { data, error } = await supabase
-            .from('product_colors')
-            .select('*')
-            .order('created_at', { ascending: false });
+            .from("product_colors")
+            .select("*")
+            .order("created_at", { ascending: false });
 
           if (error) throw error;
 
@@ -311,7 +321,7 @@ export const useStore = create<StoreState>()(
               lastFetched: { ...state.lastFetched, productColors: Date.now() },
             }),
             false,
-            'fetchProductColors/success'
+            "fetchProductColors/success"
           );
         } catch (error) {
           set(
@@ -319,11 +329,12 @@ export const useStore = create<StoreState>()(
               loading: { ...state.loading, productColors: false },
               errors: {
                 ...state.errors,
-                productColors: error instanceof Error ? error.message : 'Unknown error',
+                productColors:
+                  error instanceof Error ? error.message : "Unknown error",
               },
             }),
             false,
-            'fetchProductColors/error'
+            "fetchProductColors/error"
           );
         }
       },
@@ -331,8 +342,8 @@ export const useStore = create<StoreState>()(
       // Fetch Reservations
       fetchReservations: async () => {
         const { shouldRefetch } = get();
-        
-        if (!shouldRefetch('reservations')) {
+
+        if (!shouldRefetch("reservations")) {
           return; // Skip if cache is still valid
         }
 
@@ -342,14 +353,14 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, reservations: null },
           }),
           false,
-          'fetchReservations/start'
+          "fetchReservations/start"
         );
 
         try {
           const { data, error } = await supabase
-            .from('reservations')
-            .select('*')
-            .order('created_at', { ascending: false });
+            .from("reservations")
+            .select("*")
+            .order("created_at", { ascending: false });
 
           if (error) throw error;
 
@@ -360,7 +371,7 @@ export const useStore = create<StoreState>()(
               lastFetched: { ...state.lastFetched, reservations: Date.now() },
             }),
             false,
-            'fetchReservations/success'
+            "fetchReservations/success"
           );
         } catch (error) {
           set(
@@ -368,19 +379,26 @@ export const useStore = create<StoreState>()(
               loading: { ...state.loading, reservations: false },
               errors: {
                 ...state.errors,
-                reservations: error instanceof Error ? error.message : 'Unknown error',
+                reservations:
+                  error instanceof Error ? error.message : "Unknown error",
               },
             }),
             false,
-            'fetchReservations/error'
+            "fetchReservations/error"
           );
         }
       },
 
       // Fetch All Data
       fetchAllData: async () => {
-        const { fetchCollections, fetchColors, fetchProducts, fetchProductColors, fetchReservations } = get();
-        
+        const {
+          fetchCollections,
+          fetchColors,
+          fetchProducts,
+          fetchProductColors,
+          fetchReservations,
+        } = get();
+
         await Promise.allSettled([
           fetchCollections(),
           fetchColors(),
@@ -393,59 +411,72 @@ export const useStore = create<StoreState>()(
       // Getters with relations
       getProductsWithCollections: () => {
         const { products, collections } = get();
-        return products.map(product => ({
-          ...product,
-          collections: collections.find(collection => collection.id === product.collection_id)!,
-        })).filter(product => product.collections) as ProductWithCollection[];
+        return products
+          .map((product) => ({
+            ...product,
+            collections: collections.find(
+              (collection) => collection.id === product.collection_id
+            )!,
+          }))
+          .filter((product) => product.collections) as ProductWithCollection[];
       },
 
       getProductsWithColors: () => {
         const { products, productColors, colors } = get();
-        return products.map(product => ({
+        return products.map((product) => ({
           ...product,
           product_colors: productColors
-            .filter(pc => pc.product_id === product.id)
-            .map(pc => ({
-              ...pc,
-              colors: colors.find(color => color.id === pc.color_id)!,
-            }))
-            .filter(pc => pc.colors),
+            .filter((pc) => pc.product_id === product.id)
+            .map((pc) => {
+              const color = colors.find((color) => color.id === pc.color_id);
+              return color ? { ...pc, colors: color } : null;
+            })
+            .filter(
+              (pc): pc is ProductColor & { colors: Color } => pc !== null
+            ),
         })) as ProductWithColors[];
       },
 
       getProductsFull: () => {
         const state = get();
         const { products, collections, productColors, colors } = state;
-        
-        // Return cached result if possible
-        return products.map(product => {
-          const collection = collections.find(c => c.id === product.collection_id);
-          const productColorsWithColors = productColors
-            .filter(pc => pc.product_id === product.id)
-            .map(pc => ({
-              ...pc,
-              colors: colors.find(color => color.id === pc.color_id)!,
-            }))
-            .filter(pc => pc.colors);
 
-          if (!collection) return null;
+        return products
+          .map((product) => {
+            const collection = collections.find(
+              (c) => c.id === product.collection_id
+            );
+            const productColorsWithColors = productColors
+              .filter((pc) => pc.product_id === product.id)
+              .map((pc) => {
+                const color = colors.find((color) => color.id === pc.color_id);
+                return color ? { ...pc, colors: color } : null;
+              })
+              .filter(
+                (pc): pc is ProductColor & { colors: Color } => pc !== null
+              );
 
-          return {
-            ...product,
-            collections: collection,
-            product_colors: productColorsWithColors,
-          };
-        }).filter(Boolean) as ProductFull[];
+            if (!collection) return null;
+
+            return {
+              ...product,
+              collections: collection,
+              product_colors: productColorsWithColors,
+            };
+          })
+          .filter((product): product is ProductFull => product !== null);
       },
 
       getProductBySlug: (slug: string) => {
         const { getProductsFull } = get();
-        return getProductsFull().find(product => product.slug === slug);
+        return getProductsFull().find((product) => product.slug === slug);
       },
 
       getProductsByCollection: (collectionId: string) => {
         const { getProductsFull } = get();
-        return getProductsFull().filter(product => product.collection_id === collectionId);
+        return getProductsFull().filter(
+          (product) => product.collection_id === collectionId
+        );
       },
 
       // Reset actions
@@ -457,7 +488,7 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, collections: null },
           }),
           false,
-          'resetCollections'
+          "resetCollections"
         );
       },
 
@@ -469,7 +500,7 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, colors: null },
           }),
           false,
-          'resetColors'
+          "resetColors"
         );
       },
 
@@ -481,7 +512,7 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, products: null },
           }),
           false,
-          'resetProducts'
+          "resetProducts"
         );
       },
 
@@ -493,7 +524,7 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, productColors: null },
           }),
           false,
-          'resetProductColors'
+          "resetProductColors"
         );
       },
 
@@ -505,7 +536,7 @@ export const useStore = create<StoreState>()(
             errors: { ...state.errors, reservations: null },
           }),
           false,
-          'resetReservations'
+          "resetReservations"
         );
       },
 
@@ -528,7 +559,7 @@ export const useStore = create<StoreState>()(
             },
           },
           false,
-          'resetAll'
+          "resetAll"
         );
       },
 
@@ -545,15 +576,15 @@ export const useStore = create<StoreState>()(
             },
           }),
           false,
-          'forceRefreshAll'
+          "forceRefreshAll"
         );
-        
+
         const { fetchAllData } = get();
         await fetchAllData();
       },
     })),
     {
-      name: 'nelly-store',
+      name: "nelly-store",
     }
   )
 );
@@ -568,6 +599,9 @@ export const useReservations = () => useStore((state) => state.reservations);
 export const useLoading = () => useStore((state) => state.loading);
 export const useErrors = () => useStore((state) => state.errors);
 
-export const useProductsFull = () => useStore((state) => state.getProductsFull());
-export const useProductsWithCollections = () => useStore((state) => state.getProductsWithCollections());
-export const useProductsWithColors = () => useStore((state) => state.getProductsWithColors());
+export const useProductsFull = () =>
+  useStore((state) => state.getProductsFull());
+export const useProductsWithCollections = () =>
+  useStore((state) => state.getProductsWithCollections());
+export const useProductsWithColors = () =>
+  useStore((state) => state.getProductsWithColors());

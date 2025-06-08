@@ -1,4 +1,5 @@
 import Banner from "@/components/layout/banner";
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import ShopContent from "@/components/pages/shop/shop-content";
 import { Button } from "@/components/ui/button";
@@ -67,6 +68,7 @@ export default async function Shop({ params }: ShopPageProps) {
         translations={translations}
         locale={locale}
       />
+      <Footer translations={translations} locale={locale} />
     </div>
   );
 }

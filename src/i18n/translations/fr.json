@@ -159,7 +159,7 @@
       "error": "Une erreur s'est produite. Veuillez réessayer."
     },
     "item": {
-      "quantity": "Qté",
+      "quantity": "Quantité",
       "size": "Taille",
       "color": "Couleur",
       "total": "Total",
@@ -188,7 +188,7 @@
     "phone": "Téléphone",
     "address": "Adresse",
     "city": "Ville",
-    "quantity": "Qté",
+    "quantity": "Quantité",
     "price": "Prix",
     "subtotal": "Sous-total",
     "nextSteps": {

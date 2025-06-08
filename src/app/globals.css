@@ -1,7 +1,9 @@
 @import "tailwindcss";
-
+@plugin "@tailwindcss/typography";
+ 
 @theme inline {
   --color-background: #fdf3f4;
+  --font-arabic: "Tajawal", sans-serif;
   --color-rose-50: #fdf3f4;
   --color-rose-100: #fbe8ea;
   --color-rose-200: #f6d0d6;
