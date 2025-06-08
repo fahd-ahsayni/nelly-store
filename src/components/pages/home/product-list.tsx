@@ -104,7 +104,7 @@ export default function ProductList({
             {featuredProducts.map((product) => (
               <CarouselItem
                 key={product.id}
-                className="pl-2 md:pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
                 <ProductCard
                   product={product}

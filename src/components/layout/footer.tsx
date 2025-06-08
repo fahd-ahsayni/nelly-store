@@ -42,7 +42,7 @@ export default function Footer({
             href="/"
             className="text-4xl ltr:italic ltr:font-serif md:text-6xl tracking-tighter"
           >
-            nellycollection.com
+            nellycollection.store
           </Link>
         </div>
 

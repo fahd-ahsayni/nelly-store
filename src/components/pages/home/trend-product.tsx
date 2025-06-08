@@ -21,11 +21,10 @@ export default function TrendProduct({
         </h2>
       </div>
       <div className="grid w-full grid-cols-1 md:grid-cols-12 mt-4 gap-4 md:gap-x-2">
-        <div className="md:col-span-8 group md:min-h-[400px]">
+        <div className="md:col-span-8 group md:min-h-[600px] min-h-[400px]">
           <div className="relative w-full h-full overflow-hidden">
             <Image
-              width={500}
-              height={500}
+              fill
               src={MEDIA_ASSETS.TREND_PRODUCT}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               alt="Anti-tache serum bottle"
@@ -34,7 +33,7 @@ export default function TrendProduct({
         </div>
         <div className="md:col-span-4 bg-rose-200 border border-border flex flex-col justify-end p-4 md:p-6">
           <div className="mb-4 md:mb-8">
-            <h2 className="text-2xl md:text-4xl text-gray-900 ltr:font-medium ltr:font-serif rtl:font-bold">
+            <h2 className="text-2xl md:text-4xl text-gray-900 ltr:font-medium ltr:font-serif rtl:font-bold lg:rtl:leading-14">
               {translations.trendProduct.title}
             </h2>
             <p className="mt-4 text-gray-700 text-sm md:text-base">

@@ -36,7 +36,7 @@ export default async function Home({
     <StoreProvider>
       <HomePageClient translations={translations} />
       <main>
-        <div className="lg:absolute inset-0 z-30">
+        <div className="lg:absolute inset-0">
           <Banner text={translations.banner.text} />
           <nav className="w-full sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/20">
             <Header translations={translations} locale={locale} />

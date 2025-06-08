@@ -30,16 +30,12 @@ interface CollectionItem {
  */
 export const CAROUSEL_IMAGES: CarouselImage[] = [
   {
-    src: `${IMAGEKIT_BASE_URL}/2149288964.jpg?updatedAt=1749067294517`,
-    alt: "Sunset over water with gentle waves",
+    src: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2019.11.06.webp?updatedAt=1749407823519`,
+    alt: "Sunset over water with gentle waves - new collection",
   },
   {
-    src: `${IMAGEKIT_BASE_URL}/2149288980.jpg?updatedAt=1749067507977`,
-    alt: "Fashion collection showcase",
-  },
-  {
-    src: `${IMAGEKIT_BASE_URL}/2149288896.jpg?updatedAt=1749067507371`,
-    alt: "Premium clothing display",
+    src: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2019.11.07.webp?updatedAt=1749407821504`,
+    alt: "Fashion collection showcase - new collection",
   },
 ];
 
@@ -78,7 +74,7 @@ export const COLLECTIONS_SECTION: CollectionItem[] = [
  */
 export const MEDIA_ASSETS = {
   VIDEO_COVER: `${IMAGEKIT_BASE_URL}/video-one.mp4?updatedAt=1749132811527`,
-  TREND_PRODUCT: `${IMAGEKIT_BASE_URL}/2149288974%20(1).webp?updatedAt=1749066696108`,
+  TREND_PRODUCT: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2019.38.44%20(1).webp?updatedAt=1749405856216`,
   LOCAL_STORE: `${IMAGEKIT_BASE_URL}/2151623460.jpg?updatedAt=1749069279348`,
 } as const;
 

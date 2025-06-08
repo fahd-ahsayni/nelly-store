@@ -30,6 +30,7 @@ export interface Product {
   sizes: string[];
   image_urls: string[];
   type: string;
+  product_page_url: string | null;
 }
 
 export interface ProductColor {
