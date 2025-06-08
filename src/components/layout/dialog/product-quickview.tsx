@@ -18,7 +18,7 @@ import {
 import { HeartIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 interface ProductQuickviewProps {
   product: ProductFull | null;
@@ -49,7 +49,7 @@ export default function ProductQuickview({
 
   const sizes =
     product?.sizes?.map((size, index) => ({
-      id: `${product?.id || 'default'}-size-${index}`,
+      id: `${product?.id || "default"}-size-${index}`,
       name: size,
       inStock: true,
     })) || [];
@@ -62,18 +62,20 @@ export default function ProductQuickview({
   // Reset selections when product changes
   useEffect(() => {
     if (product) {
-      const newColors = product.product_colors?.map((pc) => ({
-        id: pc.colors.id,
-        name: pc.colors.name,
-        hex: pc.colors.hex,
-        selectedClass: pc.colors.selectedcolor,
-      })) || [];
+      const newColors =
+        product.product_colors?.map((pc) => ({
+          id: pc.colors.id,
+          name: pc.colors.name,
+          hex: pc.colors.hex,
+          selectedClass: pc.colors.selectedcolor,
+        })) || [];
 
-      const newSizes = product.sizes?.map((size, index) => ({
-        id: `${product.id}-size-${index}`,
-        name: size,
-        inStock: true,
-      })) || [];
+      const newSizes =
+        product.sizes?.map((size, index) => ({
+          id: `${product.id}-size-${index}`,
+          name: size,
+          inStock: true,
+        })) || [];
 
       setSelectedColor(newColors[0] || null);
       setSelectedSize(newSizes[2] || newSizes[0] || null);
@@ -119,11 +121,11 @@ export default function ProductQuickview({
       size: selectedSize?.name,
     });
     toast.success(translations.productQuickview.addedToBag);
-    
+
     // Reset selections after adding to bag
     setSelectedColor(colors[0] || null);
     setSelectedSize(sizes[2] || sizes[0] || null);
-    
+
     // Optional: Close the quickview after adding to cart
     onClose();
   };
@@ -227,23 +229,7 @@ export default function ProductQuickview({
 
                     {/* Benefits Section */}
                     <div className="mt-6 space-y-3">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <div className="group flex items-center gap-3 bg-green-50 border border-green-300 p-3 transition-all duration-200">
-                          <div className="flex-shrink-0">
-                            <TruckIcon className="h-5 w-5 text-green-600 group-hover:scale-110 transition-transform duration-200" />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-medium text-green-900">
-                              {translations.productQuickview?.freeShipping ||
-                                "Free Shipping"}
-                            </p>
-                            <p className="text-xs text-green-700">
-                              {translations.productQuickview
-                                ?.freeShippingDesc || "On orders over 500 MAD"}
-                            </p>
-                          </div>
-                        </div>
-
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div className="group flex items-center gap-3 bg-sky-50 p-3 transition-all duration-200 border border-sky-300">
                           <div className="flex-shrink-0">
                             <BoltIcon className="h-5 w-5 text-blue-600 group-hover:scale-110 transition-transform duration-200" />

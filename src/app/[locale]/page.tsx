@@ -6,6 +6,7 @@ import ImageCarousel from "@/components/layout/images-carousel";
 import CallToAction from "@/components/pages/home/call-to-action";
 import CollectionPerview from "@/components/pages/home/collections-perview";
 import CoverSection from "@/components/pages/home/cover-section";
+import HomePageClient from "@/components/pages/home/home-page-client";
 import LocalStoreSection from "@/components/pages/home/local-store";
 import ProductList from "@/components/pages/home/product-list";
 import TestimonialGrid from "@/components/pages/home/testimonials";
@@ -14,7 +15,6 @@ import StoreProvider from "@/components/providers/store-provider";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 import { SpinningText } from "@/components/ui/spinning-text";
-import HomePageClient from "@/components/pages/home/home-page-client";
 import { CAROUSEL_IMAGES } from "@/constants";
 import { type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
@@ -176,13 +176,13 @@ export default async function Home({
           dir="ltr"
           numRows={1}
           defaultVelocity={-3}
-          className="bg-gray-900 py-4 relative z-20"
+          className="bg-white py-4 relative z-20 border border-gray-200 shadow-2xl shadow-rose-300/50"
         >
           <span className="inline-flex items-center gap-2 whitespace-nowrap">
-            <span className="text-rose-200 font-serif italic">
+            <span className="text-rose-500 font-serif italic">
               Nelly Collection
             </span>
-            <SvgStar className="w-7 h-7 text-rose-200 ml-4" />
+            <SvgStar className="w-7 h-7 text-rose-500 ml-4" />
           </span>
         </VelocityScroll>
         <ProductList
@@ -201,13 +201,13 @@ export default async function Home({
           dir="ltr"
           numRows={1}
           defaultVelocity={-3}
-          className="bg-gray-900 py-4 relative z-20"
+          className="bg-white py-4 relative z-20 border border-gray-200 shadow-2xl shadow-rose-300/50"
         >
           <span className="inline-flex items-center gap-2 whitespace-nowrap">
-            <span className="text-rose-200 font-serif italic">
+            <span className="text-rose-500 font-serif italic">
               Nelly Collection
             </span>
-            <SvgStar className="w-7 h-7 text-rose-200 ml-4" />
+            <SvgStar className="w-7 h-7 text-rose-500 ml-4" />
           </span>
         </VelocityScroll>
         <LocalStoreSection translations={translations} locale={locale} />
