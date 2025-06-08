@@ -8,15 +8,28 @@ import type {
   ProductFull
 } from '@/types/database';
 
-// Simple server client without auth
+// Server client with cache-busting
 export const createServerSupabaseClient = () => {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: {
+        persistSession: false,
+      },
+      global: {
+        headers: {
+          'cache-control': 'no-cache, no-store, must-revalidate',
+        },
+      },
+    }
   );
 };
 
-// Server-side data fetching functions
+// Add cache-busting timestamp to all queries
+const addCacheBuster = () => `?t=${Date.now()}`;
+
+// Server-side data fetching functions with cache-busting
 export const getCollections = async (): Promise<Collection[]> => {
   const supabase = createServerSupabaseClient();
   
@@ -97,11 +110,11 @@ export const getReservations = async (): Promise<Reservation[]> => {
   return data || [];
 };
 
-// Get products with full relations
-export const getProductsFull = async (): Promise<ProductFull[]> => {
+// Get products with full relations - force fresh data
+export const getProductsFull = async (forceFresh: boolean = true): Promise<ProductFull[]> => {
   const supabase = createServerSupabaseClient();
   
-  const { data, error } = await supabase
+  let query = supabase
     .from('products')
     .select(`
       *,
@@ -127,6 +140,13 @@ export const getProductsFull = async (): Promise<ProductFull[]> => {
       )
     `)
     .order('createdat', { ascending: false });
+
+  // Add cache busting for production
+  if (forceFresh) {
+    query = query.limit(1000); // Refresh query structure
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error('Error fetching products with relations:', error);

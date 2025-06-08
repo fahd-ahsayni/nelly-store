@@ -16,6 +16,9 @@ const tajawal = Tajawal({
   weight: ["200", "300", "400", "500", "700", "800", "900"],
 });
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }

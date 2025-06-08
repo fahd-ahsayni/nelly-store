@@ -13,17 +13,34 @@ export const useInitializeStore = () => {
   const hasDataRef = useRef(false);
 
   useEffect(() => {
-    // Check if we have data in store
     const state = useStore.getState();
     const hasData = state.products.length > 0 && state.collections.length > 0;
     
-    // Only fetch if we don't have data and haven't initialized globally
-    if (!hasData && !hasInitialized && !hasDataRef.current) {
+    // In production, always fetch fresh data on mount
+    const shouldFetch = process.env.NODE_ENV === 'production' 
+      ? !hasDataRef.current 
+      : !hasData && !hasInitialized && !hasDataRef.current;
+    
+    if (shouldFetch) {
       hasInitialized = true;
       hasDataRef.current = true;
       fetchAllData();
     }
   }, [fetchAllData]);
+
+  // Add effect to periodically refresh data in production
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') {
+      const interval = setInterval(() => {
+        const state = useStore.getState();
+        if (state.forceRefreshAll) {
+          state.forceRefreshAll();
+        }
+      }, 60000); // Refresh every minute in production
+
+      return () => clearInterval(interval);
+    }
+  }, []);
 
   const isLoading = Object.values(loading).some(Boolean);
   const hasErrors = Object.values(errors).some(Boolean);

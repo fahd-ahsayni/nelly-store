@@ -45,6 +45,7 @@ interface StoreState {
   fetchProductColors: () => Promise<void>;
   fetchReservations: () => Promise<void>;
   fetchAllData: () => Promise<void>;
+  forceRefreshAll: () => Promise<void>;
   
   // Getters with relations
   getProductsWithCollections: () => ProductWithCollection[];
@@ -93,7 +94,7 @@ const initialErrorState = {
   reservations: null,
 };
 
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = process.env.NODE_ENV === 'production' ? 30 * 1000 : 5 * 60 * 1000; // 30 seconds in production, 5 minutes in dev
 
 export const useStore = create<StoreState>()(
   devtools(
@@ -115,22 +116,28 @@ export const useStore = create<StoreState>()(
       },
       cacheDuration: CACHE_DURATION,
 
-      // Cache checking method
+      // Cache checking method - more aggressive in production
       shouldRefetch: (type) => {
         const { lastFetched, cacheDuration } = get();
         const lastFetchTime = lastFetched[type];
         
-        if (!lastFetchTime) return true;
+        // Always refetch in production if no data or cache expired
+        if (process.env.NODE_ENV === 'production') {
+          if (!lastFetchTime) return true;
+          return Date.now() - lastFetchTime > cacheDuration;
+        }
         
+        if (!lastFetchTime) return true;
         return Date.now() - lastFetchTime > cacheDuration;
       },
 
-      // Fetch Collections
+      // Fetch Collections with production optimizations
       fetchCollections: async () => {
         const { shouldRefetch } = get();
         
-        if (!shouldRefetch('collections')) {
-          return; // Skip if cache is still valid
+        // Force refetch in production or if cache invalid
+        if (!shouldRefetch('collections') && process.env.NODE_ENV !== 'production') {
+          return;
         }
 
         set(
@@ -227,7 +234,7 @@ export const useStore = create<StoreState>()(
       fetchProducts: async () => {
         const { shouldRefetch } = get();
         
-        if (!shouldRefetch('products')) {
+        if (!shouldRefetch('products') && process.env.NODE_ENV !== 'production') {
           return; // Skip if cache is still valid
         }
 
@@ -523,6 +530,26 @@ export const useStore = create<StoreState>()(
           false,
           'resetAll'
         );
+      },
+
+      // Add force refresh method
+      forceRefreshAll: async () => {
+        set(
+          (state) => ({
+            lastFetched: {
+              collections: null,
+              colors: null,
+              products: null,
+              productColors: null,
+              reservations: null,
+            },
+          }),
+          false,
+          'forceRefreshAll'
+        );
+        
+        const { fetchAllData } = get();
+        await fetchAllData();
       },
     })),
     {
