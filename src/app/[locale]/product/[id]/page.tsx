@@ -9,6 +9,7 @@ import Spinner from "@/components/ui/spinner";
 import Image from "next/image";
 import { logo } from "@/assets";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface ProductPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -129,6 +130,20 @@ export default function ProductPage({ params }: ProductPageProps) {
 
       <div className="pb-20">
         <ProductClient product={product!} />
+      </div>
+
+      <div className="mx-auto mt-6 max-w-2xl lg:max-w-7xl sm:px-6 lg:gap-x-8 lg:px-8 pb-8">
+        <div className="bg-gray-200 mt-16 flex items-center justify-between px-6 py-3">
+          <span className="text-title text-sm">
+            &copy; {new Date().getFullYear()} IMFA. جميع الحقوق محفوظة.
+          </span>
+          <Link
+            href="#"
+            className="text-muted-foreground hover:text-primary text-sm"
+          >
+            سياسة الخصوصية
+          </Link>
+        </div>
       </div>
     </main>
   );
