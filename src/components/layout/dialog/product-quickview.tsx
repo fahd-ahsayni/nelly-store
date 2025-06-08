@@ -10,14 +10,12 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
   BoltIcon,
   ChatBubbleLeftRightIcon,
-  ExclamationTriangleIcon,
   HeartIcon as HeartOutlineIcon,
-  TruckIcon,
-  XMarkIcon,
+  XMarkIcon
 } from "@heroicons/react/24/outline";
 import { HeartIcon, StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 interface ProductQuickviewProps {
@@ -198,7 +196,9 @@ export default function ProductQuickview({
                   >
                     <StarIcon className="w-4 h-4 text-yellow-400" />
                     <span className="text-sm font-medium text-gray-800">
-                      4.8
+                      {product.rating === null && product.rating < 4
+                        ? 4.5
+                        : product.rating}
                     </span>
                   </Badge>
                   <Image
