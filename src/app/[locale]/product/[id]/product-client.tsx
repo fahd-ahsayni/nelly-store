@@ -4,10 +4,18 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ProductFull } from "@/types/database";
 import { Radio, RadioGroup } from "@headlessui/react";
-import { StarIcon } from "@heroicons/react/20/solid";
-import { BoltIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
-import { useRouter, useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import {
+  BoltIcon,
+  ChatBubbleLeftRightIcon,
+  HandThumbUpIcon,
+  HeartIcon,
+  MinusIcon,
+  PlusIcon,
+  StarIcon,
+} from "@heroicons/react/24/outline";
+import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
 interface ProductClientProps {
   product: ProductFull;
@@ -34,6 +42,12 @@ export default function ProductClient({ product }: ProductClientProps) {
 
   const [selectedColor, setSelectedColor] = useState(initialColor);
   const [selectedSize, setSelectedSize] = useState(initialSize);
+  const [quantity, setQuantity] = useState(1);
+  const [timeLeft, setTimeLeft] = useState({
+    hours: 23,
+    minutes: 59,
+    seconds: 59,
+  });
 
   // Memoize computed values
   const displayImages = useMemo(() => {
@@ -47,16 +61,23 @@ export default function ProductClient({ product }: ProductClientProps) {
   const hasColors = product.product_colors && product.product_colors.length > 0;
   const hasSizes = product.sizes && product.sizes.length > 0;
 
+  const handleQuantityChange = (change: number) => {
+    const newQuantity = quantity + change;
+    if (newQuantity >= 1 && newQuantity <= 10) {
+      setQuantity(newQuantity);
+    }
+  };
+
   const handleAddToBag = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Build checkout URL with product details
     const checkoutParams = new URLSearchParams({
       productId: product.id,
-      quantity: "1",
+      quantity: quantity.toString(),
     });
 
-    if (selectedColor) {
+    if (selectedColor?.colors?.name) {
       checkoutParams.set("color", selectedColor.colors.name);
     }
 
@@ -65,8 +86,39 @@ export default function ProductClient({ product }: ProductClientProps) {
     }
 
     // Navigate to checkout page with correct locale path
-    router.push(`/${params.locale}/product/checkout?${checkoutParams.toString()}`);
+    router.push(
+      `/${params.locale}/product/checkout?${checkoutParams.toString()}`
+    );
   };
+
+  // Countdown timer effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        let { hours, minutes, seconds } = prev;
+
+        if (seconds > 0) {
+          seconds--;
+        } else if (minutes > 0) {
+          minutes--;
+          seconds = 59;
+        } else if (hours > 0) {
+          hours--;
+          minutes = 59;
+          seconds = 59;
+        } else {
+          // Reset to 24 hours when countdown reaches 0
+          hours = 23;
+          minutes = 59;
+          seconds = 59;
+        }
+
+        return { hours, minutes, seconds };
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section>
@@ -85,29 +137,29 @@ export default function ProductClient({ product }: ProductClientProps) {
       </div>
 
       {/* Image gallery */}
-      <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+      <div className="mb-10 mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
         <img
-          alt={product.imagealt || product.name}
+          alt={product.imagealt || product.name || "Product image"}
           src={displayImages[0]}
           className="hidden aspect-3/4 size-full shadow-xl shadow-rose-300/30 object-cover lg:block"
           loading="eager"
         />
         <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
           <img
-            alt={product.imagealt || product.name}
+            alt={product.imagealt || product.name || "Product image"}
             src={displayImages[1] || displayImages[0]}
             className="aspect-3/2 size-full shadow-xl shadow-rose-300/30 object-cover"
             loading="lazy"
           />
           <img
-            alt={product.imagealt || product.name}
+            alt={product.imagealt || product.name || "Product image"}
             src={displayImages[2] || displayImages[0]}
             className="aspect-3/2 size-full shadow-xl shadow-rose-300/30 object-cover"
             loading="lazy"
           />
         </div>
         <img
-          alt={product.imagealt || product.name}
+          alt={product.imagealt || product.name || "Product image"}
           src={displayImages[3] || displayImages[0]}
           className="aspect-4/5 size-full object-cover sm:shadow-xl shadow-rose-300/30 lg:aspect-3/4"
           loading="lazy"
@@ -127,6 +179,65 @@ export default function ProductClient({ product }: ProductClientProps) {
                 }}
               />
             </div>
+
+            {/* Countdown Timer */}
+            <div className="mt-6">
+              <div className="flex items-center gap-3">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  عرض محدود الوقت!
+                </h3>
+              </div>
+
+              <p className="text-gray-700 mb-4 font-medium">
+                احصلي على خصم 30% - ينتهي العرض خلال:
+              </p>
+
+              <div
+                dir="ltr"
+                className="flex items-center justify-end gap-4 mt-8"
+              >
+                <div className="text-center">
+                  <div className="bg-rose-600 text-white px-3 py-2 min-w-[60px]">
+                    <span className="text-2xl font-bold">
+                      {timeLeft.hours.toString().padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="text-xs text-rose-600 mt-1 font-medium">ساعة</p>
+                </div>
+
+                <span className="text-rose-600 text-2xl font-bold">:</span>
+
+                <div className="text-center">
+                  <div className="bg-rose-600 text-white px-3 py-2 min-w-[60px]">
+                    <span className="text-2xl font-bold">
+                      {timeLeft.minutes.toString().padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="text-xs text-rose-600 mt-1 font-medium">
+                    دقيقة
+                  </p>
+                </div>
+
+                <span className="text-rose-600 text-2xl font-bold">:</span>
+
+                <div className="text-center">
+                  <div className="bg-rose-600 text-white px-3 py-2 min-w-[60px]">
+                    <span className="text-2xl font-bold">
+                      {timeLeft.seconds.toString().padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="text-xs text-rose-600 mt-1 font-medium">
+                    ثانية
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-sm text-rose-600">
+                  ⚡ سارعي بالطلب قبل انتهاء العرض!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -135,10 +246,10 @@ export default function ProductClient({ product }: ProductClientProps) {
           <h2 className="sr-only">معلومات المنتج</h2>
           <div>
             <p className="text-3xl tracking-tight text-gray-900 font-bold">
-              {product.price.toFixed(2)} درهم فقط
+              {(product.price || 0).toFixed(2)} درهم فقط
             </p>
             <p className="text-xl tracking-tight text-gray-400 line-through">
-              {Math.floor(product.price * 1.3) + ".00"} درهم
+              {Math.floor((product.price || 0) * 1.3) + ".00"} درهم
             </p>
           </div>
 
@@ -148,7 +259,7 @@ export default function ProductClient({ product }: ProductClientProps) {
             <div className="flex items-center">
               <div className="flex items-center">
                 {[0, 1, 2, 3, 4].map((rating) => (
-                  <StarIcon
+                  <StarIconSolid
                     key={rating}
                     aria-hidden="true"
                     className={cn(
@@ -165,14 +276,26 @@ export default function ProductClient({ product }: ProductClientProps) {
                 href="#reviews"
                 className="mr-3 text-sm font-medium text-rose-600 hover:text-rose-500"
               >
-                432 من التقييمات{" "}
+                1,247 تقييم
               </a>
+            </div>
+
+            {/* Sales Badge */}
+            <div className="mt-3 inline-flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+              <div className="flex items-center gap-1">
+                <span className="text-green-700 font-semibold text-sm">
+                  5K+
+                </span>
+                <span className="text-green-600 text-sm">
+                  تم بيعها هذا الشهر
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Feature badges */}
           <div className="mt-6 space-y-3">
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 grid-cols-2">
               <div className="group flex items-center gap-3 bg-sky-50 p-3 transition-all duration-200 border border-sky-300">
                 <div className="flex-shrink-0">
                   <BoltIcon className="h-5 w-5 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
@@ -181,7 +304,7 @@ export default function ProductClient({ product }: ProductClientProps) {
                   <p className="text-sm font-medium text-blue-900">
                     توصيل سريع
                   </p>
-                  <p className="text-xs text-blue-700">24-48 ساعة</p>
+                  <p className="text-xs text-blue-700">48-24 ساعة</p>
                 </div>
               </div>
 
@@ -212,12 +335,14 @@ export default function ProductClient({ product }: ProductClientProps) {
                       <Radio
                         key={productColor.id}
                         value={productColor}
-                        aria-label={productColor.colors.name}
+                        aria-label={productColor.colors?.name || "Color"}
                         className="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-checked:ring-2 data-checked:ring-rose-500 data-focus:data-checked:ring-2 data-focus:data-checked:ring-offset-1"
                       >
                         <span
                           aria-hidden="true"
-                          style={{ backgroundColor: productColor.colors.hex }}
+                          style={{
+                            backgroundColor: productColor.colors?.hex || "#000",
+                          }}
                           className="size-8 rounded-full border border-black/10"
                         />
                       </Radio>
@@ -285,6 +410,31 @@ export default function ProductClient({ product }: ProductClientProps) {
               </div>
             )}
 
+            {/* Quantity */}
+            <div className="mt-10">
+              <h3 className="text-sm font-medium text-gray-900 mb-3">الكمية</h3>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleQuantityChange(-1)}
+                  disabled={quantity <= 1}
+                  className="flex bg-white items-center justify-center w-10 h-10 rounded-full border border-gray-300 hover:border-rose-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <MinusIcon className="w-4 h-4" />
+                </button>
+                <span className="w-12 text-center font-medium text-2xl">
+                  {quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleQuantityChange(1)}
+                  disabled={quantity >= 10}
+                  className="flex bg-white items-center justify-center w-10 h-10 rounded-full border border-gray-300 hover:border-rose-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <PlusIcon className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
             <Button
               type="submit"
               color="rose"
@@ -293,6 +443,69 @@ export default function ProductClient({ product }: ProductClientProps) {
               اشتري الآن
             </Button>
           </form>
+        </div>
+      </div>
+
+      {/* Loved by Sisters Worldwide Section */}
+      <div className="mt-16 py-16 relative isolate">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -bottom-20 -z-10 transform-gpu overflow-hidden blur-3xl sm:-bottom-40"
+        >
+          <div
+            style={{
+              clipPath:
+                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+            }}
+            className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:left-[calc(50%+20rem)] sm:w-[72.1875rem]"
+          />
+        </div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+                محبوبة من الأخوات حول العالم
+              </h2>
+            </div>
+            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+              انضمي إلى مجتمعنا من محبات الأزياء المحتشمة الواثقات
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-8 grid-cols-3 max-w-4xl mx-auto">
+            {[
+              {
+                icon: HeartIcon,
+                iconColor: "text-rose-500",
+                value: "50K+",
+                label: "عميلة سعيدة",
+              },
+              {
+                icon: StarIcon,
+                iconColor: "text-yellow-500",
+                value: "4.9",
+                label: "متوسط التقييم",
+              },
+              {
+                icon: HandThumbUpIcon,
+                iconColor: "text-green-500",
+                value: "98%",
+                label: "ينصحن بالمنتج",
+              },
+            ].map((stat, index) => (
+              <div key={index} className="text-center group">
+                <div className="flex items-center justify-center mx-auto mb-4">
+                  <stat.icon
+                    className={`lg:size-12 size-10 ${stat.iconColor}`}
+                  />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-gray-600">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

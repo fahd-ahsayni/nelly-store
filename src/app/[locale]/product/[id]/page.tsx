@@ -1,146 +1,175 @@
-"use client";
-
-import { useInitializeStore } from "@/hooks/useStoreData";
-import { useStore } from "@/store/useStore";
-import { Color, ProductColor, ProductFull } from "@/types/database";
-import { useEffect, useMemo, useState } from "react";
+import { Locale } from "@/i18n/config";
+import { getTranslations } from "@/i18n/utils";
+import { generateProductStructuredData, generateSEOMetadata } from "@/lib/seo";
+import { getProductsFull } from "@/lib/supabase-server";
+import { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import ProductClient from "./product-client";
-import Spinner from "@/components/ui/spinner";
 import Image from "next/image";
 import { logo } from "@/assets";
-import { redirect } from "next/navigation";
-import Link from "next/link";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 interface ProductPageProps {
-  params: Promise<{ locale: string; id: string }>;
+  params: Promise<{ locale: Locale; id: string }>;
 }
 
-interface ResolvedParams {
-  locale: string;
-  id: string;
-}
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const { locale, id } = await params;
+  const translations = await getTranslations(locale);
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const [resolvedParams, setResolvedParams] = useState<ResolvedParams | null>(
-    null
-  );
+  try {
+    const products = await getProductsFull();
+    const product = products.find((p) => p.id === id);
 
-  const { isLoading: storeLoading } = useInitializeStore();
-
-  // Use individual selectors to avoid selector instability
-  const products = useStore((state) => state.products);
-  const collections = useStore((state) => state.collections);
-  const productColors = useStore((state) => state.productColors);
-  const colors = useStore((state) => state.colors);
-
-  // Resolve params once
-  useEffect(() => {
-    params.then(setResolvedParams).catch(console.error);
-  }, [params]);
-
-  // Memoize product computation
-  const product = useMemo((): ProductFull | null => {
-    if (!resolvedParams?.id || storeLoading || products.length === 0) {
-      return null;
+    if (!product) {
+      return generateSEOMetadata({
+        title: `${
+          translations.errors?.productNotFound || "Product Not Found"
+        } - Nelly Collection`,
+        description:
+          translations.errors?.productNotFound || "Product not found",
+        locale,
+        path: `/product/${id}`,
+      });
     }
 
-    const foundProduct = products.find((p) => p.id === resolvedParams.id);
-    if (!foundProduct) return null;
+    const productName = product.name || `Product ${id}`;
+    const productDescription =
+      product.description || translations.seo.description;
+    const price = product.price?.toString() || "";
 
-    const collection = collections.find(
-      (c) => c.id === foundProduct.collection_id
-    );
-    if (!collection) return null;
+    return generateSEOMetadata({
+      title: `${productName} - Nelly Collection`,
+      description: `${productDescription.substring(
+        0,
+        160
+      )}... Shop premium modest fashion at Nelly Collection.`,
+      keywords:
+        locale === "ar"
+          ? [
+              "منتج",
+              "أزياء محتشمة",
+              "حجاب",
+              "مجموعة نيللي",
+              "تسوق",
+              "أزياء نسائية",
+            ]
+          : locale === "fr"
+          ? [
+              "produit",
+              "mode modeste",
+              "hijab",
+              "collection nelly",
+              "shopping",
+              "mode féminine",
+            ]
+          : [
+              "product",
+              "modest fashion",
+              "hijab",
+              "nelly collection",
+              "shopping",
+              "women fashion",
+            ],
+      locale,
+      path: `/product/${id}`,
+      price,
+      currency: "MAD",
+      availability: "in_stock",
+      category: "Fashion",
+      image: product.imagesrc || "/logo/logo.webp",
+    });
+  } catch (error) {
+    return generateSEOMetadata({
+      title: `Product - Nelly Collection`,
+      description: translations.seo.description,
+      locale,
+      path: `/product/${id}`,
+    });
+  }
+}
 
-    const productColorsWithColors = productColors
-      .filter((pc) => pc.product_id === foundProduct.id)
-      .map((pc) => {
-        const color = colors.find((color) => color.id === pc.color_id);
-        return color ? { ...pc, colors: color } : null;
-      })
-      .filter((pc): pc is ProductColor & { colors: Color } => pc !== null);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { locale, id } = await params;
+  const translations = await getTranslations(locale);
 
-    return {
-      ...foundProduct,
-      collections: collection,
-      product_colors: productColorsWithColors,
-    };
-  }, [
-    resolvedParams?.id,
-    storeLoading,
-    products,
-    collections,
-    productColors,
-    colors,
-  ]);
+  try {
+    const products = await getProductsFull();
+    const product = products.find((p) => p.id === id);
 
-  const isLoading = storeLoading || !resolvedParams;
-  const productNotFound = !isLoading && !product && resolvedParams?.id;
+    if (!product) {
+      notFound();
+    }
 
-  // Loading state
-  if (isLoading) {
+    // Generate product structured data
+    const productStructuredData = generateProductStructuredData({
+      id: product.id,
+      name: product.name || `Product ${id}`,
+      description: product.description || "",
+      price: product.price || 0,
+      currency: "MAD",
+      image: product.imagesrc || "/logo/logo.webp",
+      availability: "InStock",
+      category: "Fashion",
+      brand: "Nelly Collection",
+      sku: product.id,
+      rating: product.rating || undefined,
+      locale,
+    });
+
     return (
-      <div
-        className="min-h-screen flex items-center justify-center !font-arabic relative isolate"
-        dir="rtl"
-      >
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-        >
-          <div
-            style={{
-              clipPath:
-                "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-            }}
-            className="relative right-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-rose-600 opacity-30 sm:right-[calc(50%-30rem)] sm:w-[72.1875rem]"
-          />
-        </div>
-        <div className="animate-pulse text-center">
-          <div>
-            <span className="flex flex-col justify-center items-center gap-4">
-              <span className="sr-only">Nelly Collection</span>
-              <Image
-                alt="nelly collection"
-                src={logo}
-                className="h-20 w-auto"
-              />
-              <div className="flex items-center gap-2">
-                <Spinner size={7} color="rose" />
-                <h2 className="text-lg lg:text-3xl rtl:font-bold">
-                  نيللي <span className="ltr:italic text-rose-600">كولكشن</span>
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(productStructuredData),
+          }}
+        />
+        <main dir="rtl" className="!font-arabic">
+          <nav className="w-full bg-white border-b border-gray-200 px-4 py-2 lg:px-8 lg:py-3 flex items-center justify-between">
+            <div>
+              <Link href={`/ar`} className="flex items-center lg:gap-x-2">
+                <span className="sr-only">Nelly Collection</span>
+                <Image alt="" src={logo} className="lg:h-14 h-10 w-auto" />
+                <h2 className="text-lg lg:text-3xl font-bold">
+                  <span className="text-gray-900">نيللي </span>
+                  <span className="ltr:italic text-rose-600">كولكشن</span>
                 </h2>
+              </Link>
+            </div>
+            <div className="flex items-center flex-row-reverse gap-x-2">
+              <div className="p-2 rounded-full border border-gray-300">
+                {" "}
+                <ArrowLeftIcon className="w-4 h-4 text-gray-600 cursor-pointer" />
               </div>
-            </span>
+
+              <p className="font-medium text-gray-800">توجه الى موقعنا على</p>
+            </div>
+          </nav>
+          <div className="pb-20">
+            <ProductClient product={product} />
           </div>
-        </div>
-      </div>
+
+          <div className="mx-auto mt-6 max-w-2xl lg:max-w-7xl sm:px-6 lg:gap-x-8 lg:px-8 pb-8">
+            <div className="bg-gray-200 mt-16 flex items-center justify-between px-6 py-3">
+              <span className="text-title text-sm">
+                &copy; {new Date().getFullYear()} IMFA. جميع الحقوق محفوظة.
+              </span>
+              <Link
+                href="#"
+                className="text-muted-foreground hover:text-primary text-sm"
+              >
+                سياسة الخصوصية
+              </Link>
+            </div>
+          </div>
+        </main>
+      </>
     );
+  } catch (error) {
+    notFound();
   }
-
-  // Product not found
-  if (productNotFound) {
-    redirect("/");
-  }
-  return (
-    <main dir="rtl" className="!font-arabic">
-      <div className="pb-20">
-        <ProductClient product={product!} />
-      </div>
-
-      <div className="mx-auto mt-6 max-w-2xl lg:max-w-7xl sm:px-6 lg:gap-x-8 lg:px-8 pb-8">
-        <div className="bg-gray-200 mt-16 flex items-center justify-between px-6 py-3">
-          <span className="text-title text-sm">
-            &copy; {new Date().getFullYear()} IMFA. جميع الحقوق محفوظة.
-          </span>
-          <Link
-            href="#"
-            className="text-muted-foreground hover:text-primary text-sm"
-          >
-            سياسة الخصوصية
-          </Link>
-        </div>
-      </div>
-    </main>
-  );
 }

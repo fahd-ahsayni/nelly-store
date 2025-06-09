@@ -41,10 +41,6 @@ export default async function ProductLayout({
   return (
     <StoreProvider initialData={initialData}>
       <div className="min-h-screen flex flex-col">
-        {/* Banner */}
-        <div className="bg-rose-600 text-white text-center py-2">
-          <p className="text-sm">! نحن متحمسون للإعلان عن موقع إلكتروني جديد</p>
-        </div>
         {/* Main Content */}
         <main className="flex-1">{children}</main>
       </div>

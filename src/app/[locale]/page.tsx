@@ -13,6 +13,7 @@ import ProductList from "@/components/pages/home/product-list";
 import TestimonialGrid from "@/components/pages/home/testimonials";
 import TrendProduct from "@/components/pages/home/trend-product";
 import StoreProvider from "@/components/providers/store-provider";
+import { StructuredData } from "@/components/seo/structured-data";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 import { SpinningText } from "@/components/ui/spinning-text";
@@ -35,6 +36,7 @@ export default async function Home({
 
   return (
     <StoreProvider>
+      <StructuredData locale={locale} translations={translations} />
       <HomePageClient translations={translations} />
       <main>
         <div className="lg:absolute inset-0">

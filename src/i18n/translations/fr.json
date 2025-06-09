@@ -104,10 +104,17 @@
       "apply": "Appliquer les filtres"
     },
     "productsFound": "produits trouvés"
-  },
-  "seo": {
-    "title": "Collection Nelly - Boutique de Mode",
-    "description": "Découvrez les dernières tendances de mode chez Collection Nelly"
+  },  "seo": {
+    "title": "Collection Nelly - Mode Modeste Haut de Gamme & Boutique Hijab | nellycollection.store",
+    "description": "Découvrez la mode modeste haut de gamme, hijabs, burkinis et abayas chez Collection Nelly. Designs élégants et confortables par l'influenceuse Nelly Oumaima. Livraison gratuite au Maroc. Achetez maintenant!",
+    "keywords": "mode modeste, hijab, burkini, abaya, mode islamique, mode féminine, vêtements modestes, boutique hijab, collection burkini, hijabs premium, collection nelly, mode maroc, mode musulmane, tenue modeste",
+    "ogTitle": "Collection Nelly - Boutique Mode Modeste Haut de Gamme",
+    "ogDescription": "Achetez la mode modeste haut de gamme, hijabs, burkinis et abayas. Designs élégants par Nelly Oumaima. Livraison gratuite au Maroc. Découvrez votre style parfait aujourd'hui!",
+    "twitterTitle": "Collection Nelly - Mode Modeste Haut de Gamme & Boutique Hijab",
+    "twitterDescription": "Découvrez la mode modeste élégante de @NellyOumaima. Hijabs, burkinis et abayas premium avec livraison gratuite au Maroc 🇲🇦 #ModeModeste #Hijab",
+    "author": "Nelly Oumaima",
+    "brandName": "Collection Nelly",
+    "siteType": "boutique en ligne"
   },
   "cart": {
     "title": "Panier",

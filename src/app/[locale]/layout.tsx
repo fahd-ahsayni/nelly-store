@@ -8,7 +8,6 @@ import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../globals.css";
-import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 const tajawal = Tajawal({
@@ -34,9 +33,60 @@ export async function generateMetadata({
   return {
     title: translations.seo.title,
     description: translations.seo.description,
+    keywords: translations.seo.keywords,
+    authors: [{ name: translations.seo.author }],
+    creator: "IMFA Solutions",
+    publisher: translations.seo.brandName,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     openGraph: {
-      locale: locale,
-      alternateLocale: locales.filter((l) => l !== locale),
+      type: 'website',
+      locale: locale === 'ar' ? 'ar_MA' : locale === 'fr' ? 'fr_MA' : 'en_US',
+      alternateLocale: locales.filter((l) => l !== locale).map(l => 
+        l === 'ar' ? 'ar_MA' : l === 'fr' ? 'fr_MA' : 'en_US'
+      ),
+      url: `https://nellycollection.store/${locale}`,
+      siteName: translations.seo.brandName,
+      title: translations.seo.ogTitle,
+      description: translations.seo.ogDescription,
+      images: [
+        {
+          url: '/logo/logo.webp',
+          width: 1200,
+          height: 630,
+          alt: `${translations.seo.brandName} Logo`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@NellyOumaima',
+      creator: '@NellyOumaima',
+      title: translations.seo.twitterTitle,
+      description: translations.seo.twitterDescription,
+      images: ['/logo/logo.webp'],
+    },
+    alternates: {
+      canonical: `https://nellycollection.store/${locale}`,
+      languages: Object.fromEntries(
+        locales.map(l => [l, `https://nellycollection.store/${l}`])
+      ),
+    },
+    other: {
+      'og:site_name': translations.seo.brandName,
+      'og:type': 'website',
+      'article:author': translations.seo.author,
+      'twitter:site': '@NellyOumaima',
+      'twitter:creator': '@NellyOumaima',
     },
   };
 }

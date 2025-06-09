@@ -123,10 +123,17 @@
       "apply": "Apply Filters"
     },
     "productsFound": "products found"
-  },
-  "seo": {
-    "title": "Nelly Collection - Fashion Store",
-    "description": "Discover the latest fashion trends at Nelly Collection"
+  },  "seo": {
+    "title": "Nelly Collection - Premium Modest Fashion & Hijab Store | nellycollection.store",
+    "description": "Discover premium modest fashion, hijabs, burkinis & abayas at Nelly Collection. Elegant, comfortable designs by influencer Nelly Oumaima. Free shipping in Morocco. Shop now!",
+    "keywords": "modest fashion, hijab, burkini, abaya, islamic fashion, women fashion, modest clothing, hijab store, burkini collection, premium hijabs, nelly collection, morocco fashion, muslim fashion, modest wear",
+    "ogTitle": "Nelly Collection - Premium Modest Fashion Store",
+    "ogDescription": "Shop premium modest fashion, hijabs, burkinis & abayas. Elegant designs by Nelly Oumaima. Free shipping in Morocco. Discover your perfect style today!",
+    "twitterTitle": "Nelly Collection - Premium Modest Fashion & Hijab Store",
+    "twitterDescription": "Discover elegant modest fashion by @NellyOumaima. Premium hijabs, burkinis & abayas with free shipping in Morocco 🇲🇦 #ModestFashion #Hijab",
+    "author": "Nelly Oumaima",
+    "brandName": "Nelly Collection",
+    "siteType": "e-commerce store"
   },
   "checkout": {
     "title": "Checkout",

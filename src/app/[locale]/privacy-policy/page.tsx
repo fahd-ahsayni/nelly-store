@@ -3,6 +3,7 @@ import { Locale } from "@/i18n/config";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { generateSEOMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,10 +13,18 @@ export async function generateMetadata({
   const { locale } = await params;
   const translations = await getTranslations(locale);
 
-  return {
+  return generateSEOMetadata({
     title: `${translations.privacyPolicy.title} - Nelly Collection`,
     description: translations.privacyPolicy.metaDescription,
-  };
+    keywords: locale === 'ar' 
+      ? ['سياسة الخصوصية', 'حماية البيانات', 'مجموعة نيللي', 'الخصوصية', 'البيانات الشخصية', 'الحماية']
+      : locale === 'fr'
+      ? ['politique de confidentialité', 'protection des données', 'collection nelly', 'confidentialité', 'données personnelles', 'protection']
+      : ['privacy policy', 'data protection', 'nelly collection', 'privacy', 'personal data', 'protection'],
+    locale,
+    path: '/privacy-policy',
+    type: 'article'
+  });
 }
 
 export default async function PrivacyPolicyPage({

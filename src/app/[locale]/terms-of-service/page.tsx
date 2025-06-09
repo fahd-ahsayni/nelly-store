@@ -3,6 +3,7 @@ import { Locale } from "@/i18n/config";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { generateSEOMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,11 +13,18 @@ export async function generateMetadata({
   const { locale } = await params;
   const translations = await getTranslations(locale);
 
-  return {
+  return generateSEOMetadata({
     title: `${translations.termsOfService.title} - Nelly Collection`,
-    description:
-      "Terms of Service for Nelly Collection - Read our terms and conditions for using our platform.",
-  };
+    description: "Terms of Service for Nelly Collection - Read our terms and conditions for using our platform.",
+    keywords: locale === 'ar' 
+      ? ['شروط الخدمة', 'الشروط والأحكام', 'مجموعة نيللي', 'اتفاقية الاستخدام', 'القوانين', 'الأحكام']
+      : locale === 'fr'
+      ? ['conditions d\'utilisation', 'termes et conditions', 'collection nelly', 'accord d\'utilisation', 'règles', 'conditions']
+      : ['terms of service', 'terms and conditions', 'nelly collection', 'user agreement', 'rules', 'terms'],
+    locale,
+    path: '/terms-of-service',
+    type: 'article'
+  });
 }
 
 export default async function TermsOfServicePage({
