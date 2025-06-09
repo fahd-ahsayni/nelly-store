@@ -1,28 +1,28 @@
+import { logo } from "@/assets";
 import { Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { generateProductStructuredData, generateSEOMetadata } from "@/lib/seo";
 import { getProductsFull } from "@/lib/supabase-server";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductClient from "./product-client";
-import Image from "next/image";
-import { logo } from "@/assets";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 interface ProductPageProps {
-  params: Promise<{ locale: Locale; id: string }>;
+  params: Promise<{ locale: Locale; slug: string }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const { locale, id } = await params;
+  const { locale, slug } = await params;
   const translations = await getTranslations(locale);
 
   try {
     const products = await getProductsFull();
-    const product = products.find((p) => p.id === id);
+    const product = products.find((p) => p.slug === slug);
 
     if (!product) {
       return generateSEOMetadata({
@@ -32,11 +32,11 @@ export async function generateMetadata({
         description:
           translations.errors?.productNotFound || "Product not found",
         locale,
-        path: `/product/${id}`,
+        path: `/product/${slug}`,
       });
     }
 
-    const productName = product.name || `Product ${id}`;
+    const productName = product.name || `Product ${slug}`;
     const productDescription =
       product.description || translations.seo.description;
     const price = product.price?.toString() || "";
@@ -75,7 +75,7 @@ export async function generateMetadata({
               "women fashion",
             ],
       locale,
-      path: `/product/${id}`,
+      path: `/product/${slug}`,
       price,
       currency: "MAD",
       availability: "in_stock",
@@ -87,18 +87,17 @@ export async function generateMetadata({
       title: `Product - Nelly Collection`,
       description: translations.seo.description,
       locale,
-      path: `/product/${id}`,
+      path: `/product/${slug}`,
     });
   }
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { locale, id } = await params;
-  const translations = await getTranslations(locale);
+  const { locale, slug } = await params;
 
   try {
     const products = await getProductsFull();
-    const product = products.find((p) => p.id === id);
+    const product = products.find((p) => p.slug === slug);
 
     if (!product) {
       notFound();
@@ -107,7 +106,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     // Generate product structured data
     const productStructuredData = generateProductStructuredData({
       id: product.id,
-      name: product.name || `Product ${id}`,
+      name: product.name || `Product ${slug}`,
       description: product.description || "",
       price: product.price || 0,
       currency: "MAD",

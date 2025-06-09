@@ -73,7 +73,7 @@ export default function ProductClient({ product }: ProductClientProps) {
 
     // Build checkout URL with product details
     const checkoutParams = new URLSearchParams({
-      productId: product.id,
+      slug: params.slug as string,
       quantity: quantity.toString(),
     });
 
