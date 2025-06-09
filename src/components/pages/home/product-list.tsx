@@ -13,7 +13,7 @@ import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
 import { useState } from "react";
 
-const AUTOPLAY_DELAY = 4000;
+const AUTOPLAY_DELAY = 2000;
 
 interface ProductListProps {
   translations: any;

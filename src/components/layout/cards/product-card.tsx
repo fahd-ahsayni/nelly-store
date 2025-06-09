@@ -46,17 +46,18 @@ export default function ProductCard({
       : locale === "fr"
       ? "Rupture de stock"
       : "Out of Stock";
-
+  const currency = locale === "ar" ? "درهم": "MAD";
   return (
     <div key={product.id} className="group relative select-none">
-      <div className="w-full overflow-hidden relative rounded-lg shadow-sm">
+      <div className="w-full overflow-hidden relative shadow-sm">
         <div className="absolute bottom-3 right-3 z-10">
           <div className="backdrop-blur-sm bg-black/20 rounded-full overflow-hidden px-3 py-1.5 border border-white/30">
-            <p className="text-white font-semibold text-sm tracking-wide">
+            <p
+              dir={locale === "ar" ? "rtl" : "ltr"}
+              className="text-white font-semibold text-sm tracking-wide"
+            >
               {product.price}{" "}
-              <span className="text-xs opacity-90">
-                {translations?.currency?.mad || "MAD"}
-              </span>
+              <span className="text-xs opacity-90">{currency}</span>
             </p>
           </div>
         </div>

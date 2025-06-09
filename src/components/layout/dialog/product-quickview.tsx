@@ -52,10 +52,17 @@ export default function ProductQuickview({
       inStock: true,
     })) || [];
 
-  const [selectedColor, setSelectedColor] = useState(colors[0] || null);
-  const [selectedSize, setSelectedSize] = useState(
-    sizes[2] || sizes[0] || null
-  );
+  const [selectedColor, setSelectedColor] = useState<{
+    id: string;
+    name: string;
+    hex: string;
+    selectedClass: string;
+  } | null>(null);
+  const [selectedSize, setSelectedSize] = useState<{
+    id: string;
+    name: string;
+    inStock: boolean;
+  } | null>(null);
 
   // Reset selections when product changes
   useEffect(() => {
@@ -75,16 +82,16 @@ export default function ProductQuickview({
           inStock: true,
         })) || [];
 
-      setSelectedColor(newColors[0] || null);
-      setSelectedSize(newSizes[2] || newSizes[0] || null);
+      setSelectedColor(null);
+      setSelectedSize(null);
     }
   }, [product?.id]);
 
   // Reset selections when dialog closes
   useEffect(() => {
     if (!open) {
-      setSelectedColor(colors[0] || null);
-      setSelectedSize(sizes[2] || sizes[0] || null);
+      setSelectedColor(null);
+      setSelectedSize(null);
     }
   }, [open, colors, sizes]);
 
@@ -121,8 +128,8 @@ export default function ProductQuickview({
     toast.success(translations.productQuickview.addedToBag);
 
     // Reset selections after adding to bag
-    setSelectedColor(colors[0] || null);
-    setSelectedSize(sizes[2] || sizes[0] || null);
+    setSelectedColor(null);
+    setSelectedSize(null);
 
     // Optional: Close the quickview after adding to cart
     onClose();

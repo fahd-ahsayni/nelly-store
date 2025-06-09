@@ -43,24 +43,24 @@ export async function generateMetadata({
       googleBot: {
         index: true,
         follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
     },
     openGraph: {
-      type: 'website',
-      locale: locale === 'ar' ? 'ar_MA' : locale === 'fr' ? 'fr_MA' : 'en_US',
-      alternateLocale: locales.filter((l) => l !== locale).map(l => 
-        l === 'ar' ? 'ar_MA' : l === 'fr' ? 'fr_MA' : 'en_US'
-      ),
+      type: "website",
+      locale: locale === "ar" ? "ar_MA" : locale === "fr" ? "fr_MA" : "en_US",
+      alternateLocale: locales
+        .filter((l) => l !== locale)
+        .map((l) => (l === "ar" ? "ar_MA" : l === "fr" ? "fr_MA" : "en_US")),
       url: `https://nellycollection.store/${locale}`,
       siteName: translations.seo.brandName,
       title: translations.seo.ogTitle,
       description: translations.seo.ogDescription,
       images: [
         {
-          url: '/logo/logo.webp',
+          url: "/logo/logo.webp",
           width: 1200,
           height: 630,
           alt: `${translations.seo.brandName} Logo`,
@@ -68,25 +68,25 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: 'summary_large_image',
-      site: '@NellyOumaima',
-      creator: '@NellyOumaima',
+      card: "summary_large_image",
+      site: "@NellyOumaima",
+      creator: "@NellyOumaima",
       title: translations.seo.twitterTitle,
       description: translations.seo.twitterDescription,
-      images: ['/logo/logo.webp'],
+      images: ["/logo/logo.webp"],
     },
     alternates: {
       canonical: `https://nellycollection.store/${locale}`,
       languages: Object.fromEntries(
-        locales.map(l => [l, `https://nellycollection.store/${l}`])
+        locales.map((l) => [l, `https://nellycollection.store/${l}`])
       ),
     },
     other: {
-      'og:site_name': translations.seo.brandName,
-      'og:type': 'website',
-      'article:author': translations.seo.author,
-      'twitter:site': '@NellyOumaima',
-      'twitter:creator': '@NellyOumaima',
+      "og:site_name": translations.seo.brandName,
+      "og:type": "website",
+      "article:author": translations.seo.author,
+      "twitter:site": "@NellyOumaima",
+      "twitter:creator": "@NellyOumaima",
     },
   };
 }
@@ -124,6 +124,7 @@ export default async function LocaleLayout({
           draggable
           pauseOnHover
           theme="light"
+          className={fontClass}
         />
       </body>
     </html>
