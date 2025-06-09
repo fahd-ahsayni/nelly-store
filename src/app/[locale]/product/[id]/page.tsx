@@ -133,21 +133,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div>
               <Link href={`/ar`} className="flex items-center lg:gap-x-2">
                 <span className="sr-only">Nelly Collection</span>
-                <Image alt="" src={logo} className="lg:h-14 h-10 w-auto" />
-                <h2 className="text-lg lg:text-3xl font-bold">
+                <Image alt="" src={logo} className="lg:h-12 h-10 w-auto" />
+                <h2 className="text-lg lg:text-2xl font-bold">
                   <span className="text-gray-900">نيللي </span>
-                  <span className="ltr:italic text-rose-600">كولكشن</span>
+                  <span className="text-rose-600">كولكشن</span>
                 </h2>
               </Link>
             </div>
-            <div className="flex items-center flex-row-reverse gap-x-2">
+            <Link href="/ar" className="flex items-center flex-row-reverse gap-x-2">
               <div className="p-2 rounded-full border border-gray-300">
                 {" "}
                 <ArrowLeftIcon className="w-4 h-4 text-gray-600 cursor-pointer" />
               </div>
 
               <p className="font-medium text-gray-800">توجه الى موقعنا على</p>
-            </div>
+            </Link>
           </nav>
           <div className="pb-20">
             <ProductClient product={product} />
@@ -159,7 +159,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 &copy; {new Date().getFullYear()} IMFA. جميع الحقوق محفوظة.
               </span>
               <Link
-                href="#"
+                href="/ar/privacy-policy"
                 className="text-muted-foreground hover:text-primary text-sm"
               >
                 سياسة الخصوصية
