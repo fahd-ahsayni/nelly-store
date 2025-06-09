@@ -32,10 +32,8 @@ export default function Footer({
     return () => clearInterval(interval);
   }, []);
 
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="w-full py-8">
+    <footer className="w-full py-8 relative z-20">
       <div className="px-3 lg:px-8">
         <div className="mb-8">
           <Link
@@ -51,23 +49,27 @@ export default function Footer({
             &copy; {new Date().getFullYear()}{" "}
             {translations.footer?.secondaryCopyright ||
               "IMFA. جميع الحقوق محفوظة."}
-          </div>          <div className="text-sm flex items-center">
+          </div>{" "}
+          <div className="text-sm flex items-center">
             {translations.footer?.timeLabel || "Time"}{" "}
             <span className="mx-1">→</span> {time}
           </div>
-
           <div className="flex items-center gap-4">
             <Link
               href={`/${locale}/privacy-policy`}
               className="text-sm hover:text-foreground transition-colors"
             >
-              {translations.footer?.privacyPolicy || translations.privacyPolicy?.title || "Privacy Policy"}
+              {translations.footer?.privacyPolicy ||
+                translations.privacyPolicy?.title ||
+                "Privacy Policy"}
             </Link>
             <Link
               href={`/${locale}/terms-of-service`}
               className="text-sm hover:text-foreground transition-colors"
             >
-              {translations.footer?.termsOfService || translations.termsOfService?.title || "Terms of Service"}
+              {translations.footer?.termsOfService ||
+                translations.termsOfService?.title ||
+                "Terms of Service"}
             </Link>
           </div>
         </div>

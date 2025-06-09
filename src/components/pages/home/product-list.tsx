@@ -84,7 +84,7 @@ export default function ProductList({
         </Link>
       </div>
 
-      <div className="relative mt-4 md:mt-8" dir="ltr">
+      <div className="relative mt-4 md:mt-8 select-none" dir="ltr">
         <Carousel
           opts={{
             loop: true,
