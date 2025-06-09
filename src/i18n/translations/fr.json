@@ -212,11 +212,13 @@
     },
     "orderNotFound": "Commande Introuvable"
   },
-  "footer": {
-    "logoText": "nellycollection.com",
+  "footer": {    "logoText": "nellycollection.com",
     "copyright": "© solutions imfa",
     "timeLabel": "Heure",
-    "contactEmail": "nelly@contact.com"
+    "contactEmail": "nelly@contact.com",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions d'Utilisation",
+    "secondaryCopyright": "IMFA. Tous droits réservés."
   },
   "localStore": {
     "title": "Notre Boutique",
@@ -225,10 +227,126 @@
     "address": "Boulevard Souhaib Arroumi, à côté de la Mosquée El Jazair,Sidi Bernoussi, Casablanca",
     "hours": "Lundi - Samedi : 9h00 - 21h00",
     "phone": "07 81 69 79 96",
-    "visitButton": "Visitez-Nous Aujourd'hui"
-  },
+    "visitButton": "Visitez-Nous Aujourd'hui"  },
   "errors": {
     "invalidItem": "Article invalide dans la liste de souhaits.",
     "productNotFound": "Ce produit n'est plus disponible ou n'a pas pu être trouvé."
+  },
+  "privacyPolicy": {
+    "title": "Politique de Confidentialité",
+    "metaDescription": "Politique de Confidentialité pour Nelly Collection - Découvrez comment nous protégeons vos informations personnelles et vos données lors de vos réservations sur notre boutique.",
+    "lastUpdated": "Dernière mise à jour",
+    "introduction": {
+      "title": "Introduction",
+      "content": "Bienvenue sur Nelly Collection, la plateforme e-commerce exclusive créée par IMFA Solutions pour Nelly Oumaima, une influenceuse renommée avec plus de 500 000 abonnés. Nous nous engageons à protéger votre vie privée et à assurer la sécurité de vos informations personnelles. Cette Politique de Confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations lorsque vous visitez notre site web et effectuez des achats."
+    },
+    "informationWeCollect": {
+      "title": "Informations que Nous Collectons",
+      "personalInfo": {
+        "title": "Informations Personnelles",
+        "content": "Lorsque vous créez un compte ou effectuez un achat, nous pouvons collecter : Nom complet, adresse e-mail, numéro de téléphone, adresses de livraison et de facturation, informations de paiement (traitées de manière sécurisée via des processeurs de paiement tiers), et historique d'achat."
+      },
+      "automaticInfo": {
+        "title": "Informations Collectées Automatiquement",
+        "content": "Nous collectons automatiquement certaines informations lorsque vous visitez notre site web : Adresse IP, type et version du navigateur, informations sur l'appareil, pages visitées et temps passé, site web de référence, et cookies et technologies de suivi similaires."
+      }
+    },
+    "howWeUseInfo": {
+      "title": "Comment Nous Utilisons Vos Informations",
+      "content": "Nous utilisons vos informations pour : Traiter et exécuter vos commandes, communiquer avec vous concernant vos achats, fournir un support client, envoyer des communications marketing (avec votre consentement), améliorer notre site web et nos services, prévenir la fraude et assurer la sécurité, et respecter les obligations légales."
+    },
+    "informationSharing": {
+      "title": "Partage et Divulgation des Informations",
+      "content": "Nous ne vendons, n'échangeons ni ne louons vos informations personnelles à des tiers. Nous pouvons partager vos informations avec : Des prestataires de services qui nous aident à exploiter notre site web et nos activités, des processeurs de paiement pour le traitement des transactions, des entreprises de livraison pour l'exécution des commandes, les autorités légales lorsque requis par la loi, et des partenaires commerciaux avec votre consentement explicite."
+    },
+    "dataSecurity": {
+      "title": "Sécurité des Données",
+      "content": "Nous mettons en place des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos informations personnelles contre l'accès non autorisé, l'altération, la divulgation ou la destruction. Cependant, aucune méthode de transmission sur Internet n'est sécurisée à 100%, et nous ne pouvons garantir une sécurité absolue."
+    },
+    "cookies": {
+      "title": "Cookies et Technologies de Suivi",
+      "content": "Nous utilisons des cookies et des technologies similaires pour améliorer votre expérience de navigation, analyser le trafic du site web et à des fins marketing. Vous pouvez contrôler les paramètres des cookies via les préférences de votre navigateur, mais la désactivation des cookies peut affecter la fonctionnalité du site web."
+    },
+    "thirdPartyServices": {
+      "title": "Services de Tiers",
+      "content": "Notre site web peut contenir des liens vers des sites web de tiers ou s'intégrer avec des services de tiers. Nous ne sommes pas responsables des pratiques de confidentialité de ces tiers. Veuillez consulter leurs politiques de confidentialité avant de fournir des informations."
+    },
+    "dataRetention": {
+      "title": "Conservation des Données",
+      "content": "Nous conservons vos informations personnelles aussi longtemps que nécessaire pour fournir nos services, respecter les obligations légales, résoudre les différends et faire appliquer nos accords. Vous pouvez demander la suppression de votre compte et de vos données personnelles à tout moment."
+    },
+    "yourRights": {
+      "title": "Vos Droits",
+      "content": "Selon votre localisation, vous pouvez avoir le droit de : Accéder à vos informations personnelles, corriger les informations inexactes, supprimer vos informations personnelles, restreindre le traitement de vos informations, portabilité des données, et retirer le consentement pour les communications marketing."
+    },
+    "internationalTransfers": {
+      "title": "Transferts Internationaux de Données",
+      "content": "Vos informations peuvent être transférées et traitées dans des pays autres que votre pays de résidence. Nous nous assurons que des garanties appropriées sont en place pour protéger vos informations conformément aux lois applicables sur la protection des données."
+    },
+    "childrenPrivacy": {
+      "title": "Confidentialité des Enfants",
+      "content": "Nos services ne sont pas destinés aux enfants de moins de 13 ans. Nous ne collectons pas sciemment d'informations personnelles d'enfants de moins de 13 ans. Si vous pensez que nous avons collecté des informations d'un enfant de moins de 13 ans, veuillez nous contacter immédiatement."
+    },
+    "policyChanges": {
+      "title": "Modifications de Cette Politique de Confidentialité",
+      "content": "Nous pouvons mettre à jour cette Politique de Confidentialité de temps à autre. Nous vous informerons de tout changement en publiant la nouvelle Politique de Confidentialité sur cette page et en mettant à jour la date de 'Dernière mise à jour'. Votre utilisation continue de nos services après tout changement constitue une acceptation de la politique mise à jour."
+    },
+    "contactUs": {
+      "title": "Informations de Contact",
+      "content": "Si vous avez des questions concernant cette Politique de Confidentialité ou nos pratiques de confidentialité, veuillez nous contacter :",
+      "email": "E-mail : privacy@nellycollection.store",      "developer": "Développé par : IMFA Solutions",
+      "brand": "Propriétaire de la marque : Nelly Oumaima"
+    }
+  },
+  "termsOfService": {
+    "title": "Conditions d'Utilisation",
+    "lastUpdated": "Dernière mise à jour",
+    "acceptance": {
+      "title": "Acceptation des Conditions",
+      "content": "En accédant et en utilisant le site web et les services de Nelly Collection, vous acceptez et convenez d'être lié par les termes et dispositions de cet accord. Ces Conditions d'Utilisation régissent votre utilisation de notre plateforme e-commerce développée par IMFA Solutions pour Nelly Oumaima."
+    },
+    "useOfService": {
+      "title": "Utilisation du Service",
+      "content": "Vous ne pouvez utiliser notre service qu'à des fins légales. Vous acceptez de ne pas utiliser le service : (a) à des fins frauduleuses, (b) pour transmettre ou distribuer du contenu nuisible, (c) pour violer toute loi ou réglementation applicable, (d) pour porter atteinte aux droits de propriété intellectuelle, ou (e) pour interférer avec le bon fonctionnement du service."
+    },
+    "account": {
+      "title": "Comptes Utilisateur",
+      "content": "Lorsque vous créez un compte chez nous, vous devez fournir des informations exactes, complètes et à jour en permanence. Vous êtes responsable de la protection du mot de passe et du maintien de la confidentialité de votre compte."
+    },
+    "orders": {
+      "title": "Commandes et Paiement",
+      "content": "Toutes les commandes sont sujettes à acceptation et disponibilité. Nous nous réservons le droit de refuser ou d'annuler toute commande. Les prix sont sujets à changement sans préavis. Le paiement doit être effectué au moment de l'achat via notre système de paiement sécurisé."
+    },
+    "shipping": {
+      "title": "Expédition et Livraison",
+      "content": "Nous visons à traiter et expédier les commandes dans les 24-48 heures. Les délais de livraison peuvent varier selon l'emplacement et la disponibilité. Le risque de perte et le titre des articles achetés vous sont transférés lors de la livraison au transporteur."
+    },
+    "returns": {
+      "title": "Retours et Remboursements",
+      "content": "Les retours sont acceptés dans les 7 jours suivant la livraison pour les articles non portés en état d'origine. Les articles personnalisés ne peuvent pas être retournés. Les remboursements seront traités sur le mode de paiement original dans les 7-10 jours ouvrables."
+    },
+    "intellectualProperty": {
+      "title": "Propriété Intellectuelle",
+      "content": "Le service et son contenu original, ses fonctionnalités et sa fonctionnalité sont et resteront la propriété exclusive de Nelly Collection et IMFA Solutions. Le service est protégé par le droit d'auteur, les marques déposées et d'autres lois."
+    },
+    "limitation": {
+      "title": "Limitation de Responsabilité",
+      "content": "En aucun cas Nelly Collection, IMFA Solutions ou Nelly Oumaima ne seront responsables de dommages indirects, accessoires, spéciaux, consécutifs ou punitifs, y compris sans limitation, la perte de profits, de données, d'utilisation, de clientèle ou d'autres pertes intangibles."
+    },
+    "termination": {
+      "title": "Résiliation",
+      "content": "Nous pouvons résilier ou suspendre votre compte et interdire l'accès au service immédiatement, sans préavis ni responsabilité, à notre seule discrétion, pour quelque raison que ce soit, y compris la violation des Conditions."
+    },
+    "changes": {
+      "title": "Modifications des Conditions",
+      "content": "Nous nous réservons le droit de modifier ou de remplacer ces Conditions à tout moment. Si une révision est importante, nous fournirons un préavis d'au moins 30 jours avant que de nouvelles conditions prennent effet."
+    },
+    "contact": {
+      "title": "Informations de Contact",
+      "content": "Si vous avez des questions concernant ces Conditions d'Utilisation, veuillez nous contacter :",
+      "email": "E-mail : legal@nellycollection.store",
+      "developer": "Développé par : IMFA Solutions",
+      "brand": "Propriétaire de la marque : Nelly Oumaima"
+    }
   }
 }

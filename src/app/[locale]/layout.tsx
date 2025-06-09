@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../globals.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 const tajawal = Tajawal({
@@ -54,7 +55,6 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const translations = await getTranslations(locale as Locale);
   const isRTL = locale === "ar";
   const fontClass = locale === "ar" ? tajawal.className : inter.className;
 

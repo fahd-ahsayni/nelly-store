@@ -48,23 +48,28 @@ export default function Footer({
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-muted-foreground">
           <div className="text-sm">
-            {translations.footer?.copyright ||
-              `© imfa solutions ${currentYear}`}
-          </div>
-
-          <div className="text-sm flex items-center">
+            &copy; {new Date().getFullYear()}{" "}
+            {translations.footer?.secondaryCopyright ||
+              "IMFA. جميع الحقوق محفوظة."}
+          </div>          <div className="text-sm flex items-center">
             {translations.footer?.timeLabel || "Time"}{" "}
             <span className="mx-1">→</span> {time}
           </div>
 
-          <Link
-            href={`mailto:${
-              translations.footer?.contactEmail || "nelly@contact.com"
-            }`}
-            className="text-sm hover:text-foreground transition-colors"
-          >
-            {translations.footer?.contactEmail || "nelly@contact.com"}
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href={`/${locale}/privacy-policy`}
+              className="text-sm hover:text-foreground transition-colors"
+            >
+              {translations.footer?.privacyPolicy || translations.privacyPolicy?.title || "Privacy Policy"}
+            </Link>
+            <Link
+              href={`/${locale}/terms-of-service`}
+              className="text-sm hover:text-foreground transition-colors"
+            >
+              {translations.footer?.termsOfService || translations.termsOfService?.title || "Terms of Service"}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

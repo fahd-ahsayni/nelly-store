@@ -1,6 +1,7 @@
 import SvgStar from "@/assets/svgs";
 import { RevealOnScroll } from "@/components/animations/reveal-on-scroll";
 import Banner from "@/components/layout/banner";
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import ImageCarousel from "@/components/layout/images-carousel";
 import CallToAction from "@/components/pages/home/call-to-action";
@@ -211,6 +212,9 @@ export default async function Home({
           </span>
         </VelocityScroll>
         <LocalStoreSection translations={translations} locale={locale} />
+        <div className="h-24" />
+        {/* Footer */}
+        <Footer translations={translations} locale={locale} />
       </main>
     </StoreProvider>
   );

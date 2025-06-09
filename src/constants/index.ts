@@ -30,7 +30,7 @@ interface CollectionItem {
  */
 export const CAROUSEL_IMAGES: CarouselImage[] = [
   {
-    src: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2019.11.06.webp?updatedAt=1749407823519`,
+    src: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2021.02.17.webp?updatedAt=1749468436794`,
     alt: "Sunset over water with gentle waves - new collection",
   },
   {

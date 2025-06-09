@@ -211,12 +211,14 @@
       "email": "Email us"
     },
     "orderNotFound": "Order Not Found"
-  },
-  "footer": {
+  },  "footer": {
     "logoText": "nellycollection.com",
     "copyright": "© imfa solutions",
     "timeLabel": "Time",
-    "contactEmail": "nelly@contact.com"
+    "contactEmail": "nelly@contact.com",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "secondaryCopyright": "IMFA. All rights reserved."
   },
   "localStore": {
     "title": "Our Local",
@@ -230,12 +232,128 @@
   "errors": {
     "invalidItem": "Invalid item in wishlist.",
     "productNotFound": "This product is no longer available or could not be found."
-  },
-  "notFound": {
+  },  "notFound": {
     "title": "Page Not Found",
     "subtitle": "Sorry, we couldn't find the page you're looking for.",
     "description": "The link might be broken or the page may have been moved to another location.",
     "homeButton": "Go Home",
     "shopButton": "Shop Now"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "metaDescription": "Privacy Policy for Nelly Collection - Learn how we protect your personal information and data when you make reservations on our store.",
+    "lastUpdated": "Last updated",
+    "introduction": {
+      "title": "Introduction",
+      "content": "Welcome to Nelly Collection, the exclusive e-commerce platform created by IMFA Solutions for Nelly Oumaima, a renowned influencer with over 500,000 followers. We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and make purchases."
+    },
+    "informationWeCollect": {
+      "title": "Information We Collect",
+      "personalInfo": {
+        "title": "Personal Information",
+        "content": "When you create an account or make a purchase, we may collect: Full name, email address, phone number, shipping and billing addresses, payment information (processed securely through third-party payment processors), and purchase history."
+      },
+      "automaticInfo": {
+        "title": "Automatically Collected Information",
+        "content": "We automatically collect certain information when you visit our website: IP address, browser type and version, device information, pages visited and time spent, referring website, and cookies and similar tracking technologies."
+      }
+    },
+    "howWeUseInfo": {
+      "title": "How We Use Your Information",
+      "content": "We use your information to: Process and fulfill your orders, communicate with you about your purchases, provide customer support, send marketing communications (with your consent), improve our website and services, prevent fraud and ensure security, and comply with legal obligations."
+    },
+    "informationSharing": {
+      "title": "Information Sharing and Disclosure",
+      "content": "We do not sell, trade, or rent your personal information to third parties. We may share your information with: Service providers who assist us in operating our website and business, payment processors for transaction processing, shipping companies for order fulfillment, legal authorities when required by law, and business partners with your explicit consent."
+    },
+    "dataSecurity": {
+      "title": "Data Security",
+      "content": "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security."
+    },
+    "cookies": {
+      "title": "Cookies and Tracking Technologies",
+      "content": "We use cookies and similar technologies to enhance your browsing experience, analyze website traffic, and for marketing purposes. You can control cookie settings through your browser preferences, but disabling cookies may affect website functionality."
+    },
+    "thirdPartyServices": {
+      "title": "Third-Party Services",
+      "content": "Our website may contain links to third-party websites or integrate with third-party services. We are not responsible for the privacy practices of these third parties. Please review their privacy policies before providing any information."
+    },
+    "dataRetention": {
+      "title": "Data Retention",
+      "content": "We retain your personal information for as long as necessary to provide our services, comply with legal obligations, resolve disputes, and enforce our agreements. You may request deletion of your account and personal data at any time."
+    },
+    "yourRights": {
+      "title": "Your Rights",
+      "content": "Depending on your location, you may have the right to: Access your personal information, correct inaccurate information, delete your personal information, restrict processing of your information, data portability, and withdraw consent for marketing communications."
+    },
+    "internationalTransfers": {
+      "title": "International Data Transfers",
+      "content": "Your information may be transferred to and processed in countries other than your country of residence. We ensure appropriate safeguards are in place to protect your information in accordance with applicable data protection laws."
+    },
+    "childrenPrivacy": {
+      "title": "Children's Privacy",
+      "content": "Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe we have collected information from a child under 13, please contact us immediately."
+    },
+    "policyChanges": {
+      "title": "Changes to This Privacy Policy",
+      "content": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the 'Last Updated' date. Your continued use of our services after any changes constitutes acceptance of the updated policy."
+    },
+    "contactUs": {
+      "title": "Contact Information",
+      "content": "If you have any questions about this Privacy Policy or our privacy practices, please contact us:",
+      "email": "Email: privacy@nellycollection.store",      "developer": "Developed by: IMFA Solutions",
+      "brand": "Brand Owner: Nelly Oumaima"
+    }
+  },
+  "termsOfService": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated",
+    "acceptance": {
+      "title": "Acceptance of Terms",
+      "content": "By accessing and using Nelly Collection's website and services, you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service govern your use of our e-commerce platform developed by IMFA Solutions for Nelly Oumaima."
+    },
+    "useOfService": {
+      "title": "Use of Service",
+      "content": "You may use our service for lawful purposes only. You agree not to use the service: (a) for fraudulent purposes, (b) to transmit or distribute harmful content, (c) to violate any applicable laws or regulations, (d) to infringe upon intellectual property rights, or (e) to interfere with the proper working of the service."
+    },
+    "account": {
+      "title": "User Accounts",
+      "content": "When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for maintaining the confidentiality of your account."
+    },
+    "orders": {
+      "title": "Orders and Payment",
+      "content": "All orders are subject to acceptance and availability. We reserve the right to refuse or cancel any order. Prices are subject to change without notice. Payment must be made at the time of purchase through our secure payment system."
+    },
+    "shipping": {
+      "title": "Shipping and Delivery",
+      "content": "We aim to process and ship orders within 24-48 hours. Delivery times may vary based on location and availability. Risk of loss and title for items purchased pass to you upon delivery to the carrier."
+    },
+    "returns": {
+      "title": "Returns and Refunds",
+      "content": "Returns are accepted within 7 days of delivery for unworn items in original condition. Custom or personalized items cannot be returned. Refunds will be processed to the original payment method within 7-10 business days."
+    },
+    "intellectualProperty": {
+      "title": "Intellectual Property",
+      "content": "The service and its original content, features, and functionality are and will remain the exclusive property of Nelly Collection and IMFA Solutions. The service is protected by copyright, trademark, and other laws."
+    },
+    "limitation": {
+      "title": "Limitation of Liability",
+      "content": "In no event shall Nelly Collection, IMFA Solutions, or Nelly Oumaima be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses."
+    },
+    "termination": {
+      "title": "Termination",
+      "content": "We may terminate or suspend your account and bar access to the service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever including breach of the Terms."
+    },
+    "changes": {
+      "title": "Changes to Terms",
+      "content": "We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days notice prior to any new terms taking effect."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "content": "If you have any questions about these Terms of Service, please contact us:",
+      "email": "Email: legal@nellycollection.store",
+      "developer": "Developed by: IMFA Solutions",
+      "brand": "Brand Owner: Nelly Oumaima"
+    }
   }
 }
