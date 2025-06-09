@@ -6,6 +6,7 @@ import { ProductFull } from "@/types/database";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { BoltIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
+import { useRouter, useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 interface ProductClientProps {
@@ -15,6 +16,9 @@ interface ProductClientProps {
 const PLACEHOLDER_IMAGE = "/placeholder.jpg";
 
 export default function ProductClient({ product }: ProductClientProps) {
+  const router = useRouter();
+  const params = useParams();
+
   // Initialize selected options with better defaults
   const initialColor = useMemo(
     () => product.product_colors?.[0] || null,
@@ -45,12 +49,23 @@ export default function ProductClient({ product }: ProductClientProps) {
 
   const handleAddToBag = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement add to cart functionality
-    console.log("Adding to cart:", {
-      product: product.id,
-      color: selectedColor?.id,
-      size: selectedSize,
+
+    // Build checkout URL with product details
+    const checkoutParams = new URLSearchParams({
+      productId: product.id,
+      quantity: "1",
     });
+
+    if (selectedColor) {
+      checkoutParams.set("color", selectedColor.colors.name);
+    }
+
+    if (selectedSize) {
+      checkoutParams.set("size", selectedSize);
+    }
+
+    // Navigate to checkout page with correct locale path
+    router.push(`/${params.locale}/product/checkout?${checkoutParams.toString()}`);
   };
 
   return (
@@ -119,7 +134,7 @@ export default function ProductClient({ product }: ProductClientProps) {
         <div className="mt-4 lg:row-span-3 lg:mt-10">
           <h2 className="sr-only">معلومات المنتج</h2>
           <div>
-            <p className="text-3xl tracking-tight text-gray-900">
+            <p className="text-3xl tracking-tight text-gray-900 font-bold">
               {product.price.toFixed(2)} درهم فقط
             </p>
             <p className="text-xl tracking-tight text-gray-400 line-through">
@@ -275,7 +290,7 @@ export default function ProductClient({ product }: ProductClientProps) {
               color="rose"
               className="mt-10 w-full flex items-center justify-center h-12"
             >
-              {product.instock ? "أضف إلى الحقيبة" : "غير متوفر"}
+              اشتري الآن
             </Button>
           </form>
         </div>

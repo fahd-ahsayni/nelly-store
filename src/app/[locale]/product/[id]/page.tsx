@@ -124,10 +124,6 @@ export default function ProductPage({ params }: ProductPageProps) {
   }
   return (
     <main dir="rtl" className="!font-arabic">
-      <div className="bg-rose-600 text-white text-center py-2">
-        <p className="text-sm">! نحن متحمسون للإعلان عن موقع إلكتروني جديد</p>
-      </div>
-
       <div className="pb-20">
         <ProductClient product={product!} />
       </div>
