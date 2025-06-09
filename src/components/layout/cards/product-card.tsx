@@ -1,4 +1,7 @@
 import type { ProductFull } from "@/types/database";
+import {
+  ExclamationTriangleIcon
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
 
 export interface ProductCardProps {
@@ -36,6 +39,14 @@ export default function ProductCard({
 }: ProductCardProps) {
   const isNew = isProductNew(product, allProducts);
 
+  // Direct badge texts based on locale
+  const newBadgeText =
+    locale === "ar" ? "جديد" :
+    locale === "fr" ? "Nouveau" : "New";
+  const stockBadgeText =
+    locale === "ar" ? "نفد المخزون" :
+    locale === "fr" ? "Rupture de stock" : "Out of Stock";
+
   return (
     <div key={product.id} className="group relative">
       <Image
@@ -51,23 +62,35 @@ export default function ProductCard({
         className="aspect-[3/4] w-full bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
       />
 
-      {isNew && (
-        <div className="absolute top-3 rtl:right-3 ltr:left-3">
-          <span className="px-2.5 py-1 text-xs font-medium bg-rose-600 text-white shadow-sm">
-            {translations?.new || "New"}
-          </span>
-        </div>
-      )}
+      {/* Out of Stock Badge */}
+      <div className="absolute top-0 left-0 w-full flex rtl:flex-row-reverse justify-between p-2">
+        {!product.instock && (
+          <div className="w-fit">
+            <span className="flex rtl:flex-row-reverse items-center gap-1 px-2.5 py-1 text-xs font-medium bg-red-50 text-red-700 border border-red-400">
+              <ExclamationTriangleIcon className="w-3 h-3" />
+              {stockBadgeText}
+            </span>
+          </div>
+        )}
+
+        {isNew && product.instock  && (
+          <div className="w-fit">
+            <span className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-rose-600 text-white">
+              {newBadgeText}
+            </span>
+          </div>
+        )}
+      </div>
 
       <div className="mt-4 flex justify-between">
         <div>
-          <h3 className="text-gray-80 font-medium line-clamp-1">
+          <h3 className="text-gray-80 font-medium line-clamp-1 text-sm">
             <div onClick={onClick} className="cursor-pointer">
               <span aria-hidden="true" className="absolute inset-0" />
               {product.name}
             </div>
           </h3>
-          <p className="text-gray-600">{product.collections.name}</p>
+          <p className="text-gray-600 text-sm">{product.collections.name}</p>
         </div>
         <p className="font-medium text-gray-900">
           {product.price} {translations?.currency?.mad || "MAD"}

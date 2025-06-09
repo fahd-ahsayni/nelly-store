@@ -34,7 +34,7 @@ export const CAROUSEL_IMAGES: CarouselImage[] = [
     alt: "Sunset over water with gentle waves - new collection",
   },
   {
-    src: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2019.11.07.webp?updatedAt=1749407821504`,
+    src: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-08%20at%2019.32.41%20(1).webp?updatedAt=1749407821497`,
     alt: "Fashion collection showcase - new collection",
   },
 ];

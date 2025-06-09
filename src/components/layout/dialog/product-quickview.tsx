@@ -196,9 +196,9 @@ export default function ProductQuickview({
                   >
                     <StarIcon className="w-4 h-4 text-yellow-400" />
                     <span className="text-sm font-medium text-gray-800">
-                      {product.rating === null && product.rating < 4
-                        ? 4.5
-                        : product.rating}
+                      {product.rating === null || product.rating < 4
+                        ? (4.5).toFixed(1)
+                        : product.rating.toFixed(1)}
                     </span>
                   </Badge>
                   <Image
@@ -335,11 +335,15 @@ export default function ProductQuickview({
                         <Button
                           color="rose"
                           type="submit"
+                          disabled={!product.instock}
                           className={cn(
-                            "flex-1 !h-12 flex items-center justify-center font-semibold"
+                            "flex-1 !h-12 flex items-center justify-center font-semibold",
+                            !product.instock && "opacity-50 cursor-not-allowed"
                           )}
                         >
-                          {translations.productQuickview.addToBag}
+                          {!product.instock 
+                            ? translations.productQuickview.outOfStock
+                            : translations.productQuickview.addToBag}
                         </Button>
 
                         <div className="relative">
@@ -347,13 +351,15 @@ export default function ProductQuickview({
                             outline
                             type="button"
                             onClick={handleWishlistToggle}
+                            disabled={!product.instock}
                             className={cn(
                               "!h-12 !w-12 !p-0 flex items-center justify-center",
                               "transition-colors duration-200 ease-in-out bg-white",
                               "border-2",
                               isItemInWishlist
                                 ? "!border-rose-500 !text-rose-600"
-                                : ""
+                                : "",
+                              !product.instock && "opacity-50 cursor-not-allowed"
                             )}
                           >
                             {/* Heart icon with animation */}

@@ -45,10 +45,10 @@ export default function CollectionsCarousel({
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  // Only show collections that have at least one in-stock product.
+  // Only show collections that have at least one product (removed instock filter).
   const collectionsWithProducts = collections.filter((collection) =>
     products.some(
-      (product) => product.collection_id === collection.id && product.instock
+      (product) => product.collection_id === collection.id
     )
   );
 

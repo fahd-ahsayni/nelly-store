@@ -31,9 +31,8 @@ export default function ProductList({
   );
   const [isQuickviewOpen, setIsQuickviewOpen] = useState(false);
 
-  // Get featured products (top 10 highest rated, in stock products)
+  // Get featured products (top 10 highest rated products - removed instock filter)
   const featuredProducts = initialProducts
-    .filter((product) => product.instock)
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 10);
 
