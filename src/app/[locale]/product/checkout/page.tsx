@@ -61,7 +61,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   // Get product data from URL params
-  const productId = searchParams.get("productId");
+  const productIdParam = searchParams.get("productId") || searchParams.get("slug");
   const selectedColor = searchParams.get("color");
   const selectedSize = searchParams.get("size");
   const quantity = parseInt(searchParams.get("quantity") || "1");
@@ -73,11 +73,11 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
 
   // Memoize product computation
   const product = useMemo((): ProductFull | null => {
-    if (!productId || storeLoading || products.length === 0) {
+    if (!productIdParam || storeLoading || products.length === 0) {
       return null;
     }
 
-    const foundProduct = products.find((p) => p.id === productId);
+    const foundProduct = products.find((p) => p.id === productIdParam || p.slug === productIdParam);
     if (!foundProduct) return null;
 
     const collection = collections.find(
@@ -98,7 +98,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
       collections: collection,
       product_colors: productColorsWithColors,
     };
-  }, [productId, storeLoading, products, collections, productColors, colors]);
+  }, [productIdParam, storeLoading, products, collections, productColors, colors]);
 
   const selectedColorInfo = useMemo(() => {
     if (!product || !selectedColor) return null;
@@ -108,7 +108,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
   }, [product, selectedColor]);
 
   const isLoading = storeLoading || !resolvedParams || !product;
-  const productNotFound = !isLoading && !product && productId;
+  const productNotFound = !isLoading && !product && productIdParam;
 
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
