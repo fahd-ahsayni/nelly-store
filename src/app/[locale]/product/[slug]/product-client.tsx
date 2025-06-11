@@ -440,7 +440,7 @@ export default function ProductClient({ product }: ProductClientProps) {
               color="rose"
               disabled={!product.instock}
               className={cn(
-                "mt-10 w-full flex items-center justify-center h-12",
+                "mt-10 w-full flex items-center justify-center h-12 relative z-30",
                 !product.instock && "opacity-50 cursor-not-allowed bg-gray-400 hover:bg-gray-400"
               )}
             >
