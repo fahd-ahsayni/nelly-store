@@ -1,4 +1,4 @@
-import { collection1, collection2, collection3, collection4 } from "@/assets";
+import { collection1, collection2, collection3 } from "@/assets";
 import { Testimonial } from "@/components/pages/home/testimonials";
 import { StaticImageData } from "next/image";
 
@@ -45,7 +45,7 @@ export const CAROUSEL_IMAGES: CarouselImage[] = [
 export const COLLECTIONS_SECTION: CollectionItem[] = [
   {
     name: "Summer Collection",
-    image: collection1,
+    image: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-09%20at%2018.34.09.jpeg?updatedAt=1749491054945`,
     alt: "Summer Collection",
     translationKey: "collection1",
   },
@@ -57,13 +57,13 @@ export const COLLECTIONS_SECTION: CollectionItem[] = [
   },
   {
     name: "Spring Collection",
-    image: collection3,
+    image: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-09%20at%2018.30.01.jpeg?updatedAt=1749490331709`,
     alt: "Spring Collection",
     translationKey: "collection3",
   },
   {
     name: "Autumn Collection",
-    image: collection4,
+    image: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-09%20at%2018.32.05.jpeg?updatedAt=1749490333207`,
     alt: "Autumn Collection",
     translationKey: "collection4",
   },

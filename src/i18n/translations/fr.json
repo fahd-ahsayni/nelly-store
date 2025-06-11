@@ -40,10 +40,10 @@
     "title-part1": "Découvrez Notre",
     "title-part2": "Nouvelle Collection",
     "link": "Voir toutes les collections",
-    "collection1": "Collection Foulard",
-    "collection2": "Collection Hijab",
-    "collection3": "Collection Burkini",
-    "collection4": "Collection Abaya",
+    "collection1": "Collection de abayas importées",
+    "collection2": "Collection d’abayas",
+    "collection3": "Collection d’abayas de prière",
+    "collection4": "Collection de khimars",
     "allCollections": "Toutes les Collections"
   },
   "callToAction": {
@@ -105,7 +105,8 @@
       "apply": "Appliquer les filtres"
     },
     "productsFound": "produits trouvés"
-  },  "seo": {
+  },
+  "seo": {
     "title": "Collection Nelly - Mode Modeste Haut de Gamme & Boutique Hijab | nellycollection.store",
     "description": "Découvrez la mode modeste haut de gamme, hijabs, burkinis et abayas chez Collection Nelly. Designs élégants et confortables par l'influenceuse Nelly Oumaima. Livraison gratuite au Maroc. Achetez maintenant!",
     "keywords": "mode modeste, hijab, burkini, abaya, mode islamique, mode féminine, vêtements modestes, boutique hijab, collection burkini, hijabs premium, collection nelly, mode maroc, mode musulmane, tenue modeste",
@@ -220,7 +221,8 @@
     },
     "orderNotFound": "Commande Introuvable"
   },
-  "footer": {    "logoText": "nellycollection.com",
+  "footer": {
+    "logoText": "nellycollection.com",
     "copyright": "© solutions imfa",
     "timeLabel": "Heure",
     "contactEmail": "nelly@contact.com",
@@ -235,7 +237,8 @@
     "address": "Boulevard Souhaib Arroumi, à côté de la Mosquée El Jazair,Sidi Bernoussi, Casablanca",
     "hours": "Lundi - Samedi : 9h00 - 21h00",
     "phone": "07 81 69 79 96",
-    "visitButton": "Visitez-Nous Aujourd'hui"  },
+    "visitButton": "Visitez-Nous Aujourd'hui"
+  },
   "errors": {
     "invalidItem": "Article invalide dans la liste de souhaits.",
     "productNotFound": "Ce produit n'est plus disponible ou n'a pas pu être trouvé."
@@ -302,7 +305,8 @@
     "contactUs": {
       "title": "Informations de Contact",
       "content": "Si vous avez des questions concernant cette Politique de Confidentialité ou nos pratiques de confidentialité, veuillez nous contacter :",
-      "email": "E-mail : privacy@nellycollection.store",      "developer": "Développé par : IMFA Solutions",
+      "email": "E-mail : privacy@nellycollection.store",
+      "developer": "Développé par : IMFA Solutions",
       "brand": "Propriétaire de la marque : Nelly Oumaima"
     }
   },

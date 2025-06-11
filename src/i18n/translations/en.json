@@ -40,10 +40,10 @@
     "title-part1": "Discover Our",
     "title-part2": "New Collection",
     "link": "View all Collections",
-    "collection1": "Foular Collection",
-    "collection2": "Hijab Collection",
-    "collection3": "Burkini Collection",
-    "collection4": "Abaya Collection",
+    "collection1": "Imported Abayas Collection",
+    "collection2": "Abaya Collection",
+    "collection3": "Prayer Abayas Collection",
+    "collection4": "Khimar Collection",
     "allCollections": "All Collections"
   },
   "callToAction": {
@@ -124,7 +124,8 @@
       "apply": "Apply Filters"
     },
     "productsFound": "products found"
-  },  "seo": {
+  },
+  "seo": {
     "title": "Nelly Collection - Premium Modest Fashion & Hijab Store | nellycollection.store",
     "description": "Discover premium modest fashion, hijabs, burkinis & abayas at Nelly Collection. Elegant, comfortable designs by influencer Nelly Oumaima. Free shipping in Morocco. Shop now!",
     "keywords": "modest fashion, hijab, burkini, abaya, islamic fashion, women fashion, modest clothing, hijab store, burkini collection, premium hijabs, nelly collection, morocco fashion, muslim fashion, modest wear",
@@ -219,7 +220,8 @@
       "email": "Email us"
     },
     "orderNotFound": "Order Not Found"
-  },  "footer": {
+  },
+  "footer": {
     "logoText": "nellycollection.com",
     "copyright": "© imfa solutions",
     "timeLabel": "Time",
@@ -240,7 +242,8 @@
   "errors": {
     "invalidItem": "Invalid item in wishlist.",
     "productNotFound": "This product is no longer available or could not be found."
-  },  "notFound": {
+  },
+  "notFound": {
     "title": "Page Not Found",
     "subtitle": "Sorry, we couldn't find the page you're looking for.",
     "description": "The link might be broken or the page may have been moved to another location.",
@@ -309,7 +312,8 @@
     "contactUs": {
       "title": "Contact Information",
       "content": "If you have any questions about this Privacy Policy or our privacy practices, please contact us:",
-      "email": "Email: privacy@nellycollection.store",      "developer": "Developed by: IMFA Solutions",
+      "email": "Email: privacy@nellycollection.store",
+      "developer": "Developed by: IMFA Solutions",
       "brand": "Brand Owner: Nelly Oumaima"
     }
   },
