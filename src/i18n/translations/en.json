@@ -101,7 +101,25 @@
     "fastDelivery": "Fast Delivery",
     "fastDeliveryDesc": "24-48 hours",
     "support": "24/7 Support",
-    "supportDesc": "Customer service"
+    "supportDesc": "Customer service",
+    "shopNow": "Shop Now",
+    "reservationForm": {
+      "title": "Make a Reservation",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "address": "Address",
+      "addressPlaceholder": "Enter your address",
+      "mobile": "Mobile Number",
+      "mobilePlaceholder": "Enter your mobile number",
+      "city": "City",
+      "cityPlaceholder": "Enter your city",
+      "submit": "Submit Reservation",
+      "submitting": "Submitting...",
+      "success": "Reservation submitted successfully!",
+      "error": "Error submitting reservation. Please try again.",
+      "backToProduct": "Back to Product",
+      "required": "This field is required"
+    }
   },
   "currency": {
     "mad": "MAD"

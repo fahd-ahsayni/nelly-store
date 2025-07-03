@@ -82,7 +82,25 @@
     "fastDelivery": "Livraison rapide",
     "fastDeliveryDesc": "24-48 heures",
     "support": "Assistance 24h/24 et 7j/7",
-    "supportDesc": "Service client"
+    "supportDesc": "Service client",
+    "shopNow": "Acheter maintenant",
+    "reservationForm": {
+      "title": "Faire une réservation",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Entrez votre nom complet",
+      "address": "Adresse",
+      "addressPlaceholder": "Entrez votre adresse",
+      "mobile": "Numéro de téléphone",
+      "mobilePlaceholder": "Entrez votre numéro de téléphone",
+      "city": "Ville",
+      "cityPlaceholder": "Entrez votre ville",
+      "submit": "Soumettre la réservation",
+      "submitting": "Envoi en cours...",
+      "success": "Réservation soumise avec succès !",
+      "error": "Erreur lors de la soumission. Veuillez réessayer.",
+      "backToProduct": "Retour au produit",
+      "required": "Ce champ est requis"
+    }
   },
   "currency": {
     "mad": "MAD"

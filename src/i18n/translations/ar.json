@@ -93,7 +93,25 @@
     "fastDelivery": "توصيل سريع",
     "fastDeliveryDesc": "24-48 ساعة",
     "support": "دعم 24/7",
-    "supportDesc": "خدمة العملاء"
+    "supportDesc": "خدمة العملاء",
+    "shopNow": "تسوّق الآن",
+    "reservationForm": {
+      "title": "إجراء حجز",
+      "fullName": "الاسم الكامل",
+      "fullNamePlaceholder": "أدخل اسمك الكامل",
+      "address": "العنوان",
+      "addressPlaceholder": "أدخل عنوانك",
+      "mobile": "رقم الهاتف",
+      "mobilePlaceholder": "أدخل رقم هاتفك",
+      "city": "المدينة",
+      "cityPlaceholder": "أدخل مدينتك",
+      "submit": "إرسال الحجز",
+      "submitting": "جاري الإرسال...",
+      "success": "تم إرسال الحجز بنجاح!",
+      "error": "خطأ في إرسال الحجز. يرجى المحاولة مرة أخرى.",
+      "backToProduct": "العودة إلى المنتج",
+      "required": "هذا الحقل مطلوب"
+    }
   },
   "currency": {
     "mad": "درهم"
