@@ -4,6 +4,7 @@ import { useCart } from "@/hooks/useCart";
 import { cn } from "@/lib/utils";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { PulsatingButton } from "@/components/buttons/PulsatingButton";
 
 interface FloatingCartButtonProps {
   onClick: () => void;
@@ -35,10 +36,10 @@ export default function FloatingCartButton({
   const totalItems = getTotalItems();
 
   return (
-    <button
+    <PulsatingButton
       onClick={onClick}
       className={cn(
-        "fixed bottom-6 right-6 z-30 lg:hidden",
+        "fixed bottom-6 right-6 z-30",
         "w-14 h-14 bg-rose-600 hover:bg-rose-700 active:bg-rose-800",
         "rounded-full shadow-2xl shdadow-rose-600/50",
         "flex items-center justify-center",
@@ -69,6 +70,6 @@ export default function FloatingCartButton({
           </span>
         )}
       </div>
-    </button>
+    </PulsatingButton>
   );
 }
