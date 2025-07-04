@@ -40,6 +40,17 @@ export interface ProductColor {
   created_at: string;
 }
 
+export interface ReservationItem {
+  size: string;
+  color: string;
+  image: string;
+  price: number;
+  quantity: number;
+  color_hex: string;
+  product_id: string;
+  product_name: string;
+}
+
 export interface Reservation {
   id: string;
   customer_first_name: string;
@@ -48,7 +59,7 @@ export interface Reservation {
   customer_secondary_mobile: string | null;
   customer_address: string;
   customer_city: string;
-  items: any; // JSON object
+  items: ReservationItem[]; // Array of reservation items
   total_amount: number;
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
   created_at: string;

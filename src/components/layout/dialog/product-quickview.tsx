@@ -214,16 +214,37 @@ export default function ProductQuickview({
     setIsSubmittingReservation(true);
 
     try {
+      // Split full name into first name and last name
+      const nameParts = reservationForm.fullName.trim().split(/\s+/);
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      // Create items array with the specific format
+      const items = [{
+        size: selectedSize?.name || "",
+        color: selectedColor?.name || "",
+        image: product.image_urls?.[0] || product.imagesrc,
+        price: product.price,
+        quantity: 1,
+        color_hex: selectedColor?.hex || "",
+        product_id: `${product.id}-${selectedColor?.id || "no-color"}-${selectedSize?.name || "no-size"}`,
+        product_name: product.name
+      }];
+
       const response = await fetch("/api/reservations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
           fullName: reservationForm.fullName,
           address: reservationForm.address,
           mobile: reservationForm.mobile,
           city: reservationForm.city,
+          items: items,
+          // Keep legacy fields for backward compatibility
           productId: product.id,
           productName: product.name,
           productPrice: product.price,
@@ -270,6 +291,27 @@ export default function ProductQuickview({
         [name]: "",
       }));
     }
+  };
+
+  const handleShopNowClick = () => {
+    if (!product) return;
+
+    // Validation: Check if color is required and selected
+    const hasColors = colors.length > 0;
+    const hasSizes = sizes.length > 0;
+
+    if (hasColors && !selectedColor) {
+      toast.error(translations.productQuickview.selectColor);
+      return;
+    }
+
+    if (hasSizes && !selectedSize) {
+      toast.error(translations.productQuickview.selectSize);
+      return;
+    }
+
+    // If validation passes, navigate to reservation form
+    setShowReservationForm(true);
   };
 
   const isItemInWishlist = product
@@ -521,7 +563,7 @@ export default function ProductQuickview({
                           <Button
                             outline
                             type="button"
-                            onClick={() => setShowReservationForm(true)}
+                            onClick={handleShopNowClick}
                             className="w-full !h-12 flex items-center justify-center font-semibold border-2 border-blue-600 text-blue-600 hover:bg-blue-50"
                           >
                             {translations.productQuickview.shopNow}
@@ -624,7 +666,7 @@ export default function ProductQuickview({
                             <span className="text-red-500 ml-1">*</span>
                           </label>
                           <Input
-                            type="tel"
+                            type="text"
                             id="mobile"
                             name="mobile"
                             value={reservationForm.mobile}
