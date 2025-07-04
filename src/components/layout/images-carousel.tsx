@@ -42,11 +42,16 @@ export default function ImageCarousel({
   };
 
   useEffect(() => {
-    if (!autoPlay || isHoveringNav.current) return;
+    if (!autoPlay) return;
 
-    const interval = setInterval(goToNext, autoPlayInterval);
+    const interval = setInterval(() => {
+      if (!isHoveringNav.current) {
+        goToNext();
+      }
+    }, autoPlayInterval);
+    
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, isHoveringNav.current]);
+  }, [autoPlay, autoPlayInterval]);
 
   if (!images.length) return null;
 

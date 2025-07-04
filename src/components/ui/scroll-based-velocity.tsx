@@ -60,11 +60,15 @@ function ParallaxText({
       }
     };
 
-    calculateRepetitions();
+    // Use a slight delay to ensure DOM is ready
+    const timeoutId = setTimeout(calculateRepetitions, 0);
 
     window.addEventListener("resize", calculateRepetitions);
-    return () => window.removeEventListener("resize", calculateRepetitions);
-  }, [children]);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", calculateRepetitions);
+    };
+  }, []); // Remove children dependency as it's not needed for calculations
 
   const x = useTransform(baseX, (v) => `${wrap(-100 / repetitions, 0, v)}%`);
 

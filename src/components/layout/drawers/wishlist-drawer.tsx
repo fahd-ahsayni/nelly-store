@@ -12,7 +12,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { XMarkIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { Heading } from "../../ui/heading";
 import ProductQuickview from "../dialog/product-quickview";
@@ -41,7 +41,12 @@ export default function WishlistDrawer({
 
   // Get products from store and ensure store is loaded
   const fetchAllData = useStore((state) => state.fetchAllData);
+  const productsCount = useStore((state) => state.products.length);
+  const collectionsCount = useStore((state) => state.collections.length);
+  const colorsCount = useStore((state) => state.colors.length);
   const getProductsFull = useStore((state) => state.getProductsFull);
+  
+  // Only get products when we need them (not in the dependency array)
   const products = getProductsFull();
 
   useIsomorphicLayoutEffect(() => {
@@ -51,12 +56,12 @@ export default function WishlistDrawer({
     }
   }, [isHydrated]);
 
-  // Ensure store data is loaded
+  // Ensure store data is loaded - use stable primitive values
   useEffect(() => {
-    if (mounted && products.length === 0) {
+    if (mounted && productsCount === 0) {
       fetchAllData();
     }
-  }, [mounted, products.length, fetchAllData]);
+  }, [mounted, productsCount]); // Use count instead of products array
 
   const items = useWishlistStore((state) => state.items);
   const removeFromWishlist = useWishlistStore((state) => state.removeItem);

@@ -119,7 +119,7 @@ export default function ProductQuickview({
       });
       setReservationErrors({});
     }
-  }, [open, colors, sizes]);
+  }, [open]);
 
   const handleAddToBag = (e: React.FormEvent) => {
     e.preventDefault();

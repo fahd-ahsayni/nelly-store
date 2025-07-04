@@ -2,7 +2,7 @@
 
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function Footer({
   translations,
@@ -13,13 +13,13 @@ export default function Footer({
 }) {
   const [time, setTime] = useState<string>("00:00:00");
 
-  const updateTime = () => {
+  const updateTime = useCallback(() => {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, "0");
     const minutes = now.getMinutes().toString().padStart(2, "0");
     const seconds = now.getSeconds().toString().padStart(2, "0");
     setTime(`${hours}:${minutes}:${seconds}`);
-  };
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     // Update time immediately
@@ -30,7 +30,7 @@ export default function Footer({
 
     // Clean up interval on component unmount
     return () => clearInterval(interval);
-  }, []);
+  }, [updateTime]);
 
   return (
     <footer className="w-full py-8 relative z-20">
