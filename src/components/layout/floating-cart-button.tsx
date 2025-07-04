@@ -39,7 +39,7 @@ export default function FloatingCartButton({
     <PulsatingButton
       onClick={onClick}
       className={cn(
-        "fixed bottom-6 right-6 z-30",
+        "fixed bottom-6 right-6 z-[9999]",
         "w-14 h-14 bg-rose-600 hover:bg-rose-700 active:bg-rose-800",
         "rounded-full shadow-2xl shdadow-rose-600/50",
         "flex items-center justify-center",
