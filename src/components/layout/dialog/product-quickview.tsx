@@ -2,7 +2,6 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/fieldset";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
@@ -10,13 +9,14 @@ import { cn } from "@/lib/utils";
 import type { ProductFull } from "@/types/database";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
+  ArrowLeftIcon,
   BoltIcon,
   ChatBubbleLeftRightIcon,
-  HeartIcon as HeartOutlineIcon,
   XMarkIcon,
-  ArrowLeftIcon,
+  ShoppingBagIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
-import { HeartIcon, StarIcon } from "@heroicons/react/24/solid";
+import { StarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -220,16 +220,20 @@ export default function ProductQuickview({
       const lastName = nameParts.slice(1).join(" ") || "";
 
       // Create items array with the specific format
-      const items = [{
-        size: selectedSize?.name || "",
-        color: selectedColor?.name || "",
-        image: product.image_urls?.[0] || product.imagesrc,
-        price: product.price,
-        quantity: 1,
-        color_hex: selectedColor?.hex || "",
-        product_id: `${product.id}-${selectedColor?.id || "no-color"}-${selectedSize?.name || "no-size"}`,
-        product_name: product.name
-      }];
+      const items = [
+        {
+          size: selectedSize?.name || "",
+          color: selectedColor?.name || "",
+          image: product.image_urls?.[0] || product.imagesrc,
+          price: product.price,
+          quantity: 1,
+          color_hex: selectedColor?.hex || "",
+          product_id: `${product.id}-${selectedColor?.id || "no-color"}-${
+            selectedSize?.name || "no-size"
+          }`,
+          product_name: product.name,
+        },
+      ];
 
       const response = await fetch("/api/reservations", {
         method: "POST",
@@ -351,11 +355,8 @@ export default function ProductQuickview({
 
               <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                 <div className="h-full w-full overflow-hidden sm:col-span-12 lg:col-span-5 relative">
-                  {/* Floating Rating Badge */}
-                  <Badge
-                    color="white"
-                    className="absolute top-4 ltr:right-4 rtl:left-4 z-10"
-                  >
+                  {/* Floating Rating Badge shifted to top left */}
+                  <Badge color="white" className="absolute top-4 left-4 z-10">
                     <StarIcon className="w-4 h-4 text-yellow-400" />
                     <span className="text-sm font-medium text-gray-800">
                       {product.rating === null || product.rating < 4
@@ -496,79 +497,28 @@ export default function ProductQuickview({
                             </div>
                           )}
 
-                          <div className="flex items-center justify-between gap-x-3 mt-8">
+                          <div className="flex w-full justify-between gap-2 items-center mt-8">
                             <Button
-                              color="rose"
+                              color="white"
                               type="submit"
                               disabled={!product.instock}
-                              className={cn(
-                                "flex-1 !h-12 flex items-center justify-center font-semibold",
-                                !product.instock &&
-                                  "opacity-50 cursor-not-allowed"
-                              )}
+                              className="w-full !h-12 flex items-center justify-center font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                               {!product.instock
                                 ? translations.productQuickview.outOfStock
                                 : translations.productQuickview.addToBag}
                             </Button>
-
-                            <div className="relative">
-                              <Button
-                                outline
-                                type="button"
-                                onClick={handleWishlistToggle}
-                                disabled={!product.instock}
-                                className={cn(
-                                  "!h-12 !w-12 !p-0 flex items-center justify-center",
-                                  "transition-colors duration-200 ease-in-out bg-white",
-                                  "border-2",
-                                  isItemInWishlist
-                                    ? "!border-rose-500 !text-rose-600"
-                                    : "",
-                                  !product.instock &&
-                                    "opacity-50 cursor-not-allowed"
-                                )}
-                              >
-                                {/* Heart icon with animation */}
-                                {isItemInWishlist ? (
-                                  <HeartIcon className="!size-6 !text-rose-500" />
-                                ) : (
-                                  <HeartOutlineIcon className="!size-6" />
-                                )}
-                              </Button>
-
-                              {/* Tooltip */}
-                              <div
-                                className={cn(
-                                  "absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2",
-                                  "px-2 py-1 text-xs text-white bg-gray-900 rounded whitespace-nowrap",
-                                  "opacity-0 pointer-events-none transition-opacity duration-200",
-                                  "hover:opacity-100"
-                                )}
-                              >
-                                {isItemInWishlist
-                                  ? translations.productQuickview
-                                      ?.removeFromWishlist ||
-                                    "Remove from wishlist"
-                                  : translations.productQuickview
-                                      ?.addToWishlist || "Add to wishlist"}
-                                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
-                              </div>
-                            </div>
+                            <Button
+                              color="rose"
+                              type="button"
+                              onClick={handleShopNowClick}
+                              disabled={!product.instock}
+                              className="w-full !h-12 flex items-center justify-center font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              {translations.productQuickview.shopNow}
+                            </Button>
                           </div>
                         </form>
-
-                        {/* Shop Now Button */}
-                        <div className="mt-4">
-                          <Button
-                            outline
-                            type="button"
-                            onClick={handleShopNowClick}
-                            className="w-full !h-12 flex items-center justify-center font-semibold border-2 border-blue-600 text-blue-600 hover:bg-blue-50"
-                          >
-                            {translations.productQuickview.shopNow}
-                          </Button>
-                        </div>
                       </section>
                     </>
                   ) : (
