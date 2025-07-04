@@ -1,4 +1,5 @@
 import { LenisWrapper } from "@/components/lenis-wrapper";
+import { HtmlProvider } from "@/components/providers/html-provider";
 import { locales, type Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/utils";
 import { cn } from "@/lib/utils";
@@ -109,8 +110,8 @@ export default async function LocaleLayout({
   const fontClass = locale === "ar" ? tajawal.className : inter.className;
 
   return (
-    <html lang={locale} dir={isRTL ? "rtl" : "ltr"}>
-      <body className={cn(fontClass, "bg-background overflow-x-hidden")}>
+    <HtmlProvider locale={locale}>
+      <div className={cn(fontClass, "bg-background overflow-x-hidden")} dir={isRTL ? "rtl" : "ltr"}>
         <LenisWrapper />
         {children}
         <ToastContainer
@@ -126,7 +127,7 @@ export default async function LocaleLayout({
           theme="light"
           className={fontClass}
         />
-      </body>
-    </html>
+      </div>
+    </HtmlProvider>
   );
 }

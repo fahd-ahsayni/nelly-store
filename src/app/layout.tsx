@@ -92,7 +92,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${tajawal.variable}`}>
-      <body>{children}</body>
+      <body className="bg-background overflow-x-hidden">{children}</body>
     </html>
   );
 }
