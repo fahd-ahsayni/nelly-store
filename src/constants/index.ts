@@ -63,7 +63,7 @@ export const COLLECTIONS_SECTION: CollectionItem[] = [
   },
   {
     name: "Autumn Collection",
-    image: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-09%20at%2018.32.05.jpeg?updatedAt=1749490333207`,
+    image: `${IMAGEKIT_BASE_URL}/WhatsApp%20Image%202025-06-09%20at%2018.32.04.jpeg?updatedAt=1749490334022`,
     alt: "Autumn Collection",
     translationKey: "collection4",
   },
